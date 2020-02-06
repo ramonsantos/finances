@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'boot'
 
 require "rails"
@@ -31,5 +33,17 @@ module Finances
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # Test files generator
+    config.generators do |generator|
+      generator.test_framework(
+        :rspec,
+        fixtures: false,
+        view_specs: false,
+        helper_specs: false,
+        request_specs: true,
+        routing_specs: true
+      )
+    end
   end
 end
