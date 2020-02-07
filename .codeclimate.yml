@@ -1,0 +1,28 @@
+---
+version: "2"
+
+plugins:
+  brakeman:
+    enabled: true
+  editorconfig:
+    enabled: true
+  fixme:
+    enabled: true
+  flog:
+    enabled: true
+  markdownlint:
+    enabled: true
+  reek:
+    enabled: true
+  rubocop:
+    enabled: true
+    channel: rubocop-0-79
+  scss-lint:
+    enabled: true
+
+exclude_patterns:
+  - babel.config.js
+  - Gemfile.lock
+  - db/
+  - spec/
+  - "**/*.png"

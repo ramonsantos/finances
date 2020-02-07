@@ -34,7 +34,17 @@ group :development, :test do
 end
 
 group :development do
+  gem 'brakeman'
+  gem 'bullet', '~> 6.0', '>= 6.0.2'
+  gem 'colorize'
   gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'rack-mini-profiler', '~> 1.0', require: false
+  gem 'rails_best_practices'
+  gem 'rubocop', '~> 0.79.0'
+  gem 'rubocop-performance'
+  gem 'rubocop-rails'
+  gem 'rubocop-rspec'
+  gem 'rubycritic', require: false
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 3.3.0'

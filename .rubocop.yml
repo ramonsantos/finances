@@ -1,0 +1,69 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  Exclude:
+    - config.ru
+    - bin/*
+    - db/**/*
+    - node_modules/**/*
+    - vendor/**/*
+
+Layout/HashAlignment:
+  Description: >-
+                 Align the elements of a hash literal if they span more than
+                 one line.
+  Enabled: true
+  AllowMultipleStyles: true
+  EnforcedHashRocketStyle:
+    - key
+    - table
+  EnforcedColonStyle:
+    - key
+    - table
+
+Layout/LineLength:
+  Description: 'Limit lines to 80 characters.'
+  StyleGuide: '#80-character-limits'
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Style/Documentation:
+  Description: 'Document classes and non-namespace modules.'
+  Enabled: false
+
+Style/EmptyMethod:
+  Description: 'Checks the formatting of empty method definitions.'
+  StyleGuide: '#no-single-line-methods'
+  Enabled: false
+
+Style/GuardClause:
+  Description: 'Check for conditionals that can be replaced with guard clauses'
+  StyleGuide: '#no-nested-conditionals'
+  Enabled: false
+
+Style/SymbolArray:
+  Description: 'Use %i or %I for arrays of symbols.'
+  StyleGuide: '#percent-i'
+  Enabled: false
+
+Style/WordArray:
+  Description: 'Use %w or %W for arrays of words.'
+  StyleGuide: '#percent-w'
+  Enabled: false
+
+# Rails
+Rails/FilePath:
+  Enabled: false
+
+# Rubocop RSpec
+RSpec/ContextWording:
+  Prefixes:
+    - associations
+    - validations
+    - when
+    - with
