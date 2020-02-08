@@ -14,6 +14,8 @@ require 'rspec/rails'
 
 require 'support/database_cleaner.rb'
 
+require_relative 'support/controller_macros'
+
 begin
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e
@@ -29,6 +31,10 @@ RSpec.configure do |config|
       with.library :rails
     end
   end
+
+  # Devise
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.extend  ControllerMacros,                type: :controller
 
   # FactoryBot
   config.include FactoryBot::Syntax::Methods
