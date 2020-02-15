@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Expense Groups</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @expense_groups.each do |expense_group| %>
+      <tr>
+        <td><%= expense_group.name %></td>
+        <td><%= link_to 'Destroy', expense_group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Expense Group', new_expense_group_path %>
