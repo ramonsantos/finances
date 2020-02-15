@@ -36,6 +36,11 @@
     <%= form.text_area :remark %>
   </div>
 
+  <div class="field">
+    <%= form.label :category %>
+    <%= form.select :category, Expense.categories.values, selected: Expense.categories[expense.category] %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

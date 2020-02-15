@@ -25,5 +25,10 @@
   <%= @expense.remark %>
 </p>
 
+<p>
+  <strong>Category:</strong>
+  <%= Expense.categories[@expense.category] %>
+</p>
+
 <%= link_to 'Edit', edit_expense_path(@expense) %> |
 <%= link_to 'Back', expenses_path %>

@@ -7,5 +7,7 @@ FactoryBot.define do
     date { '2020-02-15' }
     fixed { false }
     remark { '' }
+
+    category { 'food' }
   end
 end

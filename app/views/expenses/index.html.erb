@@ -10,6 +10,7 @@
       <th>Date</th>
       <th>Fixed</th>
       <th>Remark</th>
+      <th>Category</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -22,6 +23,7 @@
         <td><%= expense.date %></td>
         <td><%= expense.fixed %></td>
         <td><%= expense.remark %></td>
+        <td><%= Expense.categories[expense.category] %></td>
         <td><%= link_to 'Show', expense %></td>
         <td><%= link_to 'Edit', edit_expense_path(expense) %></td>
         <td><%= link_to 'Destroy', expense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
