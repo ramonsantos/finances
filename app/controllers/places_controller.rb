@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class PlacesController < ApplicationController
   # GET /places
   # GET /places.json
   def index
-    @places = Place.all
+    @places = Place.where(user: current_user)
   end
 
   # GET /places/new
@@ -14,6 +16,7 @@ class PlacesController < ApplicationController
   # POST /places.json
   def create
     @place = Place.new(place_params)
+    @place.user = current_user
 
     respond_to do |format|
       if @place.save
@@ -30,6 +33,7 @@ class PlacesController < ApplicationController
   # DELETE /places/1.json
   def destroy
     Place.find(params[:id]).destroy
+
     respond_to do |format|
       format.html { redirect_to places_url, notice: 'Place was successfully destroyed.' }
       format.json { head :no_content }

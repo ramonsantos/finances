@@ -4,7 +4,7 @@ class ExpenseGroupsController < ApplicationController
   # GET /expense_groups
   # GET /expense_groups.json
   def index
-    @expense_groups = ExpenseGroup.all
+    @expense_groups = ExpenseGroup..where(user: current_user)
   end
 
   # GET /expense_groups/new
@@ -16,6 +16,7 @@ class ExpenseGroupsController < ApplicationController
   # POST /expense_groups.json
   def create
     @expense_group = ExpenseGroup.new(expense_group_params)
+    @expense_group.user = current_user
 
     respond_to do |format|
       if @expense_group.save
