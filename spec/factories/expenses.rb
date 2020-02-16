@@ -3,6 +3,8 @@
 FactoryBot.define do
   factory :expense do
     user { User.first || create(:user) }
+    place { Place.first || create(:place) }
+    expense_group { ExpenseGroup.first || create(:expense_group) }
 
     description { 'Book' }
     amount { 21.5 }

@@ -4,7 +4,13 @@ require 'rails_helper'
 
 describe ExpenseGroup, type: :model do
   describe 'associations' do
-    it { is_expected.to belong_to(:user) }
+    context 'when belong_to' do
+      it { is_expected.to belong_to(:user) }
+    end
+
+    context 'when have_many' do
+      it { is_expected.to have_many(:expenses).dependent(:delete_all) }
+    end
   end
 
   describe 'validations' do

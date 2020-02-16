@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_16_153821) do
+ActiveRecord::Schema.define(version: 2020_02_16_160035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,10 @@ ActiveRecord::Schema.define(version: 2020_02_16_153821) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "category", default: "Food"
     t.bigint "user_id"
+    t.bigint "place_id"
+    t.bigint "expense_group_id"
+    t.index ["expense_group_id"], name: "index_expenses_on_expense_group_id"
+    t.index ["place_id"], name: "index_expenses_on_place_id"
     t.index ["user_id"], name: "index_expenses_on_user_id"
   end
 
@@ -57,6 +61,8 @@ ActiveRecord::Schema.define(version: 2020_02_16_153821) do
   end
 
   add_foreign_key "expense_groups", "users"
+  add_foreign_key "expenses", "expense_groups"
+  add_foreign_key "expenses", "places"
   add_foreign_key "expenses", "users"
   add_foreign_key "places", "users"
 end
