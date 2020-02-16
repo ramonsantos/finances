@@ -2,6 +2,8 @@
 
 FactoryBot.define do
   factory :expense do
+    user { User.first || create(:user) }
+
     description { 'Book' }
     amount { 21.5 }
     date { '2020-02-15' }

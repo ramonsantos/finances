@@ -2,7 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe ExpenseGroupsController, type: :controller do
+describe ExpenseGroupsController, type: :controller do
+  login_user
+
   let(:valid_attributes) do
     skip('Add a hash of attributes valid for your model')
   end
