@@ -5,4 +5,5 @@ Rails.application.routes.draw do
 
   resources :expenses
   resources :expense_groups, except: [:edit, :update, :show]
+  resources :places, except: [:edit, :update, :show]
 end
