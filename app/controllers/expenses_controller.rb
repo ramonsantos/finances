@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class ExpensesController < ApplicationController
-  before_action :set_expense, only: [:show, :edit, :update, :destroy]
+  before_action :set_expense,    only: [:edit, :destroy, :show, :update]
+  before_action :places,         only: [:edit, :new]
+  before_action :expense_groups, only: [:edit, :new]
 
   # GET /expenses
   # GET /expenses.json
@@ -31,7 +33,7 @@ class ExpensesController < ApplicationController
 
     respond_to do |format|
       if @expense.save
-        format.html { redirect_to @expense, notice: 'Expense was successfully created.' }
+        format.html { redirect_to expenses_path, notice: 'Despesa adicionada.' }
         format.json { render :show, status: :created, location: @expense }
       else
         format.html { render :new }
@@ -45,7 +47,7 @@ class ExpensesController < ApplicationController
   def update
     respond_to do |format|
       if @expense.update(expense_params)
-        format.html { redirect_to @expense, notice: 'Expense was successfully updated.' }
+        format.html { redirect_to expenses_path, notice: 'Expense was successfully updated.' }
         format.json { render :show, status: :ok, location: @expense }
       else
         format.html { render :edit }
@@ -66,13 +68,27 @@ class ExpensesController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_expense
     @expense = Expense.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def expense_params
-    params.require(:expense).permit(:description, :amount, :date, :fixed, :remark, :category)
+    params.require(:expense).permit(:description, :amount, :date, :fixed, :remark, :category, :expense_group_id, :place_id)
+  end
+
+  def places
+    @places ||= fetch_places
+  end
+
+  def fetch_places
+    Place.where(user: current_user).pluck(:name, :id)
+  end
+
+  def expense_groups
+    @expense_groups ||= fetch_expense_groups
+  end
+
+  def fetch_expense_groups
+    ExpenseGroup.where(user: current_user).pluck(:name, :id)
   end
 end

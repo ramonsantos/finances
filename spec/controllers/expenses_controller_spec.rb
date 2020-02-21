@@ -6,42 +6,40 @@ describe ExpensesController, type: :controller do
   login_user
 
   let(:valid_attributes) do
-    skip('Add a hash of attributes valid for your model')
+    attributes_for(:expense)
   end
 
   let(:invalid_attributes) do
-    skip('Add a hash of attributes invalid for your model')
+    attributes_for(:expense, description: nil)
   end
 
-  let(:valid_session) { {} }
-
   describe 'GET #index' do
-    it 'returns a success response' do
+    xit 'returns a success response' do
       Expense.create! valid_attributes
-      get :index, params: {}, session: valid_session
+      get :index, params: {}
       expect(response).to be_successful
     end
   end
 
   describe 'GET #show' do
-    it 'returns a success response' do
+    xit 'returns a success response' do
       expense = Expense.create! valid_attributes
-      get :show, params: { id: expense.to_param }, session: valid_session
+      get :show, params: { id: expense.to_param }
       expect(response).to be_successful
     end
   end
 
   describe 'GET #new' do
     it 'returns a success response' do
-      get :new, params: {}, session: valid_session
+      get(:new)
       expect(response).to be_successful
     end
   end
 
   describe 'GET #edit' do
-    it 'returns a success response' do
+    xit 'returns a success response' do
       expense = Expense.create! valid_attributes
-      get :edit, params: { id: expense.to_param }, session: valid_session
+      get :edit, params: { id: expense.to_param }
       expect(response).to be_successful
     end
   end
@@ -50,20 +48,26 @@ describe ExpensesController, type: :controller do
     context 'with valid params' do
       it 'creates a new Expense' do
         expect do
-          post :create, params: { expense: valid_attributes }, session: valid_session
+          post(:create, params: { expense: valid_attributes })
         end.to change(Expense, :count).by(1)
       end
 
+      it 'shows flash notice' do
+        post(:create, params: { expense: valid_attributes })
+        expect(flash[:notice]).to eq('Despesa adicionada.')
+      end
+
       it 'redirects to the created expense' do
-        post :create, params: { expense: valid_attributes }, session: valid_session
-        expect(response).to redirect_to(Expense.last)
+        post(:create, params: { expense: valid_attributes })
+        expect(response).to redirect_to(expenses_path)
       end
     end
 
     context 'with invalid params' do
-      it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: { expense: invalid_attributes }, session: valid_session
-        expect(response).to be_successful
+      it 'does not creates a new Expense' do
+        expect do
+          post(:create, params: { expense: invalid_attributes })
+        end.not_to change(Expense, :count)
       end
     end
   end
@@ -74,40 +78,40 @@ describe ExpensesController, type: :controller do
         skip('Add a hash of attributes valid for your model')
       end
 
-      it 'updates the requested expense' do
+      xit 'updates the requested expense' do
         expense = Expense.create! valid_attributes
-        put :update, params: { id: expense.to_param, expense: new_attributes }, session: valid_session
+        put :update, params: { id: expense.to_param, expense: new_attributes }
         expense.reload
         skip('Add assertions for updated state')
       end
 
-      it 'redirects to the expense' do
+      xit 'redirects to the expense' do
         expense = Expense.create! valid_attributes
-        put :update, params: { id: expense.to_param, expense: valid_attributes }, session: valid_session
+        put :update, params: { id: expense.to_param, expense: valid_attributes }
         expect(response).to redirect_to(expense)
       end
     end
 
     context 'with invalid params' do
-      it "returns a success response (i.e. to display the 'edit' template)" do
+      xit "returns a success response (i.e. to display the 'edit' template)" do
         expense = Expense.create! valid_attributes
-        put :update, params: { id: expense.to_param, expense: invalid_attributes }, session: valid_session
+        put :update, params: { id: expense.to_param, expense: invalid_attributes }
         expect(response).to be_successful
       end
     end
   end
 
   describe 'DELETE #destroy' do
-    it 'destroys the requested expense' do
+    xit 'destroys the requested expense' do
       expense = Expense.create! valid_attributes
       expect do
-        delete :destroy, params: { id: expense.to_param }, session: valid_session
+        delete :destroy, params: { id: expense.to_param }
       end.to change(Expense, :count).by(-1)
     end
 
-    it 'redirects to the expenses list' do
+    xit 'redirects to the expenses list' do
       expense = Expense.create! valid_attributes
-      delete :destroy, params: { id: expense.to_param }, session: valid_session
+      delete :destroy, params: { id: expense.to_param }
       expect(response).to redirect_to(expenses_url)
     end
   end

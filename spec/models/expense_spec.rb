@@ -11,16 +11,20 @@ RSpec.describe Expense, type: :model do
 
   describe 'validations' do
     context 'when presense_of' do
-      it { is_expected.to validate_presence_of(:description) }
-      it { is_expected.to validate_presence_of(:amount) }
-      it { is_expected.to validate_presence_of(:date) }
-      it { is_expected.to validate_presence_of(:fixed) }
-      it { is_expected.to validate_presence_of(:category) }
-      it { is_expected.to validate_presence_of(:user) }
-      it { is_expected.to validate_presence_of(:place) }
-      it { is_expected.to validate_presence_of(:expense_group) }
+      context 'when true' do
+        it { is_expected.to validate_presence_of(:description) }
+        it { is_expected.to validate_presence_of(:amount) }
+        it { is_expected.to validate_presence_of(:date) }
+        it { is_expected.to validate_presence_of(:category) }
+        it { is_expected.to validate_presence_of(:user) }
+        it { is_expected.to validate_presence_of(:place) }
+        it { is_expected.to validate_presence_of(:expense_group) }
+      end
 
-      it { is_expected.not_to validate_presence_of(:remark) }
+      context 'when false' do
+        it { is_expected.not_to validate_presence_of(:fixed) }
+        it { is_expected.not_to validate_presence_of(:remark) }
+      end
     end
 
     context 'when enum' do

@@ -8,7 +8,6 @@ class Expense < ApplicationRecord
   validates :description,   presence: true
   validates :amount,        presence: true
   validates :date,          presence: true
-  validates :fixed,         presence: true
   validates :category,      presence: true
   validates :user,          presence: true
   validates :place,         presence: true
