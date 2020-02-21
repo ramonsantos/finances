@@ -67,3 +67,9 @@ RSpec/ContextWording:
     - validations
     - when
     - with
+
+RSpec/NestedGroups:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
