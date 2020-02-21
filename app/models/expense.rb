@@ -14,10 +14,10 @@ class Expense < ApplicationRecord
   validates :expense_group, presence: true
 
   enum category: {
-    food:      'Food',
-    transport: 'Transport',
-    health:    'Health',
+    food:      'Alimentação',
+    transport: 'Transporte',
+    health:    'Saúde',
     pet:       'Pet',
-    education: 'Education'
+    education: 'Educação'
   }
 end

@@ -30,11 +30,11 @@ RSpec.describe Expense, type: :model do
     context 'when enum' do
       let(:category) do
         {
-          food:      'Food',
-          transport: 'Transport',
-          health:    'Health',
+          food:      'Alimentação',
+          transport: 'Transporte',
+          health:    'Saúde',
           pet:       'Pet',
-          education: 'Education'
+          education: 'Educação'
         }
       end
 
