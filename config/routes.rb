@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   root 'expenses#index'
 
-  devise_for :users
+  devise_for :users, controllers: { sessions: 'sessions' }
 
   resources :expenses
   resources :expense_groups, except: [:edit, :update, :show]
