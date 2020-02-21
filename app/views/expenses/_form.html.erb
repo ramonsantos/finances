@@ -11,47 +11,64 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_field :description %>
+  <div class="field form-group col-md-6">
+    <%= form.label :description, 'Descrição' %>
+    <%= form.text_field :description, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :amount %>
-    <%= form.text_field :amount, oninput: only_numbers_script, required: true %>
+  <div class="field form-group col-md-6">
+    <%= form.label :amount, 'Valor' %>
+    <%= form.text_field :amount, oninput: only_numbers_script, required: true, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :date %>
-    <%= form.date_select :date %>
+  <div class="field form-group col-md-4">
+    <%= form.label :date, 'Data da Compra' %>
+    <%= form.text_field :date, class: 'form-control', type: 'date', value: expense_date(expense) %>
   </div>
 
-  <div class="field">
-    <%= form.label :fixed %>
-    <%= form.check_box :fixed %>
+  <div class="field form-group col-md-6">
+    <div class="form-check">
+      <%= form.check_box :fixed, class: 'form-check-input' %>
+      <%= form.label :fixed, 'Despesa Fixa?', class: 'form-check-label'%>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :remark %>
-    <%= form.text_area :remark %>
+  <div class="field form-group col-md-4">
+    <%= form.label :category, 'Categoria' %>
+    <%= form.select(
+      :category,
+      options_for_select(Expense.categories.values, Expense.categories[expense.category]),
+      {},
+      class: 'form-control'
+    )%>
   </div>
 
-  <div class="field">
-    <%= form.label :category %>
-    <%= form.select :category, Expense.categories.values, selected: Expense.categories[expense.category] %>
+  <div class="field form-group col-md-4">
+    <%= form.label :place_id, 'Local' %>
+    <%= form.select(
+      :place_id,
+      options_for_select(@places, current_option(expense, @places)),
+      {},
+      class: 'form-control'
+    )%>
   </div>
 
-  <div class="field">
-    <%= form.label :place_id %>
-    <%= form.select :place_id, @places, selected: (expense.place_id || @places.first) %>
+  <div class="field form-group col-md-4">
+    <%= form.label :expense_group_id, 'Grupo de Despesa' %>
+    <%= form.select(
+      :expense_group_id,
+      options_for_select(@expense_groups, current_option(expense, @expense_groups)),
+      {},
+      class: 'form-control'
+    )%>
   </div>
 
-  <div class="field">
-    <%= form.label :expense_group_id %>
-    <%= form.select :expense_group_id, @expense_groups, selected: (expense.expense_group_id || @expense_groups.first) %>
+  <div class="field form-group col-md-12">
+    <%= form.label :remark, 'Observações', required: true %>
+    <%= form.text_area :remark, class: 'form-control' %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="actions col-md-2">
+    <%= form.submit('Salvar', class: 'btn btn-primary') %>
   </div>
 <% end %>
