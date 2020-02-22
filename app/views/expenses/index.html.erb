@@ -1,6 +1,15 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+  <div class="alert alert-primary alert-dismissible fade show" role="alert">
+    <%= notice %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+<% end %>
 
-<h1>Expenses</h1>
+<div class="col-sm-12">
+  <h1>Despesas</h1>
+</div>
 
 <table>
   <thead>
