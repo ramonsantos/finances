@@ -20,7 +20,7 @@ module ExpensesHelper
     (expense.date || Time.zone.today).to_s
   end
 
-  def current_option(expense, attribute_list)
-    (expense.place_id || attribute_list.first)
+  def current_option(expense, attribute_method, attribute_list)
+    (expense.try(attribute_method) || attribute_list.first.last)
   end
 end

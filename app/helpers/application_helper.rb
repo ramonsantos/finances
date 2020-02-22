@@ -2,6 +2,6 @@
 
 module ApplicationHelper
   def current_year
-    Time.zone.today.year
+    Time.zone.today.year.to_s
   end
 end

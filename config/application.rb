@@ -31,7 +31,7 @@ module Finances
         :rspec,
         fixtures: false,
         view_specs: false,
-        helper_specs: false,
+        helper_specs: true,
         request_specs: true,
         routing_specs: true
       )
