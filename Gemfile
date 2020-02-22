@@ -20,6 +20,7 @@ group :development, :test do
   gem 'factory_bot_rails', '~> 5.1', '>= 5.1.1'
   gem 'pry-byebug'
   gem 'pry-rails'
+  gem 'timecop'
 end
 
 group :development do

@@ -5,5 +5,11 @@ FactoryBot.define do
     user { User.first || create(:user) }
 
     name { 'Recife' }
+
+    trait :place_surubim do
+      name { 'Surubim' }
+    end
+
+    factory :place_surubim, traits: [:place_surubim]
   end
 end

@@ -12,9 +12,7 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 
 require 'rspec/rails'
 
-require 'support/database_cleaner.rb'
-
-require_relative 'support/controller_macros'
+Dir[Rails.root.join('spec', 'support', '**', '*.rb')].each { |f| require_relative f }
 
 begin
   ActiveRecord::Migration.maintain_test_schema!
@@ -33,6 +31,7 @@ RSpec.configure do |config|
   end
 
   # Devise
+  config.include Warden::Test::Helpers
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.extend  ControllerMacros,                type: :controller
 
