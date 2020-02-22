@@ -60,6 +60,10 @@ Style/WordArray:
 Rails/FilePath:
   Enabled: false
 
+# Capybara
+Capybara/FeatureMethods:
+  Enabled: false
+
 # Rubocop RSpec
 RSpec/ContextWording:
   Prefixes:
@@ -67,6 +71,12 @@ RSpec/ContextWording:
     - validations
     - when
     - with
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
 
 RSpec/NestedGroups:
   Enabled: false
