@@ -13,7 +13,7 @@
 
 <div class="col-md-12">
   <div class="table-responsive">
-    <table class="table table-hover">
+    <table class="table table-hover table-bordered">
       <thead class="thead-dark">
         <tr>
           <th scope="col">Descrição</th>
@@ -23,6 +23,7 @@
           <th scope="col">Categoria</th>
           <th scope="col">Local</th>
           <th scope="col">Grupo</th>
+          <th scope="col">Observações</th>
           <th scope="col" colspan="3"></th>
         </tr>
       </thead>
@@ -31,14 +32,15 @@
         <% @expenses.each do |expense| %>
           <tr>
             <td scope="row"><%= expense.description %></td>
-            <td><%= format_to_money(expense.amount) %></td>
-            <td><%= expense.date %></td>
-            <td><%= fixed_label(expense.fixed) %></td>
+            <td class="td-right"><%= format_to_money(expense.amount) %></td>
+            <td class="td-right"><%= format_date(expense.date) %></td>
+            <td class="td-center"><%= fixed_label(expense.fixed) %></td>
             <td><%= Expense.categories[expense.category] %></td>
             <td><%= expense.place.name %></td>
             <td><%= expense.expense_group.name %></td>
-            <td><%= link_to 'Edit', edit_expense_path(expense) %></td>
-            <td><%= link_to 'Destroy', expense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= remark_preview(expense.remark) %></td>
+            <td class="td-center"><%= link_to 'Editar', edit_expense_path(expense), class: 'btn btn-primary btn-sm' %></td>
+            <td class="td-center"><%= link_to 'Remover', expense, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn btn-danger btn-sm' %></td>
           </tr>
         <% end %>
       </tbody>

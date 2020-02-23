@@ -45,6 +45,16 @@ module ExpensesHelper
     number_to_currency(amount, unit: 'R$', separator: ',', delimiter: '.', format: '%n %u')
   end
 
+  def format_date(date)
+    date.strftime('%d/%m/%Y')
+  end
+
+  def remark_preview(remark)
+    return remark if remark.blank? || remark.length <= 20
+
+    "#{remark.first(17)}..."
+  end
+
   private
 
   def build_month_label(date)
