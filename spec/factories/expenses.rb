@@ -13,5 +13,11 @@ FactoryBot.define do
     remark { '' }
 
     category { 'food' }
+
+    trait :expense_other_month do
+      date { '2020-03-01' }
+    end
+
+    factory :expense_other_month, traits: [:expense_other_month]
   end
 end

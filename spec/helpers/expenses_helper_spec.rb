@@ -108,4 +108,38 @@ describe ExpensesHelper, type: :helper do
       end
     end
   end
+
+  describe '.month_label' do
+    before { Timecop.freeze(2020, 1, 20) }
+
+    after { Timecop.return }
+
+    it 'returns prev label' do
+      expect(month_label(:prev)).to eq('Dez/2019')
+    end
+
+    it 'returns current label' do
+      expect(month_label(:current)).to eq('Jan/2020')
+    end
+
+    it 'returns next label' do
+      expect(month_label(:next)).to eq('Fev/2020')
+    end
+  end
+
+  describe '.fixed_label' do
+    it 'returns "Sim" label' do
+      expect(fixed_label(true)).to eq('Sim')
+    end
+
+    it 'returns "Não" label' do
+      expect(fixed_label(false)).to eq('Não')
+    end
+  end
+
+  describe '.format_to_money' do
+    it { expect(format_to_money(0.1)).to eq('0,10 R$') }
+    it { expect(format_to_money(1.01)).to eq('1,01 R$') }
+    it { expect(format_to_money(1012.1)).to eq('1.012,10 R$') }
+  end
 end

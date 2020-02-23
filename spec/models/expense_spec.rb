@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Expense, type: :model do
+describe Expense, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:place) }
@@ -40,6 +40,22 @@ RSpec.describe Expense, type: :model do
 
       it do
         expect(subject).to define_enum_for(:category).with_values(category).backed_by_column_of_type(:string)
+      end
+    end
+  end
+
+  describe 'scopes' do
+    describe '.fetch_by_month' do
+      let(:expeses) { described_class.fetch_by_month(User.first, Date.parse('2020-02-21')) }
+
+      before do
+        create(:expense)
+        create(:expense_other_month)
+      end
+
+      it 'returns one expense from February' do
+        expect(expeses.count).to eq(1)
+        expect(expeses.first.date).to eq(Date.parse('2020-02-15'))
       end
     end
   end

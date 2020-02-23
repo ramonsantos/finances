@@ -23,4 +23,31 @@ module ExpensesHelper
   def current_option(expense, attribute_method, attribute_list)
     (expense.try(attribute_method) || attribute_list.first.last)
   end
+
+  def month_label(month)
+    current_date = Time.zone.today
+
+    case month
+    when :prev
+      build_month_label(current_date - 1.month)
+    when :current
+      build_month_label(current_date)
+    when :next
+      build_month_label(current_date + 1.month)
+    end
+  end
+
+  def fixed_label(fixed)
+    fixed ? 'Sim' : 'Não'
+  end
+
+  def format_to_money(amount)
+    number_to_currency(amount, unit: 'R$', separator: ',', delimiter: '.', format: '%n %u')
+  end
+
+  private
+
+  def build_month_label(date)
+    "#{(I18n.t :abbr_month_names, scope: :date)[date.month].capitalize}/#{date.year}"
+  end
 end

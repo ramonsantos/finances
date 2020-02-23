@@ -14,10 +14,24 @@ describe ExpensesController, type: :controller do
   end
 
   describe 'GET #index' do
-    xit 'returns a success response' do
-      Expense.create! valid_attributes
-      get :index, params: {}
+    it 'returns a success response' do
+      get(:index)
       expect(response).to be_successful
+    end
+
+    context 'when user is not authorized' do
+      before do
+        sign_out(User.last)
+        get(:index)
+      end
+
+      it 'returns a redirect response' do
+        expect(response).to have_http_status(:found)
+      end
+
+      it 'redirects to login page' do
+        expect(response).to redirect_to(new_user_session_path)
+      end
     end
   end
 
