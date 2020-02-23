@@ -228,6 +228,7 @@ GEM
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    rexml (3.2.4)
     rspec-core (3.9.1)
       rspec-support (~> 3.9.1)
     rspec-expectations (3.9.0)
@@ -245,11 +246,12 @@ GEM
       rspec-mocks (~> 3.9)
       rspec-support (~> 3.9)
     rspec-support (3.9.2)
-    rubocop (0.79.0)
+    rubocop (0.80.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.7.0.1)
       rainbow (>= 2.2.2, < 4.0)
+      rexml
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 1.7)
     rubocop-performance (1.5.2)
@@ -361,7 +363,7 @@ DEPENDENCIES
   rails (~> 6.0.2, >= 6.0.2.1)
   rails_best_practices
   rspec-rails (~> 4.0.0.beta4)
-  rubocop (~> 0.79.0)
+  rubocop (~> 0.80.0)
   rubocop-performance
   rubocop-rails
   rubocop-rspec
