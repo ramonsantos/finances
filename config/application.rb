@@ -25,6 +25,11 @@ module Finances
     # Don't generate system test files.
     config.generators.system_tests = nil
 
+    # Localization
+    config.i18n.default_locale = :"pt-BR"
+    config.i18n.available_locales = :"pt-BR"
+    config.time_zone = 'Brasilia'
+
     # Test files generator
     config.generators do |generator|
       generator.test_framework(
