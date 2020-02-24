@@ -10,6 +10,7 @@ class ExpensesController < ApplicationController
   def index
     @expenses = Expense.fetch_by_month(current_user, expense_month)
     @current_expense_month = expense_month
+    @total_expense_amount = @expenses.sum(:amount)
   end
 
   # GET /expenses/1

@@ -63,4 +63,6 @@
 
 <br>
 
-<%= link_to 'New Expense', new_expense_path %>
+<div class="col-md-12">
+  <h3>Total de Despesas: <%= format_to_money(@total_expense_amount) %></h3>
+</div>
