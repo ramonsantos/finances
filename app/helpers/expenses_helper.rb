@@ -24,8 +24,8 @@ module ExpensesHelper
     (expense.try(attribute_method) || attribute_list.first.last)
   end
 
-  def month_label(month)
-    current_date = Time.zone.today
+  def month_label(month, current_expense_month)
+    current_date = current_expense_month
 
     case month
     when :prev
@@ -34,6 +34,17 @@ module ExpensesHelper
       build_month_label(current_date)
     when :next
       build_month_label(current_date + 1.month)
+    end
+  end
+
+  def month_param(month, current_expense_month)
+    current_date = current_expense_month
+
+    case month
+    when :prev
+      (current_date - 1.month).to_s
+    when :next
+      (current_date + 1.month).to_s
     end
   end
 

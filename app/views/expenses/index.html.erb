@@ -7,8 +7,21 @@
   </div>
 <% end %>
 
-<div class="col-sm-12">
-  <h1>Despesas - <%= month_label(:current) %> </h1>
+<div class=" col-sm-12 btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+  <h1>Despesas - <%= month_label(:current, @current_expense_month) %> </h1>
+
+  <div class="page-title-buttons">
+    <%= link_to(
+      month_label(:prev, @current_expense_month),
+      expenses_path(expense_month: month_param(:prev, @current_expense_month)),
+      class: 'btn btn-outline-primary btn-sm')
+    %>
+    <%= link_to(
+      month_label(:next, @current_expense_month),
+      expenses_path(expense_month: month_param(:next, @current_expense_month)),
+      class: 'btn btn-outline-primary btn-sm')
+    %>
+  </div>
 </div>
 
 <div class="col-md-12">

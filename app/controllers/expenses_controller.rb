@@ -8,7 +8,8 @@ class ExpensesController < ApplicationController
   # GET /expenses
   # GET /expenses.json
   def index
-    @expenses = Expense.fetch_by_month(current_user, Time.zone.now)
+    @expenses = Expense.fetch_by_month(current_user, expense_month)
+    @current_expense_month = expense_month
   end
 
   # GET /expenses/1
@@ -90,5 +91,11 @@ class ExpensesController < ApplicationController
 
   def fetch_expense_groups
     ExpenseGroup.where(user: current_user).pluck(:name, :id)
+  end
+
+  def expense_month
+    return Time.zone.now if params[:expense_month].blank?
+
+    Date.parse(params[:expense_month])
   end
 end

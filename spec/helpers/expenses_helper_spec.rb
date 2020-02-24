@@ -115,15 +115,29 @@ describe ExpensesHelper, type: :helper do
     after { Timecop.return }
 
     it 'returns prev label' do
-      expect(month_label(:prev)).to eq('Dez/2019')
+      expect(month_label(:prev, Time.zone.today)).to eq('Dez/2019')
     end
 
     it 'returns current label' do
-      expect(month_label(:current)).to eq('Jan/2020')
+      expect(month_label(:current, Time.zone.today)).to eq('Jan/2020')
     end
 
     it 'returns next label' do
-      expect(month_label(:next)).to eq('Fev/2020')
+      expect(month_label(:next, Time.zone.today)).to eq('Fev/2020')
+    end
+  end
+
+  describe '.month_param' do
+    before { Timecop.freeze(2020, 1, 31) }
+
+    after { Timecop.return }
+
+    it 'returns prev date param' do
+      expect(month_param(:prev, Time.zone.today)).to eq('2019-12-31')
+    end
+
+    it 'returns next date param' do
+      expect(month_param(:next, Time.zone.today)).to eq('2020-02-29')
     end
   end
 
