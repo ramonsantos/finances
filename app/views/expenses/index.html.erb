@@ -7,7 +7,7 @@
   </div>
 <% end %>
 
-<div class=" col-sm-12 btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+<div class="col-sm-12 btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
   <h1>Despesas - <%= month_label(:current, @current_expense_month) %> </h1>
 
   <div class="page-title-buttons">
@@ -61,8 +61,8 @@
   </div>
 </div>
 
-<br>
-
-<div class="col-md-12">
+<div class="col-sm-12 btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
   <h3>Total de Despesas: <%= format_to_money(@total_expense_amount) %></h3>
+
+  <%= paginate @expenses %>
 </div>

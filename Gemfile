@@ -8,6 +8,7 @@ ruby '2.7.0'
 gem 'bootsnap', '~> 1.4', '>= 1.4.5', require: false
 gem 'devise'
 gem 'jbuilder', '~> 2.7'
+gem 'kaminari'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 4.3', '>= 4.3.1'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
@@ -47,6 +48,7 @@ group :test do
   gem 'rspec-rails', '~> 4.0.0.beta4'
   gem 'shoulda-matchers', '~> 4.2'
   gem 'simplecov'
+  gem 'simplecov-lcov'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

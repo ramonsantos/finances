@@ -8,9 +8,10 @@ class ExpensesController < ApplicationController
   # GET /expenses
   # GET /expenses.json
   def index
-    @expenses = Expense.fetch_by_month(current_user, expense_month)
+    @expenses = Expense.fetch_by_month(current_user, expense_month).page(params[:page])
     @current_expense_month = expense_month
-    @total_expense_amount = @expenses.sum(:amount)
+
+    @total_expense_amount = Expense.fetch_total_monthly_spend(current_user, expense_month)
   end
 
   # GET /expenses/1

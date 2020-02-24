@@ -45,17 +45,26 @@ describe Expense, type: :model do
   end
 
   describe 'scopes' do
+    before do
+      create(:expense)
+      create(:expense_other_month)
+      create(:expense, amount: 2.42)
+    end
+
     describe '.fetch_by_month' do
       let(:expeses) { described_class.fetch_by_month(User.first, Date.parse('2020-02-21')) }
 
-      before do
-        create(:expense)
-        create(:expense_other_month)
-      end
-
       it 'returns one expense from February' do
-        expect(expeses.count).to eq(1)
+        expect(expeses.count).to eq(2)
         expect(expeses.first.date).to eq(Date.parse('2020-02-15'))
+      end
+    end
+
+    describe '.fetch_total_monthly_spend' do
+      let(:total) { described_class.fetch_total_monthly_spend(User.first, Date.parse('2020-02-21')) }
+
+      it 'returns total  monthly spend' do
+        expect(total).to eq(23.92)
       end
     end
   end
