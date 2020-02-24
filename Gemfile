@@ -47,8 +47,7 @@ group :test do
   gem 'database_cleaner'
   gem 'rspec-rails', '~> 4.0.0.beta4'
   gem 'shoulda-matchers', '~> 4.2'
-  gem 'simplecov'
-  gem 'simplecov-lcov'
+  gem 'simplecov', '~> 0.17.1'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
