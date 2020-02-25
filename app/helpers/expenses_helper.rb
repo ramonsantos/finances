@@ -37,12 +37,14 @@ module ExpensesHelper
     end
   end
 
-  def month_param(month, current_expense_month)
+  def month_param(current_expense_month, month = :current)
     current_date = current_expense_month
 
     case month
     when :prev
       (current_date - 1.month).to_s
+    when :current
+      current_date.to_s
     when :next
       (current_date + 1.month).to_s
     end

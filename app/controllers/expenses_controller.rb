@@ -63,7 +63,7 @@ class ExpensesController < ApplicationController
   def destroy
     @expense.destroy
     respond_to do |format|
-      format.html { redirect_to expenses_url, notice: 'Expense was successfully destroyed.' }
+      format.html { redirect_to expenses_path(expense_month: expense_month), notice: 'Despesa removida.' }
       format.json { head :no_content }
     end
   end
@@ -95,7 +95,7 @@ class ExpensesController < ApplicationController
   end
 
   def expense_month
-    return Time.zone.now if params[:expense_month].blank?
+    return Time.zone.today if params[:expense_month].blank?
 
     Date.parse(params[:expense_month])
   end

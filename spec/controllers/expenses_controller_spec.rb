@@ -5,6 +5,10 @@ require 'rails_helper'
 describe ExpensesController, type: :controller do
   login_user
 
+  let!(:expense) { create(:expense) }
+
+  let!(:expense_other_month) { create(:expense_other_month) }
+
   let(:valid_attributes) do
     attributes_for(:expense)
   end
@@ -116,17 +120,37 @@ describe ExpensesController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    xit 'destroys the requested expense' do
-      expense = Expense.create! valid_attributes
-      expect do
-        delete :destroy, params: { id: expense.to_param }
-      end.to change(Expense, :count).by(-1)
+    before { Timecop.freeze(2020, 2, 20) }
+
+    after { Timecop.return }
+
+    context 'when current month' do
+      let(:params) { { id: expense.id } }
+
+      it 'destroys the requested accept test' do
+        expect do
+          delete(:destroy, params: params)
+        end.to change(Expense, :count).by(-1)
+      end
+
+      it 'shows flash notice' do
+        delete(:destroy, params: params)
+        expect(flash[:notice]).to eq('Despesa removida.')
+      end
+
+      it 'redirects to the accept tests list' do
+        delete(:destroy, params: params)
+        expect(response).to redirect_to(expenses_path(expense_month: '2020-02-20'))
+      end
     end
 
-    xit 'redirects to the expenses list' do
-      expense = Expense.create! valid_attributes
-      delete :destroy, params: { id: expense.to_param }
-      expect(response).to redirect_to(expenses_url)
+    context 'when other month' do
+      let(:params) { { id: expense_other_month.id, expense_month: '2020-03-01' } }
+
+      it 'redirects to the accept tests list' do
+        delete(:destroy, params: params)
+        expect(response).to redirect_to(expenses_path(expense_month: '2020-03-01'))
+      end
     end
   end
 end

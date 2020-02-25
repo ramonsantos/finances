@@ -13,7 +13,7 @@
   <div class="page-title-buttons">
     <%= link_to(
       month_label(:prev, @current_expense_month),
-      expenses_path(expense_month: month_param(:prev, @current_expense_month)),
+      expenses_path(expense_month: month_param(@current_expense_month, :prev)),
       class: 'btn btn-outline-primary btn-sm')
     %>
 
@@ -21,7 +21,7 @@
 
     <%= link_to(
       month_label(:next, @current_expense_month),
-      expenses_path(expense_month: month_param(:next, @current_expense_month)),
+      expenses_path(expense_month: month_param(@current_expense_month, :next)),
       class: 'btn btn-outline-primary btn-sm')
     %>
   </div>
@@ -56,7 +56,7 @@
             <td><%= expense.expense_group.name %></td>
             <td><%= remark_preview(expense.remark) %></td>
             <td class="td-center"><%= link_to 'Editar', edit_expense_path(expense), class: 'btn btn-primary btn-sm' %></td>
-            <td class="td-center"><%= link_to 'Remover', expense, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn btn-danger btn-sm' %></td>
+            <td class="td-center"><%= link_to 'Remover', expense_path(expense, expense_month: month_param(@current_expense_month)), method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn btn-danger btn-sm' %></td>
           </tr>
         <% end %>
       </tbody>

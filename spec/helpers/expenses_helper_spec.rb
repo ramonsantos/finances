@@ -133,11 +133,16 @@ describe ExpensesHelper, type: :helper do
     after { Timecop.return }
 
     it 'returns prev date param' do
-      expect(month_param(:prev, Time.zone.today)).to eq('2019-12-31')
+      expect(month_param(Time.zone.today, :prev)).to eq('2019-12-31')
+    end
+
+    it 'returns current date param' do
+      expect(month_param(Time.zone.today, :current)).to eq('2020-01-31')
+      expect(month_param(Time.zone.today)).to eq('2020-01-31')
     end
 
     it 'returns next date param' do
-      expect(month_param(:next, Time.zone.today)).to eq('2020-02-29')
+      expect(month_param(Time.zone.today, :next)).to eq('2020-02-29')
     end
   end
 

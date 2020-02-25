@@ -15,6 +15,7 @@ FactoryBot.define do
     category { 'food' }
 
     trait :expense_other_month do
+      amount { 11.5 }
       date { '2020-03-01' }
     end
 
