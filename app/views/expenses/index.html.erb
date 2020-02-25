@@ -16,6 +16,9 @@
       expenses_path(expense_month: month_param(:prev, @current_expense_month)),
       class: 'btn btn-outline-primary btn-sm')
     %>
+
+    <button type="button" class="btn btn-success btn-sm">Fechar despesas do mês</button>
+
     <%= link_to(
       month_label(:next, @current_expense_month),
       expenses_path(expense_month: month_param(:next, @current_expense_month)),

@@ -82,6 +82,7 @@ RSpec/ContextWording:
     - validations
     - when
     - with
+    - without
 
 RSpec/ExampleLength:
   Enabled: false
