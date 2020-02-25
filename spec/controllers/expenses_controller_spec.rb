@@ -40,9 +40,8 @@ describe ExpensesController, type: :controller do
   end
 
   describe 'GET #show' do
-    xit 'returns a success response' do
-      expense = Expense.create! valid_attributes
-      get :show, params: { id: expense.to_param }
+    it 'returns a success response' do
+      get(:show, params: { id: expense.to_param })
       expect(response).to be_successful
     end
   end
@@ -50,14 +49,6 @@ describe ExpensesController, type: :controller do
   describe 'GET #new' do
     it 'returns a success response' do
       get(:new)
-      expect(response).to be_successful
-    end
-  end
-
-  describe 'GET #edit' do
-    xit 'returns a success response' do
-      expense = Expense.create! valid_attributes
-      get :edit, params: { id: expense.to_param }
       expect(response).to be_successful
     end
   end
@@ -92,29 +83,38 @@ describe ExpensesController, type: :controller do
 
   describe 'PUT #update' do
     context 'with valid params' do
-      let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
-      end
+      before { Timecop.freeze(2020, 2, 20) }
 
-      xit 'updates the requested expense' do
-        expense = Expense.create! valid_attributes
-        put :update, params: { id: expense.to_param, expense: new_attributes }
+      after { Timecop.return }
+
+      let(:new_attributes) { { description: 'Book 1984' } }
+
+      it 'updates the requested expense' do
+        put(:update, params: { id: expense.to_param, expense: new_attributes })
         expense.reload
-        skip('Add assertions for updated state')
+        expect(expense.description).to eq('Book 1984')
       end
 
-      xit 'redirects to the expense' do
-        expense = Expense.create! valid_attributes
-        put :update, params: { id: expense.to_param, expense: valid_attributes }
-        expect(response).to redirect_to(expense)
+      it 'redirects to the expense' do
+        put(:update, params: { id: expense.to_param, expense: valid_attributes })
+        expect(response).to redirect_to(expenses_path(expense_month: '2020-02-20'))
+      end
+
+      context 'when other month' do
+        let(:params) { { id: expense_other_month.to_param, expense: valid_attributes, expense_month: '2020-03-01' } }
+
+        it 'redirects to the expense' do
+          put(:update, params: params)
+          expect(response).to redirect_to(expenses_path(expense_month: '2020-03-01'))
+        end
       end
     end
 
     context 'with invalid params' do
-      xit "returns a success response (i.e. to display the 'edit' template)" do
-        expense = Expense.create! valid_attributes
-        put :update, params: { id: expense.to_param, expense: invalid_attributes }
-        expect(response).to be_successful
+      it 'does not updates the Expense' do
+        expect do
+          put(:update, params: { id: expense.to_param, expense: invalid_attributes })
+        end.not_to change(Expense, :first)
       end
     end
   end

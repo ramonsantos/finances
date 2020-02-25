@@ -55,7 +55,7 @@
             <td><%= expense.place.name %></td>
             <td><%= expense.expense_group.name %></td>
             <td><%= remark_preview(expense.remark) %></td>
-            <td class="td-center"><%= link_to 'Editar', edit_expense_path(expense), class: 'btn btn-primary btn-sm' %></td>
+            <td class="td-center"><%= link_to 'Editar', expense_path(expense, expense_month: month_param(@current_expense_month)), class: 'btn btn-primary btn-sm' %></td>
             <td class="td-center"><%= link_to 'Remover', expense_path(expense, expense_month: month_param(@current_expense_month)), method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn btn-danger btn-sm' %></td>
           </tr>
         <% end %>

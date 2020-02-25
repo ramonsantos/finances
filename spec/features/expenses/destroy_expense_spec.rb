@@ -24,7 +24,7 @@ feature 'Expenses', type: :feature do
       expect(page).to have_selector('h3', text: 'Total de Despesas: 30,00 R$')
 
       expect do
-        find("a[href=\"/expenses/#{expense.id}?expense_month=2020-02-20\"]").click
+        find("a[href=\"/expenses/#{expense.id}?expense_month=2020-02-20\"]", text: 'Remove').click
       end.to change(Expense, :count).by(-1)
 
       expect(page).to have_content('Despesa removida.')
@@ -32,7 +32,7 @@ feature 'Expenses', type: :feature do
       expect(page).to have_selector('h3', text: 'Total de Despesas: 8,50 R$')
     end
 
-    scenario 'user visits second expenses page and click to remove expense' do
+    scenario 'user visits next month expenses page and click to remove expense' do
       visit(expenses_path(expense_month: '2020-03-31'))
       expect(page).to have_selector('h3', text: 'Total de Despesas: 11,50 R$')
 

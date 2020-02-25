@@ -74,10 +74,11 @@
     <%= form.text_area :remark, class: 'form-control' %>
   </div>
 
+  <%= hidden_field_tag(:expense_month, @current_expense_month) %>
+
   <div class="actions col-md-2">
     <%= form.submit('Salvar', class: 'btn btn-primary') %>
   </div>
 <% end %>
 
-
- <%= javascript_pack_tag 'expenses' %>
+<%= javascript_pack_tag 'expenses' %>

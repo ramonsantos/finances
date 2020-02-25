@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class ExpensesController < ApplicationController
-  before_action :set_expense,    only: [:edit, :destroy, :show, :update]
-  before_action :places,         only: [:edit, :new]
-  before_action :expense_groups, only: [:edit, :new]
+  before_action :set_expense,    only: [:destroy, :show, :update]
+  before_action :places,         only: [:new, :show]
+  before_action :expense_groups, only: [:new, :show]
 
   # GET /expenses
   # GET /expenses.json
@@ -16,15 +16,12 @@ class ExpensesController < ApplicationController
   # GET /expenses/1
   # GET /expenses/1.json
   def show
+    @current_expense_month = expense_month
   end
 
   # GET /expenses/new
   def new
     @expense = Expense.new
-  end
-
-  # GET /expenses/1/edit
-  def edit
   end
 
   # POST /expenses
@@ -49,10 +46,10 @@ class ExpensesController < ApplicationController
   def update
     respond_to do |format|
       if @expense.update(expense_params)
-        format.html { redirect_to expenses_path, notice: 'Expense was successfully updated.' }
+        format.html { redirect_to expenses_path(expense_month: expense_month), notice: 'Despesa atualizada.' }
         format.json { render :show, status: :ok, location: @expense }
       else
-        format.html { render :edit }
+        format.html { render :show }
         format.json { render json: @expense.errors, status: :unprocessable_entity }
       end
     end
@@ -71,7 +68,7 @@ class ExpensesController < ApplicationController
   private
 
   def set_expense
-    @expense = Expense.find(params[:id])
+    @expense = Expense.find_by(id: params[:id], user: current_user)
   end
 
   def expense_params
