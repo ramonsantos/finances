@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/ramonsantos/finances.svg?branch=master)](https://travis-ci.org/ramonsantos/finances)
 [![Maintainability](https://api.codeclimate.com/v1/badges/db90ecff0ae3a8718b6d/maintainability)](https://codeclimate.com/github/ramonsantos/finances/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/db90ecff0ae3a8718b6d/test_coverage)](https://codeclimate.com/github/ramonsantos/finances/test_coverage)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
