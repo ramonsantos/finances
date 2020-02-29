@@ -42,24 +42,33 @@ class Expense < ApplicationRecord
   class << self
     def group_for_report(user, date)
       fetch_expenses_grouped_by_groups(user, date).map do |name, expenses|
+        total_expense_amount = total(expenses)
+
         {
           expense_group_name: name,
-          total: total(expenses),
-          categories: categories_data(expenses.group_by(&:category))
+          total: total_expense_amount,
+          categories: categories_data(expenses.group_by(&:category), total_expense_amount)
         }
       end
     end
 
     private
 
-    def categories_data(expenses_grouped_by_catogory)
+    def categories_data(expenses_grouped_by_catogory, total_expense_amount)
       expenses_grouped_by_catogory.map do |catg_name, expenses|
-        [catg_name, total(expenses)]
+        {
+          name: categories[catg_name],
+          percent_total: percent(total_expense_amount, total(expenses))
+        }
       end
     end
 
     def total(expenses)
       expenses.inject(0) { |sum, e| sum + e.amount }
+    end
+
+    def percent(total, portion)
+      ((portion / total) * 100).round(2)
     end
   end
 end

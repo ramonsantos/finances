@@ -34,6 +34,20 @@ describe ExpensesHelper, type: :helper do
     end
   end
 
+  describe '.formated_percent' do
+    context 'when value blank' do
+      it 'returns blank value' do
+        expect(helper.formated_percent(nil)).to eq('0,00 %')
+      end
+    end
+
+    context 'when value present' do
+      it 'returns formated value' do
+        expect(helper.formated_percent(1.1)).to eq('1,10 %')
+      end
+    end
+  end
+
   describe '.expense_date' do
     context 'when expense with date' do
       it 'returns expense date' do

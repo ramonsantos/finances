@@ -87,16 +87,24 @@ describe Expense, type: :model do
 
     let(:expected_result) do
       [
-        { categories: [['food', 64.56]], expense_group_name: 'Trabalho', total: 64.56 },
-        { categories: [['health', 13.99], ['food', 2.42]], expense_group_name: 'Casa', total: 16.41 }
+        {
+          expense_group_name: 'Trabalho',
+          total: 64.56,
+          categories: [{ name: 'Alimentação', percent_total: 100.0 }]
+        },
+        {
+          expense_group_name: 'Casa',
+          total: 91.44,
+          categories: [{ name: 'Saúde', percent_total: 93.45 }, { name: 'Alimentação', percent_total: 6.55 }]
+        }
       ]
     end
 
     before do
       create(:expense, expense_group_id: expense_group_work.id, amount: 12.56)
       create(:expense, expense_group_id: expense_group_work.id, amount: 52.0)
-      create(:expense, expense_group_id: expense_group_home.id, amount: 13.99, category: 'health')
-      create(:expense, expense_group_id: expense_group_home.id, amount: 2.42)
+      create(:expense, expense_group_id: expense_group_home.id, amount: 85.45, category: 'health')
+      create(:expense, expense_group_id: expense_group_home.id, amount: 5.99)
     end
 
     it { expect(result).to eq(expected_result) }

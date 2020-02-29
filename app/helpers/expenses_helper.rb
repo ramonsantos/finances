@@ -16,6 +16,12 @@ module ExpensesHelper
     format('R$ %<amount>.2f', amount: amount).tr('.', ',')
   end
 
+  def formated_percent(value)
+    return '0,00 %' if value.blank?
+
+    "#{format('%<amount>.2f', amount: value).tr('.', ',')} %"
+  end
+
   def expense_date(expense)
     (expense.date || Time.zone.today).to_s
   end

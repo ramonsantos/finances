@@ -10,5 +10,5 @@ SimpleCov.start 'rails' do
   ]
 end
 
-SimpleCov::MINIMUM_COVERAGE = 75
+SimpleCov::MINIMUM_COVERAGE = 80
 SimpleCov.minimum_coverage SimpleCov::MINIMUM_COVERAGE
