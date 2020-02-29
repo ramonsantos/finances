@@ -13,7 +13,7 @@ feature 'Expenses', type: :feature do
 
   after { Timecop.return }
 
-  feature 'create expense' do
+  feature 'list expense' do
     context 'without expenses' do
       before { visit(expenses_path) }
 
@@ -34,6 +34,12 @@ feature 'Expenses', type: :feature do
 
         expect(page).to have_selector('h3', text: 'Total de Despesas: 0,00 R$')
         expect(page).not_to have_selector(:link_or_button, '1')
+      end
+
+      scenario 'user visits expenses page and click on "Relatório de Despesas"' do
+        find(:xpath, '/html/body/main/div[1]/div/a[2]').click
+
+        expect(page).to have_selector(:link_or_button, 'Lista de Despesas')
       end
     end
 
@@ -75,6 +81,13 @@ feature 'Expenses', type: :feature do
 
         expect(page).to have_selector('h3', text: 'Total de Despesas: 21,50 R$')
       end
+
+      scenario 'user visits expenses page and click on "Relatório de Despesas"' do
+        find(:xpath, '/html/body/main/div[1]/div/a[2]').click
+
+        expect(page).to have_selector(:link_or_button, 'Lista de Despesas')
+        expect(page).to have_selector('h1', text: 'Despesas - Jan/2020')
+      end
     end
 
     context 'with one expense in next month' do
@@ -93,6 +106,13 @@ feature 'Expenses', type: :feature do
         expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[8]').text).to eq('12345678901234567...')
 
         expect(page).to have_selector('h3', text: 'Total de Despesas: 21,50 R$')
+      end
+
+      scenario 'user visits expenses page and click on "Relatório de Despesas"' do
+        find(:xpath, '/html/body/main/div[1]/div/a[2]').click
+
+        expect(page).to have_selector(:link_or_button, 'Lista de Despesas')
+        expect(page).to have_selector('h1', text: 'Despesas - Mar/2020')
       end
     end
 
