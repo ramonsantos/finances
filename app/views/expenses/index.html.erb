@@ -10,7 +10,9 @@
 <%= render(
   'expenses_title',
   current_expense_month: @current_expense_month,
-  switch_page_to: 'Relatório de Despesas', path: :report_expenses_path)
+  switch_page_to: 'Relatório de Despesas',
+  switch_page_path: :report_expenses_path,
+  switch_month_path: :expenses_path)
 %>
 
 <div class="col-md-12">

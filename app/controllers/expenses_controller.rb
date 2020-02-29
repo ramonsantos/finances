@@ -16,6 +16,7 @@ class ExpensesController < ApplicationController
   # GET /expenses/report
   def report
     @current_expense_month = expense_month
+    @expenses_grouped_data = Expense.group_for_report(current_user, expense_month)
   end
 
   # GET /expenses/1

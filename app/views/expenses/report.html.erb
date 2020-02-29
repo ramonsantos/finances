@@ -1,9 +1,36 @@
 <%= render(
   'expenses_title',
   current_expense_month: @current_expense_month,
-  switch_page_to: 'Lista de Despesas', path: :expenses_path)
+  switch_page_to: 'Lista de Despesas',
+  switch_page_path: :expenses_path,
+  switch_month_path: :report_expenses_path)
 %>
 
 <div class="col-md-12">
+  <div class="card-deck">
+    <% @expenses_grouped_data.each do |group| %>
+      <div class="card">
+        <div class="card-header text-white bg-primary">
+          <%= group[:expense_group_name] %>
+        </div>
 
+        <div class="card-body">
+          <% group[:categories].each do |category| %>
+            <%= category[:name] %>
+
+            <div class="progress progress-height">
+              <div class="progress-bar" role="progressbar" style="width: <%= category[:percent_total] %>%;"
+                   aria-valuenow="<%= category[:percent_total] %>" aria-valuemin="0" aria-valuemax="100">
+                <%= category[:percent_total] %>%
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="card-footer td-right">
+          Total <%= format_to_money(group[:total]) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>

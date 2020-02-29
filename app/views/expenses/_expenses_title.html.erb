@@ -4,19 +4,19 @@
   <div class="page-title-buttons">
     <%= link_to(
       month_label(:prev, current_expense_month),
-      expenses_path(expense_month: month_param(current_expense_month, :prev)),
+      send(switch_month_path, { expense_month: month_param(current_expense_month, :prev) } ),
       class: 'btn btn-outline-primary btn-sm')
     %>
 
     <%= link_to(
       switch_page_to,
-      send(path, { expense_month: month_param(current_expense_month)} ),
+      send(switch_page_path, { expense_month: month_param(current_expense_month) } ),
       class: 'btn btn-success btn-sm')
     %>
 
     <%= link_to(
       month_label(:next, current_expense_month),
-      expenses_path(expense_month: month_param(current_expense_month, :next)),
+      send(switch_month_path, { expense_month: month_param(current_expense_month, :next) } ),
       class: 'btn btn-outline-primary btn-sm')
     %>
   </div>
