@@ -3,6 +3,9 @@
 require 'rails_helper'
 
 describe Expense, type: :model do
+  let!(:expense_group_work) { create(:expense_group) }
+  let!(:expense_group_home) { create(:expense_group_home) }
+
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:place) }
@@ -67,5 +70,35 @@ describe Expense, type: :model do
         expect(total).to eq(23.92)
       end
     end
+
+    describe '.fetch_expenses_grouped_by_groups' do
+      let!(:expense_home_1) { create(:expense, expense_group_id: expense_group_home.id) }
+      let!(:expense_home_2) { create(:expense, expense_group_id: expense_group_home.id) }
+      let(:result) { described_class.fetch_expenses_grouped_by_groups(User.first, Date.parse('2020-02-21')) }
+
+      it { expect(result.count).to eq(2) }
+      it { expect(result['Trabalho'].count).to eq(2) }
+      it { expect(result['Casa']).to eq([expense_home_1, expense_home_2]) }
+    end
+  end
+
+  describe '.group_for_report' do
+    let(:result) { described_class.group_for_report(User.first, Date.parse('2020-02-21')) }
+
+    let(:expected_result) do
+      [
+        { categories: [['food', 64.56]], expense_group_name: 'Trabalho', total: 64.56 },
+        { categories: [['health', 13.99], ['food', 2.42]], expense_group_name: 'Casa', total: 16.41 }
+      ]
+    end
+
+    before do
+      create(:expense, expense_group_id: expense_group_work.id, amount: 12.56)
+      create(:expense, expense_group_id: expense_group_work.id, amount: 52.0)
+      create(:expense, expense_group_id: expense_group_home.id, amount: 13.99, category: 'health')
+      create(:expense, expense_group_id: expense_group_home.id, amount: 2.42)
+    end
+
+    it { expect(result).to eq(expected_result) }
   end
 end

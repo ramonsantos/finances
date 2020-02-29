@@ -25,12 +25,41 @@ class Expense < ApplicationRecord
     education: 'Educação'
   }
 
-  scope :fetch_by_month, lambda { |current_user, date|
-    where(user: current_user, date: date.beginning_of_month..date.end_of_month)
+  scope :fetch_by_month, lambda { |user, date|
+    where(user: user, date: date.beginning_of_month..date.end_of_month)
       .order(:date).includes(:place, :expense_group)
   }
 
-  scope :fetch_total_monthly_spend, lambda { |current_user, date|
-    where(user: current_user, date: date.beginning_of_month..date.end_of_month).sum(:amount)
+  scope :fetch_total_monthly_spend, lambda { |user, date|
+    where(user: user, date: date.beginning_of_month..date.end_of_month).sum(:amount)
   }
+
+  scope :fetch_expenses_grouped_by_groups, lambda { |user, date|
+    where(user: user, date: date.beginning_of_month..date.end_of_month)
+      .includes(:expense_group).group_by { |expense| expense.expense_group.name }
+  }
+
+  class << self
+    def group_for_report(user, date)
+      fetch_expenses_grouped_by_groups(user, date).map do |name, expenses|
+        {
+          expense_group_name: name,
+          total: total(expenses),
+          categories: categories_data(expenses.group_by(&:category))
+        }
+      end
+    end
+
+    private
+
+    def categories_data(expenses_grouped_by_catogory)
+      expenses_grouped_by_catogory.map do |catg_name, expenses|
+        [catg_name, total(expenses)]
+      end
+    end
+
+    def total(expenses)
+      expenses.inject(0) { |sum, e| sum + e.amount }
+    end
+  end
 end
