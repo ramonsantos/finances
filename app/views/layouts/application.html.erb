@@ -34,10 +34,9 @@
                   <%= link_to 'Criar Despesa', new_expense_path, class: 'dropdown-item' %>
 
                   <div class="dropdown-divider"></div>
+                    <%= link_to 'Listar Despesas', expenses_path, class: 'dropdown-item' %>
 
-                  <a class="dropdown-item" href="#">Another action</a>
-
-                  <a class="dropdown-item" href="#">Something else here</a>
+                    <%= link_to 'Relatório de Despesas', report_expenses_path, class: 'dropdown-item' %>
                 </div>
               </li>
             </ul>

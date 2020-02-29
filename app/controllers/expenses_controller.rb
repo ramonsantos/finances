@@ -13,6 +13,11 @@ class ExpensesController < ApplicationController
     @total_expense_amount = Expense.fetch_total_monthly_spend(current_user, expense_month)
   end
 
+  # GET /expenses/report
+  def report
+    @current_expense_month = expense_month
+  end
+
   # GET /expenses/1
   # GET /expenses/1.json
   def show

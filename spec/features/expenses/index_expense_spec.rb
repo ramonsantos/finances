@@ -20,7 +20,7 @@ feature 'Expenses', type: :feature do
       scenario 'user visits expenses page' do
         expect(page).to have_selector('h1', text: 'Despesas - Fev/2020')
         expect(page).to have_selector(:link_or_button, 'Jan/2020')
-        expect(page).to have_selector(:link_or_button, 'Fechar despesas do mês')
+        expect(page).to have_selector(:link_or_button, 'Relatório de Despesas')
         expect(page).to have_selector(:link_or_button, 'Mar/2020')
 
         expect(page).to have_selector('th', text: 'Descrição')
@@ -67,7 +67,7 @@ feature 'Expenses', type: :feature do
       scenario 'user visits expenses page and click to previous month link' do
         expect(page).to have_selector('h1', text: 'Despesas - Jan/2020')
         expect(page).to have_selector(:link_or_button, 'Dez/2019')
-        expect(page).to have_selector(:link_or_button, 'Fechar despesas do mês')
+        expect(page).to have_selector(:link_or_button, 'Relatório de Despesas')
         expect(page).to have_selector(:link_or_button, 'Fev/2020')
 
         expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[3]').text).to eq('25/01/2020')
@@ -86,7 +86,7 @@ feature 'Expenses', type: :feature do
       scenario 'user visits next month expenses page' do
         expect(page).to have_selector('h1', text: 'Despesas - Mar/2020')
         expect(page).to have_selector(:link_or_button, 'Fev/2020')
-        expect(page).to have_selector(:link_or_button, 'Fechar despesas do mês')
+        expect(page).to have_selector(:link_or_button, 'Relatório de Despesas')
         expect(page).to have_selector(:link_or_button, 'Abr/2020')
 
         expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[3]').text).to eq('01/03/2020')
