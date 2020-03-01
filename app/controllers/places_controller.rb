@@ -44,12 +44,14 @@ class PlacesController < ApplicationController
     params.require(:place).permit(:name)
   end
 
+  def fetch_place
+    Place.find(params[:id])
+  end
+
   def destroy_place
-    place = Place.find(params[:id])
-
-    return false if place.expenses.present?
-
-    place.destroy
+    fetch_place.destroy
     true
+  rescue
+    false
   end
 end

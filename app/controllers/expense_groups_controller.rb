@@ -44,12 +44,14 @@ class ExpenseGroupsController < ApplicationController
     params.require(:expense_group).permit(:name)
   end
 
+  def fetch_expense_group
+    ExpenseGroup.find(params[:id])
+  end
+
   def destroy_expense_group
-    expense_group = ExpenseGroup.find(params[:id])
-
-    return false if expense_group.expenses.present?
-
-    expense_group.destroy
+    fetch_expense_group.destroy
     true
+  rescue
+    false
   end
 end
