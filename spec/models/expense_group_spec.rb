@@ -9,7 +9,7 @@ describe ExpenseGroup, type: :model do
     end
 
     context 'when have_many' do
-      it { is_expected.to have_many(:expenses).dependent(:delete_all) }
+      it { is_expected.to have_many(:expenses).dependent(:restrict_with_exception) }
     end
   end
 

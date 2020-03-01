@@ -5,9 +5,7 @@ require 'rails_helper'
 feature 'Places', type: :feature do
   let!(:user) { create(:user) }
 
-  before do
-    login_as(user)
-  end
+  before { login_as(user) }
 
   feature 'list places' do
     context 'without places ' do

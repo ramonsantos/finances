@@ -1,22 +1,11 @@
 <%= form_with(model: expense_group, local: true) do |form| %>
-  <% if expense_group.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(expense_group.errors.count, "error") %> prohibited this expense_group from being saved:</h2>
-
-      <ul>
-        <% expense_group.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+  <div class="inline-form">
+    <div class="field">
+      <%= form.text_field :name, required: true, class: 'form-control' %>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+    <div class="actions">
+      <%= form.submit('Salvar', class: 'btn btn-primary') %>
+    </div>
   </div>
 <% end %>

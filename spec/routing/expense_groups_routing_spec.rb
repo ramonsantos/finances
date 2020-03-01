@@ -8,10 +8,6 @@ RSpec.describe ExpenseGroupsController, type: :routing do
       expect(get: '/expense_groups').to route_to('expense_groups#index')
     end
 
-    it 'routes to #new' do
-      expect(get: '/expense_groups/new').to route_to('expense_groups#new')
-    end
-
     it 'routes to #create' do
       expect(post: '/expense_groups').to route_to('expense_groups#create')
     end

@@ -1,25 +1,40 @@
-<p id="notice"><%= notice %></p>
+<section class="form-section">
+  <% if notice %>
+    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+      <%= notice %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <% end %>
 
-<h1>Expense Groups</h1>
+  <% if @expense_groups.present? %>
+    <h1>Grupos de Despesa</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Grupo</th>
+            <th scope="col" colspan="3"></th>
+          </tr>
+        </thead>
 
-  <tbody>
-    <% @expense_groups.each do |expense_group| %>
-      <tr>
-        <td><%= expense_group.name %></td>
-        <td><%= link_to 'Destroy', expense_group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+        <tbody>
+          <% @expense_groups.each do |expense_group| %>
+            <tr>
+              <td scope="row"><%= expense_group.name %></td>
+              <td class="td-center"><%= link_to 'Remover', expense_group, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn btn-danger btn-sm' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
 
-<br>
+    <br>
+  <% end %>
 
-<%= link_to 'New Expense Group', new_expense_group_path %>
+  <h1>Adicionar Grupo de Despesa</h1>
+
+  <%= render 'form', expense_group: @expense_group %>
+</section>
