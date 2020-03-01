@@ -47,13 +47,13 @@ feature 'Expenses', type: :feature do
       scenario 'user visits report expense page' do
         expect(page).to have_selector('div', text: 'Trabalho')
         expect(page).to have_selector('div', text: 'Alimentação')
-        expect(page).to have_selector('div', text: '100.0%')
+        expect(page).to have_selector('div', text: '100,00%')
         expect(page).to have_selector('div', text: 'Total 64,56 R$')
 
         expect(page).to have_selector('div', text: 'Casa')
         expect(page).to have_selector('div', text: 'Saúde')
-        expect(page).to have_selector('div', text: '93.45%')
-        expect(page).to have_selector('div', text: '6.55%')
+        expect(page).to have_selector('div', text: '93,45%')
+        expect(page).to have_selector('div', text: '6,55%')
         expect(page).to have_selector('div', text: 'Total 91,44 R$')
       end
 
@@ -68,7 +68,7 @@ feature 'Expenses', type: :feature do
         expect(page).to have_selector(:link_or_button, 'Fev/2020')
         expect(page).to have_selector('div', text: 'Trabalho')
         expect(page).to have_selector('div', text: 'Alimentação')
-        expect(page).to have_selector('div', text: '100.0%')
+        expect(page).to have_selector('div', text: '100,00%')
         expect(page).to have_selector('div', text: 'Total 21,50 R$')
       end
 
@@ -91,7 +91,7 @@ feature 'Expenses', type: :feature do
         expect(page).to have_selector(:link_or_button, 'Abr/2020')
         expect(page).to have_selector('div', text: 'Casa')
         expect(page).to have_selector('div', text: 'Alimentação')
-        expect(page).to have_selector('div', text: '100.0%')
+        expect(page).to have_selector('div', text: '100,00%')
         expect(page).to have_selector('div', text: 'Total 11,50 R$')
       end
 

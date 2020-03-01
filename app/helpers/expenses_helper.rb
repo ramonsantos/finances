@@ -17,9 +17,7 @@ module ExpensesHelper
   end
 
   def formated_percent(value)
-    return '0,00 %' if value.blank?
-
-    "#{format('%<amount>.2f', amount: value).tr('.', ',')} %"
+    number_with_precision((value || 0.0).round(2), precision: 2)
   end
 
   def expense_date(expense)
