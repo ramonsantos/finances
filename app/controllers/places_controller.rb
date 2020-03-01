@@ -5,25 +5,20 @@ class PlacesController < ApplicationController
   # GET /places.json
   def index
     @places = Place.where(user: current_user)
-  end
-
-  # GET /places/new
-  def new
-    @place = Place.new
+    @place  = Place.new
   end
 
   # POST /places
   # POST /places.json
   def create
-    @place = Place.new(place_params)
-    @place.user = current_user
+    @place = Place.new(place_params.merge!(user: current_user))
 
     respond_to do |format|
       if @place.save
-        format.html { redirect_to @place, notice: 'Place was successfully created.' }
-        format.json { render :show, status: :created, location: @place }
+        format.html { redirect_to places_path, notice: 'Local adicionado.' }
+        format.json { render :index, status: :created }
       else
-        format.html { render :new }
+        format.html { render :index }
         format.json { render json: @place.errors, status: :unprocessable_entity }
       end
     end
@@ -32,11 +27,14 @@ class PlacesController < ApplicationController
   # DELETE /places/1
   # DELETE /places/1.json
   def destroy
-    Place.find(params[:id]).destroy
-
     respond_to do |format|
-      format.html { redirect_to places_url, notice: 'Place was successfully destroyed.' }
-      format.json { head :no_content }
+      if destroy_place
+        format.html { redirect_to places_path, notice: 'Local removido.' }
+        format.json { render :index, status: :created }
+      else
+        format.html { redirect_to places_path, notice: 'Ocorreu um erro ao remover o local.' }
+        format.json { render json: { error: 'Ocorreu um erro ao remover o local.' }, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -44,5 +42,14 @@ class PlacesController < ApplicationController
 
   def place_params
     params.require(:place).permit(:name)
+  end
+
+  def destroy_place
+    place = Place.find(params[:id])
+
+    return false if place.expenses.present?
+
+    place.destroy
+    true
   end
 end

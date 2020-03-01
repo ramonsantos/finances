@@ -8,10 +8,6 @@ RSpec.describe PlacesController, type: :routing do
       expect(get: '/places').to route_to('places#index')
     end
 
-    it 'routes to #new' do
-      expect(get: '/places/new').to route_to('places#new')
-    end
-
     it 'routes to #create' do
       expect(post: '/places').to route_to('places#create')
     end

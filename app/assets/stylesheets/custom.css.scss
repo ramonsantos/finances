@@ -1,6 +1,6 @@
 @import 'bootstrap/dist/css/bootstrap';
 
-.expense-form-section {
+.form-section {
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
@@ -34,4 +34,19 @@
 
 .progress-height {
   height: 25px
+}
+
+.inline-form {
+  .field {
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  input {
+    margin-top: -2.5px
+  }
+
+  .actions {
+    display: inline
+  }
 }

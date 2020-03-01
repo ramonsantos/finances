@@ -12,5 +12,5 @@ Rails.application.routes.draw do
   end
 
   resources :expense_groups, except: [:edit, :update, :show]
-  resources :places, except: [:edit, :update, :show]
+  resources :places, only: [:create, :destroy, :index]
 end

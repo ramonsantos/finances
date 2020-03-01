@@ -4,7 +4,7 @@ class ExpenseGroupsController < ApplicationController
   # GET /expense_groups
   # GET /expense_groups.json
   def index
-    @expense_groups = ExpenseGroup..where(user: current_user)
+    @expense_groups = ExpenseGroup.where(user: current_user)
   end
 
   # GET /expense_groups/new
