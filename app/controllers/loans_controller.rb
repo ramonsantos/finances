@@ -22,11 +22,11 @@ class LoansController < ApplicationController
   # POST /loans
   # POST /loans.json
   def create
-    @loan = Loan.new(loan_params)
+    @loan = Loan.new(loan_params.merge!(user: current_user))
 
     respond_to do |format|
       if @loan.save
-        format.html { redirect_to @loan, notice: 'Loan was successfully created.' }
+        format.html { redirect_to loans_path, notice: 'Empréstimo adicionado.' }
         format.json { render :show, status: :created, location: @loan }
       else
         format.html { render :new }

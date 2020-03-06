@@ -5,35 +5,6 @@ require 'rails_helper'
 describe ExpensesHelper, type: :helper do
   let(:expense) { create(:expense) }
 
-  describe '.only_numbers_script' do
-    it 'returns script' do
-      expect(helper.only_numbers_script).to eq("this.value=this.value.replace(/[^0-9]/g,'');")
-    end
-  end
-
-  describe '.normalize_amount' do
-    it 'returns script' do
-      expect(helper.normalize_amount).to eq(
-        'var expenseAmountElement = document.getElementById("expense_amount");' \
-        'expenseAmountElement.value = expenseAmountElement.value.replace(/[R][$][ ]/, "").replace(",", ".")'
-      )
-    end
-  end
-
-  describe '.formated_amount' do
-    context 'when amount blank' do
-      it 'returns blank value' do
-        expect(helper.formated_amount(nil)).to eq('')
-      end
-    end
-
-    context 'when amount present' do
-      it 'returns formated value' do
-        expect(helper.formated_amount(1.1)).to eq('R$ 1,10')
-      end
-    end
-  end
-
   describe '.formated_percent' do
     context 'when value blank' do
       it 'returns blank value' do
@@ -44,27 +15,6 @@ describe ExpensesHelper, type: :helper do
     context 'when value present' do
       it 'returns formated value' do
         expect(helper.formated_percent(1.1)).to eq('1,10')
-      end
-    end
-  end
-
-  describe '.expense_date' do
-    context 'when expense with date' do
-      it 'returns expense date' do
-        expect(expense_date(expense)).to eq('2020-02-15')
-      end
-    end
-
-    context 'when expense without date' do
-      before do
-        Timecop.freeze(2020, 2, 20)
-        expense.date = nil
-      end
-
-      after { Timecop.return }
-
-      it 'returns current date' do
-        expect(expense_date(expense)).to eq('2020-02-20')
       end
     end
   end

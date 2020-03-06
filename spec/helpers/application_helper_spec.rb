@@ -3,6 +3,44 @@
 require 'rails_helper'
 
 describe ApplicationHelper, type: :helper do
+  describe '.only_numbers_script' do
+    it 'returns script' do
+      expect(helper.only_numbers_script).to eq("this.value=this.value.replace(/[^0-9]/g,'');")
+    end
+  end
+
+  describe '.formated_float_value' do
+    context 'when value blank' do
+      it 'returns blank value' do
+        expect(helper.formated_float_value(nil)).to eq('')
+      end
+    end
+
+    context 'when value present' do
+      it 'returns formated value' do
+        expect(helper.formated_float_value(1.1)).to eq('R$ 1,10')
+      end
+    end
+  end
+
+  describe '.date_field' do
+    context 'with present ' do
+      it 'returns date' do
+        expect(date_field(Date.parse('2020-02-15'))).to eq('2020-02-15')
+      end
+    end
+
+    context 'without date' do
+      before { Timecop.freeze(2020, 2, 20) }
+
+      after { Timecop.return }
+
+      it 'returns current date' do
+        expect(date_field(nil)).to eq('2020-02-20')
+      end
+    end
+  end
+
   describe '.current_year' do
     before { Timecop.freeze(2019, 6, 6) }
 
@@ -10,6 +48,26 @@ describe ApplicationHelper, type: :helper do
 
     it 'returns current year' do
       expect(current_year).to eq('2019')
+    end
+  end
+
+  describe '.normalize_float_value' do
+    it 'returns script' do
+      expect(helper.normalize_float_value('expense_amount')).to eq(
+        'var expenseAmountElement = document.getElementById("expense_amount");' \
+        'expenseAmountElement.value = expenseAmountElement.value.replace(/[R][$][ ]/, "").replace(",", ".");'
+      )
+    end
+  end
+
+  describe '.normalize_float_values' do
+    it 'returns script' do
+      expect(helper.normalize_float_values(['borrowed_amount', 'received_amount'])).to eq(
+        'var borrowedAmountElement = document.getElementById("borrowed_amount");' \
+        'borrowedAmountElement.value = borrowedAmountElement.value.replace(/[R][$][ ]/, "").replace(",", ".");' \
+        'var receivedAmountElement = document.getElementById("received_amount");' \
+        'receivedAmountElement.value = receivedAmountElement.value.replace(/[R][$][ ]/, "").replace(",", ".");'
+      )
     end
   end
 end
