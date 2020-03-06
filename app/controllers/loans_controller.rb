@@ -68,6 +68,6 @@ class LoansController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def loan_params
-    params.require(:loan).permit(:description, :loan_date, :estimated_receipt_at, :received_at, :borrowed_amount, :expected_amount_to_receive, :person, :gain)
+    params.require(:loan).permit(:description, :loan_date, :estimated_receipt_at, :received_at, :borrowed_amount, :expected_amount_to_receive, :person, :received_amount)
   end
 end

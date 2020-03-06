@@ -12,7 +12,7 @@
       <th>Borrowed amount</th>
       <th>Expected amount to receive</th>
       <th>Person</th>
-      <th>Gain</th>
+      <th>Received Amount</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -27,7 +27,7 @@
         <td><%= loan.borrowed_amount %></td>
         <td><%= loan.expected_amount_to_receive %></td>
         <td><%= loan.person %></td>
-        <td><%= loan.gain %></td>
+        <td><%= loan.received_amount %></td>
         <td><%= link_to 'Show', loan %></td>
         <td><%= link_to 'Edit', edit_loan_path(loan) %></td>
         <td><%= link_to 'Destroy', loan, method: :delete, data: { confirm: 'Are you sure?' } %></td>

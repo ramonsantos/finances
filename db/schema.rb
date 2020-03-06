@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_06_185403) do
+ActiveRecord::Schema.define(version: 2020_03_06_194607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,7 +50,9 @@ ActiveRecord::Schema.define(version: 2020_03_06_185403) do
     t.text "person_ciphertext"
     t.text "borrowed_amount_ciphertext"
     t.text "expected_amount_to_receive_ciphertext"
-    t.text "gain_ciphertext"
+    t.text "received_amount_ciphertext"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_loans_on_user_id"
   end
 
   create_table "places", force: :cascade do |t|
@@ -77,5 +79,6 @@ ActiveRecord::Schema.define(version: 2020_03_06_185403) do
   add_foreign_key "expenses", "expense_groups"
   add_foreign_key "expenses", "places"
   add_foreign_key "expenses", "users"
+  add_foreign_key "loans", "users"
   add_foreign_key "places", "users"
 end
