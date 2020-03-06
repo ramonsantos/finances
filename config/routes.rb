@@ -5,12 +5,15 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { sessions: 'sessions' }
 
-  resources :expenses, except: [:edit] do
+  resources :expenses do
     collection do
       get :report
     end
   end
 
+  resources :loans, except: [:edit]
+
   resources :expense_groups, only: [:create, :destroy, :index]
+
   resources :places, only: [:create, :destroy, :index]
 end

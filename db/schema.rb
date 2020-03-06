@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_06_161928) do
+ActiveRecord::Schema.define(version: 2020_03_06_185403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,19 @@ ActiveRecord::Schema.define(version: 2020_03_06_161928) do
     t.index ["expense_group_id"], name: "index_expenses_on_expense_group_id"
     t.index ["place_id"], name: "index_expenses_on_place_id"
     t.index ["user_id"], name: "index_expenses_on_user_id"
+  end
+
+  create_table "loans", force: :cascade do |t|
+    t.date "loan_date"
+    t.date "estimated_receipt_at"
+    t.date "received_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.text "description_ciphertext"
+    t.text "person_ciphertext"
+    t.text "borrowed_amount_ciphertext"
+    t.text "expected_amount_to_receive_ciphertext"
+    t.text "gain_ciphertext"
   end
 
   create_table "places", force: :cascade do |t|
