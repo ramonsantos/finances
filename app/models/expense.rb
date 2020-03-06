@@ -25,13 +25,12 @@ class Expense < ApplicationRecord
     education: 'Educação'
   }
 
+  encrypts :description
+  encrypts :amount, type: :float
+
   scope :fetch_by_month, lambda { |user, date|
     where(user: user, date: date.beginning_of_month..date.end_of_month)
       .order(:date).includes(:place, :expense_group)
-  }
-
-  scope :fetch_total_monthly_spend, lambda { |user, date|
-    where(user: user, date: date.beginning_of_month..date.end_of_month).sum(:amount)
   }
 
   scope :fetch_expenses_grouped_by_groups, lambda { |user, date|
@@ -40,6 +39,12 @@ class Expense < ApplicationRecord
   }
 
   class << self
+    def fetch_total_monthly_spend(user, date)
+      Expense.where(user: user, date: date.beginning_of_month..date.end_of_month).reduce(0) do |sum, element|
+        sum + element.amount
+      end
+    end
+
     def group_for_report(user, date)
       fetch_expenses_grouped_by_groups(user, date).map do |name, expenses|
         total_expense_amount = total(expenses)

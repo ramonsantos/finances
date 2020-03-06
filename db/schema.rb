@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_16_160035) do
+ActiveRecord::Schema.define(version: 2020_03_06_161928) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,17 +24,17 @@ ActiveRecord::Schema.define(version: 2020_02_16_160035) do
   end
 
   create_table "expenses", force: :cascade do |t|
-    t.string "description"
-    t.float "amount"
     t.date "date"
     t.boolean "fixed"
     t.text "remark"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "category", default: "Food"
+    t.string "category", default: "food"
     t.bigint "user_id"
     t.bigint "place_id"
     t.bigint "expense_group_id"
+    t.text "description_ciphertext"
+    t.text "amount_ciphertext"
     t.index ["expense_group_id"], name: "index_expenses_on_expense_group_id"
     t.index ["place_id"], name: "index_expenses_on_place_id"
     t.index ["user_id"], name: "index_expenses_on_user_id"

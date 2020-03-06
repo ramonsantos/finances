@@ -63,14 +63,6 @@ describe Expense, type: :model do
       end
     end
 
-    describe '.fetch_total_monthly_spend' do
-      let(:total) { described_class.fetch_total_monthly_spend(User.first, Date.parse('2020-02-21')) }
-
-      it 'returns total  monthly spend' do
-        expect(total).to eq(23.92)
-      end
-    end
-
     describe '.fetch_expenses_grouped_by_groups' do
       let!(:expense_home_1) { create(:expense, expense_group_id: expense_group_home.id) }
       let!(:expense_home_2) { create(:expense, expense_group_id: expense_group_home.id) }
@@ -79,6 +71,20 @@ describe Expense, type: :model do
       it { expect(result.count).to eq(2) }
       it { expect(result['Trabalho'].count).to eq(2) }
       it { expect(result['Casa']).to eq([expense_home_1, expense_home_2]) }
+    end
+  end
+
+  describe '.fetch_total_monthly_spend' do
+    before do
+      create(:expense)
+      create(:expense_other_month)
+      create(:expense, amount: 2.42)
+    end
+
+    let(:total) { described_class.fetch_total_monthly_spend(User.first, Date.parse('2020-02-21')) }
+
+    it 'returns total  monthly spend' do
+      expect(total).to eq(23.92)
     end
   end
 

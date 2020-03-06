@@ -7,8 +7,10 @@ ruby '2.7.0'
 
 gem 'bootsnap', '~> 1.4', '>= 1.4.5', require: false
 gem 'devise'
+gem 'dotenv-rails'
 gem 'jbuilder', '~> 2.7'
 gem 'kaminari'
+gem 'lockbox'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 4.3', '>= 4.3.3'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
