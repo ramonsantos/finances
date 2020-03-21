@@ -1,43 +1,7 @@
-<p id="notice"><%= notice %></p>
+<section class="form-section">
+  <div class="col-sm-12">
+    <h1>Editar Empréstimo</h1>
+  </div>
 
-<p>
-  <strong>Description:</strong>
-  <%= @loan.description %>
-</p>
-
-<p>
-  <strong>Loan date:</strong>
-  <%= @loan.loan_date %>
-</p>
-
-<p>
-  <strong>Estimated receipt at:</strong>
-  <%= @loan.estimated_receipt_at %>
-</p>
-
-<p>
-  <strong>Received at:</strong>
-  <%= @loan.received_at %>
-</p>
-
-<p>
-  <strong>Borrowed amount:</strong>
-  <%= @loan.borrowed_amount %>
-</p>
-
-<p>
-  <strong>Expected amount to receive:</strong>
-  <%= @loan.expected_amount_to_receive %>
-</p>
-
-<p>
-  <strong>Person:</strong>
-  <%= @loan.person %>
-</p>
-
-<p>
-  <strong>Received Amount:</strong>
-  <%= @loan.received_amount %>
-</p>
-
-<%= link_to 'Back', loans_path %>
+  <%= render 'form', loan: @loan %>
+</section>

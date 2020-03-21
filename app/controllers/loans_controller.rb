@@ -6,7 +6,7 @@ class LoansController < ApplicationController
   # GET /loans
   # GET /loans.json
   def index
-    @loans = Loan.all
+    @loans = Loan.where(user: current_user).order(:loan_date).page(params[:page])
   end
 
   # GET /loans/1
@@ -40,10 +40,10 @@ class LoansController < ApplicationController
   def update
     respond_to do |format|
       if @loan.update(loan_params)
-        format.html { redirect_to @loan, notice: 'Loan was successfully updated.' }
+        format.html { redirect_to loans_path, notice: 'Empréstimo atualizado.' }
         format.json { render :show, status: :ok, location: @loan }
       else
-        format.html { render :index }
+        format.html { render :show }
         format.json { render json: @loan.errors, status: :unprocessable_entity }
       end
     end
@@ -63,7 +63,7 @@ class LoansController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_loan
-    @loan = Loan.find(params[:id])
+    @loan = Loan.find_by(id: params[:id], user: current_user)
   end
 
   # Only allow a list of trusted parameters through.

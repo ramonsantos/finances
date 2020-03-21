@@ -2,6 +2,6 @@
 
 module LoansHelper
   def loan_float_fields
-    ['borrowed_amount', 'expected_amount_to_receive', 'received_amount']
+    ['loan_borrowed_amount', 'loan_expected_amount_to_receive', 'loan_received_amount']
   end
 end

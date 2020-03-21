@@ -28,9 +28,8 @@
         <td><%= loan.expected_amount_to_receive %></td>
         <td><%= loan.person %></td>
         <td><%= loan.received_amount %></td>
-        <td><%= link_to 'Show', loan %></td>
-        <td><%= link_to 'Edit', loan_path(loan) %></td>
-        <td><%= link_to 'Destroy', loan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Editar', loan_path(loan) %></td>
+        <td><%= link_to 'Remover', loan, method: :delete, data: { confirm: 'Você tem certeza?' } %></td>
       </tr>
     <% end %>
   </tbody>

@@ -5,6 +5,8 @@ require 'rails_helper'
 describe LoansController, type: :controller do
   login_user
 
+  let!(:loan) { create(:loan) }
+
   let(:valid_attributes) { attributes_for(:loan) }
 
   let(:invalid_attributes) { attributes_for(:loan, description: nil) }
@@ -18,9 +20,8 @@ describe LoansController, type: :controller do
   end
 
   describe 'GET #show' do
-    xit 'returns a success response' do
-      loan = Loan.create! valid_attributes
-      get :show, params: { id: loan.to_param }
+    it 'returns a success response' do
+      get(:show, params: { id: loan.to_param })
       expect(response).to be_successful
     end
   end
@@ -61,29 +62,29 @@ describe LoansController, type: :controller do
 
   describe 'PUT #update' do
     context 'with valid params' do
-      let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
-      end
+      let(:new_attributes) { { description: 'Pagar Luz' } }
 
-      xit 'updates the requested loan' do
-        loan = Loan.create! valid_attributes
-        put :update, params: { id: loan.to_param, loan: new_attributes }
+      before { put(:update, params: { id: loan.to_param, loan: new_attributes }) }
+
+      it 'updates the requested loan' do
         loan.reload
-        skip('Add assertions for updated state')
+        expect(loan.description).to eq('Pagar Luz')
       end
 
-      xit 'redirects to the loan' do
-        loan = Loan.create! valid_attributes
-        put :update, params: { id: loan.to_param, loan: valid_attributes }
-        expect(response).to redirect_to(loan)
+      it 'shows flash notice' do
+        expect(flash[:notice]).to eq('Empréstimo atualizado.')
+      end
+
+      it 'redirects to the loans' do
+        expect(response).to redirect_to(loans_path)
       end
     end
 
     context 'with invalid params' do
-      xit "returns a success response (i.e. to display the 'edit' template)" do
-        loan = Loan.create! valid_attributes
-        put :update, params: { id: loan.to_param, loan: invalid_attributes }
-        expect(response).to be_successful
+      it 'does not updates the Loan' do
+        expect do
+          put(:update, params: { id: loan.to_param, loan: invalid_attributes })
+        end.not_to change(Loan, :first)
       end
     end
   end
