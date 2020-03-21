@@ -23,10 +23,6 @@ feature 'Expenses', type: :feature do
   after { Timecop.return }
 
   feature 'show and edit expense' do
-    before do
-      visit(expense_path(id: expense.id))
-    end
-
     scenario 'user visits expense page' do
       visit(expense_path(id: expense.id))
 

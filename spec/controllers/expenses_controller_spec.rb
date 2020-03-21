@@ -90,28 +90,35 @@ describe ExpensesController, type: :controller do
 
   describe 'PUT #update' do
     context 'with valid params' do
-      before { Timecop.freeze(2020, 2, 20) }
+      before do
+        Timecop.freeze(2020, 2, 20)
+
+        put(:update, params: params)
+      end
 
       after { Timecop.return }
 
       let(:new_attributes) { { description: 'Book 1984' } }
 
+      let(:params) { { id: expense.to_param, expense: new_attributes } }
+
       it 'updates the requested expense' do
-        put(:update, params: { id: expense.to_param, expense: new_attributes })
         expense.reload
         expect(expense.description).to eq('Book 1984')
       end
 
+      it 'shows flash notice' do
+        expect(flash[:notice]).to eq('Despesa atualizada.')
+      end
+
       it 'redirects to the expense' do
-        put(:update, params: { id: expense.to_param, expense: valid_attributes })
         expect(response).to redirect_to(expenses_path(expense_month: '2020-02-20'))
       end
 
       context 'when other month' do
-        let(:params) { { id: expense_other_month.to_param, expense: valid_attributes, expense_month: '2020-03-01' } }
+        let(:params) { { id: expense_other_month.to_param, expense: new_attributes, expense_month: '2020-03-01' } }
 
         it 'redirects to the expense' do
-          put(:update, params: params)
           expect(response).to redirect_to(expenses_path(expense_month: '2020-03-01'))
         end
       end

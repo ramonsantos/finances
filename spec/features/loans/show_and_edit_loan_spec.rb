@@ -11,8 +11,8 @@ feature 'Loans', type: :feature do
     visit(loan_path(id: loan.id))
   end
 
-  feature 'show and edit expense' do
-    scenario 'user visits expense page' do
+  feature 'show and edit loan' do
+    scenario 'user visits loan page' do
       expect(page).to have_selector('h1', text: 'Editar Empréstimo')
       expect(find(id: 'loan_person').value).to eq('Maria')
       expect(find(id: 'loan_description').value).to eq('Comprar Telefone')
