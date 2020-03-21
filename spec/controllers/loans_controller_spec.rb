@@ -90,17 +90,20 @@ describe LoansController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    xit 'destroys the requested loan' do
-      loan = Loan.create! valid_attributes
+    it 'destroys the requested loan' do
       expect do
-        delete :destroy, params: { id: loan.to_param }
+        delete(:destroy, params: { id: loan.to_param })
       end.to change(Loan, :count).by(-1)
     end
 
-    xit 'redirects to the loans list' do
-      loan = Loan.create! valid_attributes
-      delete :destroy, params: { id: loan.to_param }
-      expect(response).to redirect_to(loans_url)
+    it 'shows flash notice' do
+      delete(:destroy, params: { id: loan.to_param })
+      expect(flash[:notice]).to eq('Empréstimo removido.')
+    end
+
+    it 'redirects to the loans list' do
+      delete(:destroy, params: { id: loan.to_param })
+      expect(response).to redirect_to(loans_path)
     end
   end
 end
