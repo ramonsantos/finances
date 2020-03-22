@@ -20,4 +20,8 @@ class Loan < ApplicationRecord
   encrypts :borrowed_amount,            type: :float
   encrypts :expected_amount_to_receive, type: :float
   encrypts :received_amount,            type: :float
+
+  scope :fetch_order_by_loan_date, lambda { |user|
+    where(user: user).order(:loan_date)
+  }
 end

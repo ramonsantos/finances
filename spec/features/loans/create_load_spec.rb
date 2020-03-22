@@ -30,7 +30,7 @@ feature 'Loan', type: :feature do
       before do
         fill_in('Pessoa',                     with: 'Maria')
         fill_in('Descrição',                  with: 'Comprar Livro')
-        fill_in('Valor do Emprétimo',         with: '14.99')
+        fill_in('Valor do Empréstimo',        with: '14.99')
         fill_in('Valor Esperado Receber',     with: '15.99')
         fill_in('Data do Empréstimo',         with: I18n.l(Date.parse('Feb 21 2020'), format: '%Y-%m-%d'))
         fill_in('Data Estimada para Receber', with: I18n.l(Date.parse('Mar 21 2020'), format: '%Y-%m-%d'))

@@ -1,40 +1,56 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+  <div class="alert alert-primary alert-dismissible fade show" role="alert">
+    <%= notice %>
 
-<h1>Loans</h1>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+<% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Description</th>
-      <th>Loan date</th>
-      <th>Estimated receipt at</th>
-      <th>Received at</th>
-      <th>Borrowed amount</th>
-      <th>Expected amount to receive</th>
-      <th>Person</th>
-      <th>Received Amount</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div class="col-sm-12 btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+  <h1>Empréstimos</h1>
+</div>
 
-  <tbody>
-    <% @loans.each do |loan| %>
-      <tr>
-        <td><%= loan.description %></td>
-        <td><%= loan.loan_date %></td>
-        <td><%= loan.estimated_receipt_at %></td>
-        <td><%= loan.received_at %></td>
-        <td><%= loan.borrowed_amount %></td>
-        <td><%= loan.expected_amount_to_receive %></td>
-        <td><%= loan.person %></td>
-        <td><%= loan.received_amount %></td>
-        <td><%= link_to 'Editar', loan_path(loan) %></td>
-        <td><%= link_to 'Remover', loan, method: :delete, data: { confirm: 'Você tem certeza?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
 
-<br>
+<div class="col-md-12">
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Pessoa</th>
+          <th scope="col">Descrição</th>
+          <th scope="col">Valor</th>
+          <th scope="col">Data</th>
 
-<%= link_to 'New Loan', new_loan_path %>
+          <th scope="col">Valor Esperado Receber</th>
+          <th scope="col">Data Estimada para Receber</th>
+          <th scope="col">Valor Recebido</th>
+          <th scope="col">Recebido em</th>
+          <th scope="col" colspan="3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @loans.each do |loan| %>
+          <tr>
+            <td><%= loan.person %></td>
+            <td><%= loan.description %></td>
+            <td class="td-right"><%= format_to_money(loan.borrowed_amount) %></td>
+            <td class="td-right"><%= format_date(loan.loan_date) %></td>
+            <td class="td-right"><%= format_to_money(loan.expected_amount_to_receive) %></td>
+            <td class="td-right"><%= format_date(loan.estimated_receipt_at) %></td>
+            <td class="td-right"><%= format_to_money(loan.received_amount) %></td>
+            <td class="td-right"><%= format_date(loan.received_at) %></td>
+            <td class="td-center"><%= link_to 'Editar', loan_path(loan), class: 'btn btn-primary btn-sm' %></td>
+            <td class="td-center"><%= link_to 'Remover', loan, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn btn-danger btn-sm' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="col-sm-12 btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+  <%= paginate @loans %>
+</div>

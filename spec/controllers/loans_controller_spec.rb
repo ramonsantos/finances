@@ -12,9 +12,8 @@ describe LoansController, type: :controller do
   let(:invalid_attributes) { attributes_for(:loan, description: nil) }
 
   describe 'GET #index' do
-    xit 'returns a success response' do
-      Loan.create! valid_attributes
-      get :index, params: {}
+    it 'returns a success response' do
+      get(:index, params: {})
       expect(response).to be_successful
     end
   end

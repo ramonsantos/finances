@@ -25,4 +25,21 @@ describe Loan, type: :model do
       end
     end
   end
+
+  describe 'scopes' do
+    before do
+      create(:loan)
+      create(:loan, loan_date: Date.parse('2020-03-15'))
+    end
+
+    describe '.fetch_order_by_loan_date' do
+      let(:loans) { described_class.fetch_order_by_loan_date(User.first) }
+
+      it 'returns loans' do
+        expect(loans.count).to eq(2)
+        expect(loans.first.loan_date).to eq(Date.parse('2020-03-06'))
+        expect(loans.last.loan_date).to eq(Date.parse('2020-03-15'))
+      end
+    end
+  end
 end

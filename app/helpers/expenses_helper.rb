@@ -39,14 +39,6 @@ module ExpensesHelper
     fixed ? 'Sim' : 'Não'
   end
 
-  def format_to_money(amount)
-    number_to_currency(amount, unit: 'R$', separator: ',', delimiter: '.', format: '%n %u')
-  end
-
-  def format_date(date)
-    date.strftime('%d/%m/%Y')
-  end
-
   def remark_preview(remark)
     return remark if remark.blank? || remark.length <= 20
 

@@ -6,7 +6,7 @@ class LoansController < ApplicationController
   # GET /loans
   # GET /loans.json
   def index
-    @loans = Loan.where(user: current_user).order(:loan_date).page(params[:page])
+    @loans = Loan.fetch_order_by_loan_date(current_user).page(params[:page])
   end
 
   # GET /loans/1

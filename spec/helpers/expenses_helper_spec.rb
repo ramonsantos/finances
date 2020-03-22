@@ -120,18 +120,6 @@ describe ExpensesHelper, type: :helper do
     end
   end
 
-  describe '.format_to_money' do
-    it { expect(format_to_money(0.1)).to eq('0,10 R$') }
-    it { expect(format_to_money(1.01)).to eq('1,01 R$') }
-    it { expect(format_to_money(1012.1)).to eq('1.012,10 R$') }
-  end
-
-  describe '.format_date' do
-    it 'returns formated date' do
-      expect(format_date(expense.date)).to eq('15/02/2020')
-    end
-  end
-
   describe '.remark_preview' do
     context 'when remark is blank' do
       it { expect(remark_preview('')).to eq('') }

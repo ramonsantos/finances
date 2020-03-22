@@ -28,7 +28,7 @@ feature 'Loans', type: :feature do
     scenario 'user edits a loan' do
       fill_in('Pessoa', with: 'João')
       fill_in('Descrição', with: 'Pagar Luz')
-      fill_in('Valor do Emprétimo', with: 200.6)
+      fill_in('Valor do Empréstimo', with: 200.6)
       fill_in('Data do Empréstimo', with: I18n.l(Date.parse('Mar 21 2020'), format: '%Y-%m-%d'))
       fill_in('Valor Esperado Receber', with: 210.99)
       fill_in('Data Estimada para Receber', with: I18n.l(Date.parse('May 21 2020'), format: '%Y-%m-%d'))
