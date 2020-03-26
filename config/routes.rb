@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   root 'expenses#index'
 
-  devise_for :users, controllers: { sessions: 'sessions' }
+  devise_for :users, controllers: { sessions: 'sessions', registrations: 'registrations' }
 
   resources :expenses do
     collection do
