@@ -1,36 +1,40 @@
-<h2>Sign up</h2>
+<section class="login-form">
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <h2 class="text-center">Cadastro</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+    <div class="field form-group">
+      <%= f.label :email, 'E-mail' %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: 'email', required: true, class: 'form-control' %>
+    </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+    <div class="field form-group">
+      <%= f.label :password, 'Senha' %>
+      <% if @minimum_password_length %>
+      <em>(no mínimo <%= @minimum_password_length %> caracteres)</em>
+      <% end %><br />
+      <%= f.password_field :password, autocomplete: 'new-password', required: true, class: 'form-control' %>
+    </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+    <div class="field form-group">
+      <%= f.label :password_confirmation, 'Confirmar Senha' %><br />
+      <%= f.password_field :password_confirmation, autocomplete: 'new-password', required: true, class: 'form-control' %>
+    </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+    <div class="field form-group">
+      <%= f.fields_for :places do |place_form| %>
+        <%= place_form.label :name, 'Cidade' %><br />
+        <%= place_form.text_field :name, required: true, class: 'form-control' %>
+      <% end %>
+    </div>
 
-  <div class="field">
-    <%= f.fields_for :places do |place_form| %>
-      <%= place_form.label :name %><br />
-      <%= place_form.text_field :name, required: true %>
+    <div class="actions">
+      <%= f.submit 'Cadastrar', class: 'btn btn-primary btn-block' %>
+    </div>
+  <% end %>
+
+  <div class="text-center">
+    <%- if controller_name != 'sessions' %>
+      <%= link_to "Entrar", new_session_path(resource_name), class: 'authentication-link' %><br />
     <% end %>
   </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</section>
