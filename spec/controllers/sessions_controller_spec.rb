@@ -7,6 +7,13 @@ describe SessionsController, type: :controller do
 
   before { request.env['devise.mapping'] = Devise.mappings[:user] }
 
+  describe 'GET #new' do
+    it 'returns a success response' do
+      get(:new)
+      expect(response).to be_successful
+    end
+  end
+
   describe '#create' do
     it 'authenticates user correctly' do
       post(:create, params: { user: { email: user.email, password: user.password, remember_me: '0' } })
