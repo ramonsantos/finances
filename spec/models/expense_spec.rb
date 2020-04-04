@@ -33,11 +33,15 @@ describe Expense, type: :model do
     context 'when enum' do
       let(:category) do
         {
-          food:      'Alimentação',
-          transport: 'Transporte',
-          health:    'Saúde',
-          pet:       'Pet',
-          education: 'Educação'
+          food:                   'Alimentação',
+          donation_and_gifts:     'Doação e Presentes',
+          education:              'Educação',
+          recreation:             'Lazer',
+          pet:                    'Pet',
+          health:                 'Saúde',
+          work_and_prospecting:   'Trabalho e Prospecção',
+          transport:              'Transporte',
+          clothing_and_cosmetics: 'Vestuário e Cosmético'
         }
       end
 

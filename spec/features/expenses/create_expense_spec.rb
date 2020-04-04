@@ -21,6 +21,20 @@ feature 'Expenses', type: :feature do
       visit(new_expense_path)
     end
 
+    let(:category_options) do
+      [
+        'Alimentação',
+        'Doação e Presentes',
+        'Educação',
+        'Lazer',
+        'Pet',
+        'Saúde',
+        'Trabalho e Prospecção',
+        'Transporte',
+        'Vestuário e Cosmético'
+      ]
+    end
+
     scenario 'user visits new expense page' do
       expect(page).to have_selector('h1', text: 'Adicionar Despesa')
       expect(page).to have_selector('input', id: 'expense_description')
@@ -28,7 +42,7 @@ feature 'Expenses', type: :feature do
       expect(page).to have_selector('input', id: 'expense_date')
       expect(page).to have_selector('input', id: 'expense_fixed')
       expect(page).to have_field('expense_fixed', checked: false)
-      expect(page).to have_select('Categoria', options: ['Alimentação', 'Transporte', 'Saúde', 'Pet', 'Educação'])
+      expect(page).to have_select('Categoria', options: category_options)
       expect(page).to have_select('Local', options: ['Recife', 'Surubim'])
       expect(page).to have_select('Grupo de Despesa', options: ['Trabalho', 'Casa'])
       expect(page).to have_selector('textarea', id: 'expense_remark')
