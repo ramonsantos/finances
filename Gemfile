@@ -29,10 +29,10 @@ end
 group :development do
   gem 'awesome_print', '~> 2.0.0.pre2'
   gem 'brakeman'
-  gem 'bullet', '~> 6.0', '>= 6.0.2'
+  gem 'bullet', '~> 6.1'
   gem 'colorize'
   gem 'listen', '>= 3.0.5', '< 3.2'
-  gem 'rack-mini-profiler', '~> 1.0', require: false
+  gem 'rack-mini-profiler', '~> 2.0', '>= 2.0.1', require: false
   gem 'rails_best_practices'
   gem 'rubocop', '~> 0.80.0'
   gem 'rubocop-performance'
@@ -45,9 +45,9 @@ group :development do
 end
 
 group :test do
-  gem 'capybara', '~> 3.31'
+  gem 'capybara', '~> 3.32'
   gem 'database_cleaner'
-  gem 'rspec-rails', '~> 4.0.0.rc1'
+  gem 'rspec-rails', '~> 4.0.0'
   gem 'shoulda-matchers', '~> 4.2'
   gem 'simplecov', '0.17.1'
 end
