@@ -16,12 +16,20 @@ describe ExpensesController, type: :routing do
       expect(get: '/expenses/new').to route_to('expenses#new')
     end
 
+    it 'routes to #new_by_csv' do
+      expect(get: '/expenses/new_by_csv').to route_to('expenses#new_by_csv')
+    end
+
     it 'routes to #show' do
       expect(get: '/expenses/1').to route_to('expenses#show', id: '1')
     end
 
     it 'routes to #create' do
       expect(post: '/expenses').to route_to('expenses#create')
+    end
+
+    it 'routes to #create_by_csv' do
+      expect(post: '/expenses/create_by_csv').to route_to('expenses#create_by_csv')
     end
 
     it 'routes to #update via PUT' do

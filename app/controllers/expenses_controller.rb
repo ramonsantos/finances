@@ -30,6 +30,10 @@ class ExpensesController < ApplicationController
     @expense = Expense.new
   end
 
+  # GET /expenses/new_by_csv
+  def new_by_csv
+  end
+
   # POST /expenses
   # POST /expenses.json
   def create
@@ -43,6 +47,19 @@ class ExpensesController < ApplicationController
         format.html { render :new }
         format.json { render json: @expense.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  # /expenses/create_by_csv
+  def create_by_csv
+    file_path = params[:file].first.tempfile.path
+    CreateExpensesByCsvJob.perform_later({ user_id: current_user.id, file_path: file_path })
+
+    message = 'As despesas serão adicionadas em breve.'
+
+    respond_to do |format|
+      format.html { redirect_to expenses_path, notice: message }
+      format.json { render json: { message: message }, status: :created }
     end
   end
 

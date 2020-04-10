@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   resources :expenses do
     collection do
       get :report
+      get :new_by_csv
+      post :create_by_csv
     end
   end
 

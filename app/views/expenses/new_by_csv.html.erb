@@ -1,0 +1,17 @@
+<section class="form-section">
+  <div class="col-sm-12">
+    <h1>Adicionar Despesa por CSV</h1>
+
+    <%= form_with(url: create_by_csv_expenses_path, local: true, method: :post) do |form| %>
+      <div class="inline-form"">
+        <div class="field">
+          <%= form.file_field :file, multiple: true, required: true, class: 'form-control-file' %>
+        </div>
+
+          <div class="actions col-md-2">
+            <%= form.submit('Carregar Arquivo', class: 'btn btn-primary') %>
+          </div>
+      </div>
+    <% end %>
+  </div>
+</section>
