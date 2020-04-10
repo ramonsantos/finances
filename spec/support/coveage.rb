@@ -5,7 +5,6 @@ require 'simplecov'
 SimpleCov.start 'rails' do
   add_filter [
     'app/channels',
-    'app/jobs',
     'app/mailers'
   ]
 end
