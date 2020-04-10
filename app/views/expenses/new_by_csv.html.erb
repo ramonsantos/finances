@@ -5,7 +5,7 @@
     <%= form_with(url: create_by_csv_expenses_path, local: true, method: :post) do |form| %>
       <div class="inline-form"">
         <div class="field">
-          <%= form.file_field :file, multiple: true, required: true, class: 'form-control-file' %>
+          <%= form.file_field :file, multiple: false, required: true, class: 'form-control-file' %>
         </div>
 
           <div class="actions col-md-2">

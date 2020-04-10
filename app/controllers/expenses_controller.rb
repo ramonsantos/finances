@@ -50,17 +50,9 @@ class ExpensesController < ApplicationController
     end
   end
 
-  # /expenses/create_by_csv
+  # POST /expenses/create_by_csv
   def create_by_csv
-    file_path = params[:file].first.tempfile.path
-    CreateExpensesByCsvJob.perform_later({ user_id: current_user.id, file_path: file_path })
-
-    message = 'As despesas serão adicionadas em breve.'
-
-    respond_to do |format|
-      format.html { redirect_to expenses_path, notice: message }
-      format.json { render json: { message: message }, status: :created }
-    end
+    redirect_to expenses_path, notice: enqueue_create_by_csv
   end
 
   # PATCH/PUT /expenses/1
@@ -117,5 +109,13 @@ class ExpensesController < ApplicationController
     return Time.zone.today if params[:expense_month].blank?
 
     Date.parse(params[:expense_month])
+  end
+
+  def enqueue_create_by_csv
+    return 'Arquivo CSV é obrigatório.' if params[:file].blank?
+
+    file_path = params[:file].tempfile.path
+    CreateExpensesByCsvJob.perform_later({ user_id: current_user.id, file_path: file_path })
+    'As despesas serão adicionadas em breve.'
   end
 end

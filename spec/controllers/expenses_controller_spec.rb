@@ -60,6 +60,13 @@ describe ExpensesController, type: :controller do
     end
   end
 
+  describe 'GET #new_by_csv' do
+    it 'returns a success response' do
+      get(:new_by_csv)
+      expect(response).to be_successful
+    end
+  end
+
   describe 'POST #create' do
     context 'with valid params' do
       it 'creates a new Expense' do
@@ -84,6 +91,33 @@ describe ExpensesController, type: :controller do
         expect do
           post(:create, params: { expense: invalid_attributes })
         end.not_to change(Expense, :count)
+      end
+    end
+  end
+
+  describe 'POST #create_by_csv' do
+    before do
+      ActiveJob::Base.queue_adapter = :test
+      post(:create_by_csv, params: { file: file })
+    end
+
+    context 'with valid params' do
+      let(:file) { fixture_file_upload('spec/fixtures/expenses.csv') }
+
+      it 'enqueues job to create Expenses' do
+        expect(flash[:notice]).to eq('As despesas serão adicionadas em breve.')
+        expect(response).to redirect_to(expenses_path)
+        expect(CreateExpensesByCsvJob).to have_been_enqueued.exactly(:once)
+      end
+    end
+
+    context 'with invalid params' do
+      let(:file) { nil }
+
+      it 'enqueues job to create Expenses' do
+        expect(flash[:notice]).to eq('Arquivo CSV é obrigatório.')
+        expect(response).to redirect_to(expenses_path)
+        expect(CreateExpensesByCsvJob).not_to have_been_enqueued
       end
     end
   end
