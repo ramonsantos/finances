@@ -8,6 +8,7 @@ ruby '2.7.1'
 gem 'bootsnap', '~> 1.4', '>= 1.4.6', require: false
 gem 'devise'
 gem 'dotenv-rails'
+gem 'foreman'
 gem 'jbuilder', '~> 2.7'
 gem 'kaminari'
 gem 'lockbox'
