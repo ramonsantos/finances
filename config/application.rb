@@ -30,9 +30,6 @@ module Finances
     config.i18n.available_locales = :"pt-BR"
     config.time_zone = 'Brasilia'
 
-    # ActiveJob
-    config.active_job.queue_adapter = :sidekiq
-
     # Test files generator
     config.generators do |generator|
       generator.test_framework(

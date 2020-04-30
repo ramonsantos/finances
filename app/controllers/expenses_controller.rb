@@ -116,6 +116,7 @@ class ExpensesController < ApplicationController
 
     file_path = params[:file].tempfile.path
     CreateExpensesByCsvJob.perform_later({ user_id: current_user.id, file_path: file_path })
+
     'As despesas serão adicionadas em breve.'
   end
 end
