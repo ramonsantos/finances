@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_01_185920) do
+ActiveRecord::Schema.define(version: 2020_05_01_232207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,12 +38,13 @@ ActiveRecord::Schema.define(version: 2020_05_01_185920) do
     t.text "remark"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "category", default: "food"
     t.bigint "user_id"
     t.bigint "place_id"
     t.bigint "expense_group_id"
     t.text "description_ciphertext"
     t.text "amount_ciphertext"
+    t.bigint "expense_category_id"
+    t.index ["expense_category_id"], name: "index_expenses_on_expense_category_id"
     t.index ["expense_group_id"], name: "index_expenses_on_expense_group_id"
     t.index ["place_id"], name: "index_expenses_on_place_id"
     t.index ["user_id"], name: "index_expenses_on_user_id"
@@ -86,6 +87,7 @@ ActiveRecord::Schema.define(version: 2020_05_01_185920) do
 
   add_foreign_key "expense_categories", "users"
   add_foreign_key "expense_groups", "users"
+  add_foreign_key "expenses", "expense_categories"
   add_foreign_key "expenses", "expense_groups"
   add_foreign_key "expenses", "places"
   add_foreign_key "expenses", "users"

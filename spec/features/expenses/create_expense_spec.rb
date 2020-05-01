@@ -66,7 +66,7 @@ feature 'Expenses', type: :feature do
         expect(expense.amount).to eq(14.99)
         expect(expense.date).to eq(Date.parse('Feb 20 2020'))
         expect(expense.fixed).to be_falsey
-        expect(expense.category).to eq('food')
+        expect(expense.expense_category.name).to eq('Alimentação')
         expect(expense.place.name).to eq('Recife')
         expect(expense.expense_group.name).to eq('Trabalho')
         expect(expense.remark).to be_blank
@@ -76,7 +76,7 @@ feature 'Expenses', type: :feature do
         fill_in('Data da Compra', with: I18n.l(Date.parse('Feb 21 2020'), format: '%Y-%m-%d'))
         fill_in('Observações', with: 'By credit card')
         find('#expense_fixed').set(true)
-        find('#expense_category').select('Saúde')
+        find('#expense_expense_category_id').select('Saúde')
         find('#expense_place_id').select('Surubim')
         find('#expense_expense_group_id').select('Casa')
 
@@ -88,7 +88,7 @@ feature 'Expenses', type: :feature do
         expect(expense.amount).to eq(14.99)
         expect(expense.date).to eq(Date.parse('Feb 21 2020'))
         expect(expense.fixed).to be_truthy
-        expect(expense.category).to eq('health')
+        expect(expense.expense_category.name).to eq('Saúde')
         expect(expense.place.name).to eq('Surubim')
         expect(expense.expense_group.name).to eq('Casa')
         expect(expense.remark).to eq('By credit card')

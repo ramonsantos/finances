@@ -34,11 +34,12 @@ feature 'Expenses', type: :feature do
     context 'with expenses' do
       let!(:expense_group_work) { create(:expense_group) }
       let!(:expense_group_home) { create(:expense_group_home) }
+      let(:expense_category) { ExpenseCategory.find_by(name: 'Saúde') }
 
       before do
         create(:expense, expense_group_id: expense_group_work.id, amount: 12.56)
         create(:expense, expense_group_id: expense_group_work.id, amount: 52.0)
-        create(:expense, expense_group_id: expense_group_home.id, amount: 85.45, category: 'health')
+        create(:expense, expense_group_id: expense_group_home.id, amount: 85.45, expense_category_id: expense_category.id)
         create(:expense, expense_group_id: expense_group_home.id, amount: 5.99)
 
         visit(report_expenses_path)

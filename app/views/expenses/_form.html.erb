@@ -40,10 +40,10 @@
   </div>
 
   <div class="field form-group col-md-4">
-    <%= form.label :category, 'Categoria' %>
+    <%= form.label :expense_category_id, 'Categoria' %>
     <%= form.select(
-      :category,
-      options_for_select(Expense.categories.values, Expense.categories[expense.category]),
+      :expense_category_id,
+      options_for_select(@expense_categories, current_option(expense, :expense_category_id, @expense_categories)),
       {},
       class: 'form-control'
     )%>

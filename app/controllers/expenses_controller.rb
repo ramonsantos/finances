@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class ExpensesController < ApplicationController
-  before_action :set_expense,    only: [:destroy, :show, :update]
-  before_action :places,         only: [:new, :show]
-  before_action :expense_groups, only: [:new, :show]
+  before_action :set_expense,        only: [:destroy, :show, :update]
+  before_action :places,             only: [:new, :show]
+  before_action :expense_groups,     only: [:new, :show]
+  before_action :expense_categories, only: [:new, :show]
 
   # GET /expenses
   # GET /expenses.json
@@ -77,7 +78,7 @@ class ExpensesController < ApplicationController
   end
 
   def expense_params
-    params.require(:expense).permit(:description, :amount, :date, :fixed, :remark, :category, :expense_group_id, :place_id)
+    params.require(:expense).permit(:description, :amount, :date, :fixed, :remark, :expense_category_id, :expense_group_id, :place_id)
   end
 
   def places
@@ -94,6 +95,14 @@ class ExpensesController < ApplicationController
 
   def fetch_expense_groups
     ExpenseGroup.where(user: current_user).pluck(:name, :id)
+  end
+
+  def expense_categories
+    @expense_categories ||= fetch_expense_categories
+  end
+
+  def fetch_expense_categories
+    ExpenseCategory.where(user: current_user).pluck(:name, :id)
   end
 
   def expense_month
