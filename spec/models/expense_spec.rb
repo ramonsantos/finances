@@ -10,6 +10,7 @@ describe Expense, type: :model do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:place) }
     it { is_expected.to belong_to(:expense_group) }
+    it { is_expected.to belong_to(:expense_category) }
   end
 
   describe 'validations' do
@@ -18,35 +19,15 @@ describe Expense, type: :model do
         it { is_expected.to validate_presence_of(:description) }
         it { is_expected.to validate_presence_of(:amount) }
         it { is_expected.to validate_presence_of(:date) }
-        it { is_expected.to validate_presence_of(:category) }
         it { is_expected.to validate_presence_of(:user) }
         it { is_expected.to validate_presence_of(:place) }
+        it { is_expected.to validate_presence_of(:expense_category) }
         it { is_expected.to validate_presence_of(:expense_group) }
       end
 
       context 'when false' do
         it { is_expected.not_to validate_presence_of(:fixed) }
         it { is_expected.not_to validate_presence_of(:remark) }
-      end
-    end
-
-    context 'when enum' do
-      let(:category) do
-        {
-          food:                   'Alimentação',
-          donation_and_gifts:     'Doação e Presentes',
-          education:              'Educação',
-          recreation:             'Lazer',
-          pet:                    'Pet',
-          health:                 'Saúde',
-          work_and_prospecting:   'Trabalho e Prospecção',
-          transport:              'Transporte',
-          clothing_and_cosmetics: 'Vestuário e Cosmético'
-        }
-      end
-
-      it do
-        expect(subject).to define_enum_for(:category).with_values(category).backed_by_column_of_type(:string)
       end
     end
   end
@@ -94,6 +75,7 @@ describe Expense, type: :model do
 
   describe '.group_for_report' do
     let(:result) { described_class.group_for_report(User.first, Date.parse('2020-02-21')) }
+    let(:expense_category) { ExpenseCategory.find_by(name: 'Saúde') }
 
     let(:expected_result) do
       [
@@ -113,7 +95,7 @@ describe Expense, type: :model do
     before do
       create(:expense, expense_group_id: expense_group_work.id, amount: 12.56)
       create(:expense, expense_group_id: expense_group_work.id, amount: 52.0)
-      create(:expense, expense_group_id: expense_group_home.id, amount: 85.45, category: 'health')
+      create(:expense, expense_group_id: expense_group_home.id, amount: 85.45, expense_category_id: expense_category.id)
       create(:expense, expense_group_id: expense_group_home.id, amount: 5.99)
     end
 

@@ -40,7 +40,7 @@
             <td class="td-right"><%= format_to_money(expense.amount) %></td>
             <td class="td-right"><%= format_date(expense.date) %></td>
             <td class="td-center"><%= fixed_label(expense.fixed) %></td>
-            <td><%= Expense.categories[expense.category] %></td>
+            <td><%= expense.expense_category.name %></td>
             <td><%= expense.place.name %></td>
             <td><%= expense.expense_group.name %></td>
             <td><%= remark_preview(expense.remark) %></td>

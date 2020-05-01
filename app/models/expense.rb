@@ -6,28 +6,17 @@ class Expense < ApplicationRecord
   belongs_to :user
   belongs_to :place
   belongs_to :expense_group
+  belongs_to :expense_category
 
-  validates :description,   presence: true
-  validates :amount,        presence: true
-  validates :date,          presence: true
-  validates :category,      presence: true
-  validates :user,          presence: true
-  validates :place,         presence: true
-  validates :expense_group, presence: true
-  validates :remark,        presence: false
-  validates :fixed,         presence: false
-
-  enum category: {
-    food:                   'Alimentação',
-    donation_and_gifts:     'Doação e Presentes',
-    education:              'Educação',
-    recreation:             'Lazer',
-    pet:                    'Pet',
-    health:                 'Saúde',
-    work_and_prospecting:   'Trabalho e Prospecção',
-    transport:              'Transporte',
-    clothing_and_cosmetics: 'Vestuário e Cosmético'
-  }
+  validates :description,      presence: true
+  validates :amount,           presence: true
+  validates :date,             presence: true
+  validates :expense_category, presence: true
+  validates :user,             presence: true
+  validates :place,            presence: true
+  validates :expense_group,    presence: true
+  validates :remark,           presence: false
+  validates :fixed,            presence: false
 
   encrypts :description
   encrypts :amount, type: :float
@@ -56,7 +45,7 @@ class Expense < ApplicationRecord
         {
           expense_group_name: name,
           total: total_expense_amount,
-          categories: categories_data(expenses.group_by(&:category), total_expense_amount)
+          categories: categories_data(expenses.group_by(&:expense_category), total_expense_amount)
         }
       end
     end
@@ -64,9 +53,9 @@ class Expense < ApplicationRecord
     private
 
     def categories_data(expenses_grouped_by_catogory, total_expense_amount)
-      expenses_grouped_by_catogory.map do |catg_name, expenses|
+      expenses_grouped_by_catogory.map do |expense_category, expenses|
         {
-          name: categories[catg_name],
+          name: expense_category.name,
           percent_total: percent(total_expense_amount, total(expenses))
         }
       end

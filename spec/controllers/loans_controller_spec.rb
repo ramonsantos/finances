@@ -52,9 +52,11 @@ describe LoansController, type: :controller do
     end
 
     context 'with invalid params' do
-      it "returns a success response (i.e. to display the 'new' template)" do
-        post(:create, params: { loan: invalid_attributes })
-        expect(response).to be_successful
+      it 'does not creates a new Loan' do
+        expect do
+          post(:create, params: { loan: invalid_attributes })
+          expect(response).to be_successful
+        end.not_to change(Loan, :count)
       end
     end
   end

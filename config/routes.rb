@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
   resources :loans, except: [:edit]
 
+  resources :expense_categories, except: [:edit]
+
   resources :expense_groups, only: [:create, :destroy, :index]
 
   resources :places, only: [:create, :destroy, :index]

@@ -7,6 +7,7 @@ describe User, type: :model do
     it { is_expected.to have_many(:expenses).dependent(:delete_all) }
     it { is_expected.to have_many(:places).dependent(:delete_all) }
     it { is_expected.to have_many(:expense_groups).dependent(:delete_all) }
+    it { is_expected.to have_many(:expense_categories).dependent(:delete_all) }
   end
 
   context 'validations' do
