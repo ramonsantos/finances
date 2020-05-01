@@ -20,8 +20,8 @@ gem 'webpacker', '~> 4.0'
 
 group :development, :test do
   gem 'byebug'
-  gem 'factory_bot_rails', '~> 5.1', '>= 5.1.1'
-  gem 'pry-byebug'
+  gem 'factory_bot_rails', '~> 5.2'
+  gem 'pry-byebug', '~> 3.9'
   gem 'pry-rails'
   gem 'timecop'
 end
@@ -48,7 +48,7 @@ group :test do
   gem 'capybara', '~> 3.32'
   gem 'database_cleaner'
   gem 'rspec-rails', '~> 4.0.0'
-  gem 'shoulda-matchers', '~> 4.2'
+  gem 'shoulda-matchers', '~> 4.3'
   gem 'simplecov', '0.17.1'
 end
 
