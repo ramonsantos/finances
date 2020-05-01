@@ -6,7 +6,7 @@ class ExpenseCategoriesController < ApplicationController
   # GET /expense_categories
   # GET /expense_categories.json
   def index
-    @expense_categories = ExpenseCategory.all
+    @expense_categories = ExpenseCategory.where(user: current_user)
   end
 
   # GET /expense_categories/1
@@ -22,7 +22,7 @@ class ExpenseCategoriesController < ApplicationController
   # POST /expense_categories
   # POST /expense_categories.json
   def create
-    @expense_category = ExpenseCategory.new(expense_category_params)
+    @expense_category = ExpenseCategory.new(expense_category_params.merge!(user: current_user))
 
     respond_to do |format|
       if @expense_category.save
@@ -62,7 +62,7 @@ class ExpenseCategoriesController < ApplicationController
   private
 
   def set_expense_category
-    @expense_category = ExpenseCategory.find(params[:id])
+    @expense_category = ExpenseCategory.find_by(id: params[:id], user: current_user)
   end
 
   def expense_category_params
