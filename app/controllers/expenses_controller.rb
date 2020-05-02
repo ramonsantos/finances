@@ -124,7 +124,8 @@ class ExpensesController < ApplicationController
     return 'Arquivo CSV é obrigatório.' if params[:file].blank?
 
     file_path = params[:file].tempfile.path
-    CreateExpensesFromCsvJob.perform_later({ user_id: current_user.id, file_path: file_path })
+
+    CreateExpensesFromCsv.new(current_user, file_path).create_expenses
 
     'As despesas serão adicionadas em breve.'
   end

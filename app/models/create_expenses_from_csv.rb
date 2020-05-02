@@ -3,60 +3,118 @@
 class CreateExpensesFromCsv
   require 'csv'
 
-  EXPENSES_CSV_HEADER = 'Descrição,Valor,Data,Categoria,Grupo de Despesa,Local,Fixo?,Observações'
-
   def initialize(user, file_path)
     @user = user
     @file_path = file_path
+    @rows_detail = []
+    @total_success = 0
+    @total_errors = 0
   end
 
   def create_expenses
-    CSV.foreach(file_path, headers: true) do |row|
-      expenses_attributes = {
-        user: user,
-        description: row['Descrição'],
-        amount: amount(row['Valor']),
-        date: date(row['Data']),
-        expense_category_id: category(row['Categoria']),
-        place_id: place(row['Local']),
-        expense_group_id: expense_group(row['Grupo de Despesa']),
-        remark: row['Observações'],
-        fixed: fixed(row['Fixo?'])
-      }
-
-      Expense.create!(expenses_attributes)
-    end
+    CSV.foreach(@file_path, headers: true) { |row| create_expense(row) }
+    build_result
   end
 
   private
 
-  def build_expense_from_line(csv_line)
+  def create_expense(row)
+    Expense.create!(expense_attributes_from_row(row))
 
+    @total_success += 1
+    @rows_detail << build_row_detail(row)
+  rescue StandardError => e
+    @total_errors += 1
+    @rows_detail << build_row_detail(row, :error, e.message)
+  end
+
+  def build_result
+    {
+      rows_detail: @rows_detail,
+      total_success: @total_success,
+      total_errors: @total_errors
+    }
+  end
+
+  def expense_attributes_from_row(row)
+    {
+      user: @user,
+      description: description(row['Descrição']),
+      amount: amount(row['Valor']),
+      date: date(row['Data']),
+      expense_category_id: expense_category_id(row['Categoria']),
+      expense_group_id: expense_group_id(row['Grupo de Despesa']),
+      place_id: place_id(row['Local']),
+      fixed: fixed(row['Fixo?']),
+      remark: row['Observações']
+    }
+  end
+
+  def build_row_detail(row, result = :success, message = nil)
+    {
+      row: row.to_s.strip,
+      result: result,
+      message: message
+    }
+  end
+
+  def description(value)
+    return value if value.present?
+
+    raise 'Descrição não pode fica em branco'
   end
 
   def amount(value)
-    value.gsub(/[R$ ]/, '').tr(',', '.').to_f
-  end
+    raise 'Valor não pode fica em branco' if value.blank?
 
-  def fixed(value)
-    value.casecmp('sim').zero?
-  end
+    amount = value.gsub(/[R$ .]/, '').tr(',', '.').to_f
 
-  def expense_group(value)
-    ExpenseGroup.find_by(name: value).id
-  end
-
-  def place(value)
-    Place.find_by(name: value).id
-  end
-
-  def category(value)
-    # TODO - Chance Category from enum to model
-    'Alimentação'
+    amount >= 0.1 ? amount : raise('Formato de Valor inválido')
   end
 
   def date(value)
-    # TODO - implement
-    Date.current
+    raise 'Data não pode fica em branco' if value.blank?
+
+    begin
+      Date.strptime(value, '%d/%m/%y')
+    rescue StandardError
+      raise('Formato de Data inválido')
+    end
+  end
+
+  def expense_category_id(value)
+    raise 'Categoria não pode fica em branco' if value.blank?
+
+    begin
+      ExpenseCategory.find_by(name: value, user: @user).id
+    rescue StandardError
+      raise 'Categoria não encontrada'
+    end
+  end
+
+  def expense_group_id(value)
+    raise 'Grupo de Despesa não pode fica em branco' if value.blank?
+
+    begin
+      ExpenseGroup.find_by(name: value, user: @user).id
+    rescue StandardError
+      raise 'Grupo de Despesa não encontrado'
+    end
+  end
+
+  def place_id(value)
+    raise 'Local não pode fica em branco' if value.blank?
+
+    begin
+      Place.find_by(name: value, user: @user).id
+    rescue StandardError
+      raise 'Local não encontrado'
+    end
+  end
+
+  def fixed(value)
+    raise 'Fixo? não pode fica em branco' if value.blank?
+
+    value.casecmp('sim').zero?
   end
 end
