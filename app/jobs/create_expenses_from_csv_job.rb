@@ -4,16 +4,18 @@ class CreateExpensesFromCsvJob < ApplicationJob
   queue_as :create_expenses_by_csv
 
   def perform(data)
-    raise if file_path(data).blank?
+    raise if blob_key(data).blank?
     raise if user(data).blank?
 
-    CreateExpensesFromCsv.new(user, file_path).create_expenses
+    blob.open(tmpdir: Dir.tmpdir) do |file|
+      CreateExpensesFromCsv.new(user, file.path).create_expenses
+    end
   end
 
   private
 
-  def file_path(data = nil)
-    @file_path ||= data.try(:fetch, :file_path)
+  def blob_key(data = nil)
+    @blob_key ||= data.try(:fetch, :blob_key)
   end
 
   def user(data = nil)
@@ -24,5 +26,13 @@ class CreateExpensesFromCsvJob < ApplicationJob
     return nil if user_id.blank?
 
     User.find(user_id)
+  end
+
+  def blob
+    @blob ||= fetch_blob
+  end
+
+  def fetch_blob
+    ActiveStorage::Blob.find_by(key: blob_key)
   end
 end

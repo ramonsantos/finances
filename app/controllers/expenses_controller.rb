@@ -123,10 +123,16 @@ class ExpensesController < ApplicationController
   def enqueue_create_from_csv
     return 'Arquivo CSV é obrigatório.' if params[:file].blank?
 
-    file_path = params[:file].tempfile.path
-
-    CreateExpensesFromCsvJob.perform_later({ user_id: current_user.id, file_path: file_path })
+    CreateExpensesFromCsvJob.perform_later({ user_id: current_user.id, blob_key: blob.key })
 
     'As despesas serão adicionadas em breve.'
+  end
+
+  def blob
+    ActiveStorage::Blob.create_after_upload!(
+      io: params[:file],
+      filename: params[:file].original_filename,
+      content_type: params[:file].content_type
+    )
   end
 end
