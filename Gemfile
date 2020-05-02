@@ -6,6 +6,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.1'
 
 gem 'bootsnap', '~> 1.4', '>= 1.4.6', require: false
+gem 'daemons'
+gem 'delayed_job_active_record'
 gem 'devise'
 gem 'dotenv-rails'
 gem 'foreman'
