@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-class CreateExpensesByCsvJob < ApplicationJob
+class CreateExpensesFromCsvJob < ApplicationJob
   queue_as :create_expenses_by_csv
 
   def perform(data)
     raise if file_path(data).blank?
     raise if user(data).blank?
 
-    CreateExpensesByCsv.new(user, file_path).create_expenses
+    CreateExpensesFromCsv.new(user, file_path).create_expenses
   end
 
   private

@@ -2,7 +2,7 @@
   <div class="col-sm-12">
     <h1>Adicionar Despesa por CSV</h1>
 
-    <%= form_with(url: create_by_csv_expenses_path, local: true, method: :post) do |form| %>
+    <%= form_with(url: create_from_csv_expenses_path, local: true, method: :post) do |form| %>
       <div class="inline-form"">
         <div class="field">
           <%= form.file_field :file, multiple: false, required: true, class: 'form-control-file' %>

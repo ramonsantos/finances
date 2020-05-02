@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   resources :expenses do
     collection do
       get :report
-      get :new_by_csv
-      post :create_by_csv
+      get :new_from_csv
+      post :create_from_csv
     end
   end
 

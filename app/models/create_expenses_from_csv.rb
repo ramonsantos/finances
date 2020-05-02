@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
-class CreateExpensesByCsv
+class CreateExpensesFromCsv
   require 'csv'
-
-  attr_reader :user
-  attr_reader :file_path
 
   EXPENSES_CSV_HEADER = 'Descrição,Valor,Data,Categoria,Grupo de Despesa,Local,Fixo?,Observações'
 
@@ -20,7 +17,7 @@ class CreateExpensesByCsv
         description: row['Descrição'],
         amount: amount(row['Valor']),
         date: date(row['Data']),
-        category: category(row['Categoria']),
+        expense_category_id: category(row['Categoria']),
         place_id: place(row['Local']),
         expense_group_id: expense_group(row['Grupo de Despesa']),
         remark: row['Observações'],
@@ -32,6 +29,10 @@ class CreateExpensesByCsv
   end
 
   private
+
+  def build_expense_from_line(csv_line)
+
+  end
 
   def amount(value)
     value.gsub(/[R$ ]/, '').tr(',', '.').to_f
