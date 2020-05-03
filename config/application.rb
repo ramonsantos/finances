@@ -25,9 +25,6 @@ module Finances
     # Don't generate system test files.
     config.generators.system_tests = nil
 
-    # ActiveJob
-    config.active_job.queue_adapter = :delayed_job
-
     # Localization
     config.i18n.default_locale = :"pt-BR"
     config.i18n.available_locales = :"pt-BR"
