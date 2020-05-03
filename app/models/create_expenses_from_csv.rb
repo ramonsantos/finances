@@ -9,6 +9,9 @@ class CreateExpensesFromCsv
     @rows_detail = []
     @total_success = 0
     @total_errors = 0
+    @expense_categories = {}
+    @expense_groups = {}
+    @places = {}
   end
 
   def create_expenses
@@ -42,9 +45,9 @@ class CreateExpensesFromCsv
       description: description(row['Descrição']),
       amount: amount(row['Valor']),
       date: date(row['Data']),
-      expense_category_id: expense_category_id(row['Categoria']),
-      expense_group_id: expense_group_id(row['Grupo de Despesa']),
-      place_id: place_id(row['Local']),
+      expense_category: expense_category(row['Categoria']),
+      expense_group: expense_group(row['Grupo de Despesa']),
+      place: place(row['Local']),
       fixed: fixed(row['Fixo?']),
       remark: row['Observações']
     }
@@ -82,34 +85,34 @@ class CreateExpensesFromCsv
     end
   end
 
-  def expense_category_id(value)
+  def expense_category(value)
     raise 'Categoria não pode fica em branco' if value.blank?
 
-    begin
-      ExpenseCategory.find_by(name: value, user: @user).id
-    rescue StandardError
-      raise 'Categoria não encontrada'
-    end
+    @expense_categories[value] ||= fetch_expense_category(value)
   end
 
-  def expense_group_id(value)
+  def fetch_expense_category(value)
+    ExpenseCategory.find_by(name: value, user: @user) || raise('Categoria não encontrada')
+  end
+
+  def expense_group(value)
     raise 'Grupo de Despesa não pode fica em branco' if value.blank?
 
-    begin
-      ExpenseGroup.find_by(name: value, user: @user).id
-    rescue StandardError
-      raise 'Grupo de Despesa não encontrado'
-    end
+    @expense_groups[value] ||= fetch_expense_group(value)
   end
 
-  def place_id(value)
+  def fetch_expense_group(value)
+    ExpenseGroup.find_by(name: value, user: @user) || raise('Grupo de Despesa não encontrado')
+  end
+
+  def place(value)
     raise 'Local não pode fica em branco' if value.blank?
 
-    begin
-      Place.find_by(name: value, user: @user).id
-    rescue StandardError
-      raise 'Local não encontrado'
-    end
+    @places[value] ||= fetch_place(value)
+  end
+
+  def fetch_place(value)
+    Place.find_by(name: value, user: @user) || raise('Local não encontrado')
   end
 
   def fixed(value)
