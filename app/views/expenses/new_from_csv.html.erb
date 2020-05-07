@@ -1,5 +1,15 @@
 <section class="form-section">
   <div class="col-sm-12">
+    <% if notice %>
+      <div class="alert alert-primary alert-dismissible fade show" role="alert">
+        <%= notice %>
+
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <% end %>
+
     <h1>Adicionar Despesa por CSV</h1>
 
     <%= form_with(url: create_from_csv_expenses_path, local: true, method: :post) do |form| %>
@@ -8,9 +18,37 @@
           <%= form.file_field :file, multiple: false, required: true, class: 'form-control-file' %>
         </div>
 
-          <div class="actions col-md-2">
-            <%= form.submit('Carregar Arquivo', class: 'btn btn-primary') %>
-          </div>
+        <div class="actions col-md-2">
+          <%= form.submit('Carregar Arquivo', class: 'btn btn-primary') %>
+        </div>
+      </div>
+    <% end %>
+
+    <br>
+
+    <% if @results.try(:dig, :rows_detail).present? %>
+      <h2>Resultados</h2>
+
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Linha</th>
+              <th scope="col">Resultado</th>
+              <th scope="col">Detalhes</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @results[:rows_detail].each do |row_detail| %>
+              <tr>
+                <td scope="row"><%= row_detail[:row] %></td>
+                <td scope="row"><%= row_detail[:result] %></td>
+                <td scope="row"><%= row_detail[:message] %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
     <% end %>
   </div>

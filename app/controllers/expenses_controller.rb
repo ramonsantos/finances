@@ -33,6 +33,7 @@ class ExpensesController < ApplicationController
 
   # GET /expenses/new_from_csv
   def new_from_csv
+    @results = {}
   end
 
   # POST /expenses
@@ -53,7 +54,12 @@ class ExpensesController < ApplicationController
 
   # POST /expenses/create_from_csv
   def create_from_csv
-    redirect_to expenses_path, notice: enqueue_create_from_csv
+    if params[:file].blank?
+      redirect_to(new_from_csv_expenses_path, notice: 'Arquivo CSV é obrigatório.')
+    else
+      @results = enqueue_create_from_csv
+      render(:new_from_csv)
+    end
   end
 
   # PATCH/PUT /expenses/1
@@ -121,12 +127,10 @@ class ExpensesController < ApplicationController
   end
 
   def enqueue_create_from_csv
-    return 'Arquivo CSV é obrigatório.' if params[:file].blank?
-
-    file_path = params[:file].tempfile.path
-
     CreateExpensesFromCsv.new(current_user, file_path).create_expenses
+  end
 
-    'As despesas serão adicionadas em breve.'
+  def file_path
+    params[:file].tempfile.path
   end
 end

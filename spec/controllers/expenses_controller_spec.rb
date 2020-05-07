@@ -103,9 +103,6 @@ describe ExpensesController, type: :controller do
         expect do
           post(:create_from_csv, params: { file: file })
         end.to change(Expense, :count).by(2)
-
-        expect(flash[:notice]).to eq('As despesas serão adicionadas em breve.')
-        expect(response).to redirect_to(expenses_path)
       end
     end
 
@@ -113,10 +110,12 @@ describe ExpensesController, type: :controller do
       let(:file) { nil }
 
       it 'does not creates Expenses' do
-        post(:create_from_csv, params: { file: file })
+        expect do
+          post(:create_from_csv, params: { file: file })
+        end.not_to change(Expense, :count)
 
         expect(flash[:notice]).to eq('Arquivo CSV é obrigatório.')
-        expect(response).to redirect_to(expenses_path)
+        expect(response).to redirect_to(new_from_csv_expenses_path)
       end
     end
   end
