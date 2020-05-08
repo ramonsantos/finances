@@ -65,15 +65,29 @@ Style/WordArray:
   StyleGuide: '#percent-w'
   Enabled: false
 
+# Pending
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
+
+Style/ExponentialNotation:
+  Enabled: true
 
 
 # Rails
 Rails/FilePath:
   Enabled: false
 
+
 # Capybara
 Capybara/FeatureMethods:
   Enabled: false
+
 
 # Rubocop RSpec
 RSpec/ContextWording:

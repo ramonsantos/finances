@@ -34,7 +34,7 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'rack-mini-profiler', '~> 2.0', '>= 2.0.1', require: false
   gem 'rails_best_practices'
-  gem 'rubocop', '~> 0.80.0'
+  gem 'rubocop', '~> 0.82.0'
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
