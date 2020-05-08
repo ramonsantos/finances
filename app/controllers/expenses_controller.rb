@@ -7,7 +7,6 @@ class ExpensesController < ApplicationController
   before_action :expense_categories, only: [:new, :show]
 
   # GET /expenses
-  # GET /expenses.json
   def index
     @expenses = Expense.fetch_by_month(current_user, expense_month).page(params[:page])
     @current_expense_month = expense_month
@@ -21,7 +20,6 @@ class ExpensesController < ApplicationController
   end
 
   # GET /expenses/1
-  # GET /expenses/1.json
   def show
     @current_expense_month = expense_month
   end
@@ -37,18 +35,13 @@ class ExpensesController < ApplicationController
   end
 
   # POST /expenses
-  # POST /expenses.json
   def create
     @expense = Expense.new(expense_params.merge!(user: current_user))
 
-    respond_to do |format|
-      if @expense.save
-        format.html { redirect_to expenses_path, notice: 'Despesa adicionada.' }
-        format.json { render :show, status: :created, location: @expense }
-      else
-        format.html { render :new }
-        format.json { render json: @expense.errors, status: :unprocessable_entity }
-      end
+    if @expense.save
+      redirect_to(expenses_path, notice: 'Despesa adicionada.')
+    else
+      render(:new)
     end
   end
 
@@ -63,27 +56,18 @@ class ExpensesController < ApplicationController
   end
 
   # PATCH/PUT /expenses/1
-  # PATCH/PUT /expenses/1.json
   def update
-    respond_to do |format|
-      if @expense.update(expense_params)
-        format.html { redirect_to expenses_path(expense_month: expense_month), notice: 'Despesa atualizada.' }
-        format.json { render :show, status: :ok, location: @expense }
-      else
-        format.html { render :show }
-        format.json { render json: @expense.errors, status: :unprocessable_entity }
-      end
+    if @expense.update(expense_params)
+      redirect_to(expenses_path(expense_month: expense_month), notice: 'Despesa atualizada.')
+    else
+      render(:show)
     end
   end
 
   # DELETE /expenses/1
-  # DELETE /expenses/1.json
   def destroy
     @expense.destroy
-    respond_to do |format|
-      format.html { redirect_to expenses_path(expense_month: expense_month), notice: 'Despesa removida.' }
-      format.json { head :no_content }
-    end
+    redirect_to(expenses_path(expense_month: expense_month), notice: 'Despesa removida.')
   end
 
   private
