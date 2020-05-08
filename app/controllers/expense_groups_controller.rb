@@ -51,7 +51,7 @@ class ExpenseGroupsController < ApplicationController
   def destroy_expense_group
     fetch_expense_group.destroy
     true
-  rescue
+  rescue StandardError
     false
   end
 end

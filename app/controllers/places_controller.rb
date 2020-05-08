@@ -51,7 +51,7 @@ class PlacesController < ApplicationController
   def destroy_place
     fetch_place.destroy
     true
-  rescue
+  rescue StandardError
     false
   end
 end

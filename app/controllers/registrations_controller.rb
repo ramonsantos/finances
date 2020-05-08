@@ -17,7 +17,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def place_params
     params.require(:user).require(:places).permit(:name)
-  rescue
+  rescue StandardError
     nil
   end
 
