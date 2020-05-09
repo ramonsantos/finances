@@ -5,7 +5,8 @@ class LoansController < ApplicationController
 
   # GET /loans
   def index
-    @loans = Loan.fetch_order_by_loan_date(current_user).page(params[:page])
+    @loans = Loan.fetch_order_by_loan_date(current_user, {}).page(params[:page])
+    @amount_of_loans_to_receive = Loan.fetch_amount_of_loans_to_receive(current_user)
   end
 
   # GET /loans/1

@@ -68,7 +68,7 @@ describe Expense, type: :model do
 
     let(:total) { described_class.fetch_total_monthly_spend(User.first, Date.parse('2020-02-21')) }
 
-    it 'returns total  monthly spend' do
+    it 'returns total monthly spend' do
       expect(total).to eq(23.92)
     end
   end

@@ -28,6 +28,7 @@ describe Loan, type: :model do
     before do
       create(:loan)
       create(:loan, loan_date: Date.parse('2020-03-15'))
+      create(:loan, loan_date: Date.parse('2020-03-15'), received_amount: 110.0)
     end
 
     describe '.fetch_order_by_loan_date' do
@@ -38,6 +39,21 @@ describe Loan, type: :model do
         expect(loans.first.loan_date).to eq(Date.parse('2020-03-06'))
         expect(loans.last.loan_date).to eq(Date.parse('2020-03-15'))
       end
+    end
+  end
+
+  describe '.fetch_amount_of_loans_to_receive' do
+    before do
+      create(:loan)
+      create(:loan, borrowed_amount: 52.62)
+      create(:loan, borrowed_amount: 2.42)
+      create(:loan, received_amount: 110.00)
+    end
+
+    let(:total) { described_class.fetch_amount_of_loans_to_receive(User.first) }
+
+    it 'returns amount of loans to receive' do
+      expect(total).to eq(155.54)
     end
   end
 end
