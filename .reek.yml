@@ -72,11 +72,11 @@ detectors:
     exclude: []
     max_constants: 5
   TooManyInstanceVariables:
-    enabled: true
+    enabled: false
     exclude: []
     max_instance_variables: 4
   TooManyMethods:
-    enabled: true
+    enabled: false
     exclude: []
     max_methods: 15
   TooManyStatements:
@@ -124,6 +124,6 @@ detectors:
     enabled: false
     exclude: []
   UtilityFunction:
-    enabled: true
+    enabled: false
     exclude: []
     public_methods_only: false
