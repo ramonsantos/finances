@@ -17,8 +17,6 @@ feature 'Loan', type: :feature do
       expect(page).to have_selector('input', id: 'loan_description')
       expect(page).to have_selector('input', id: 'loan_borrowed_amount')
       expect(page).to have_selector('input', id: 'loan_loan_date')
-      expect(page).to have_selector('input', id: 'loan_expected_amount_to_receive')
-      expect(page).to have_selector('input', id: 'loan_estimated_receipt_at')
       expect(page).to have_selector('input', id: 'loan_received_amount')
       expect(page).to have_selector('input', id: 'loan_received_at')
       expect(page).to have_selector(:link_or_button, 'Salvar')
@@ -28,12 +26,10 @@ feature 'Loan', type: :feature do
       let(:loan) { Loan.where(user: user).last }
 
       before do
-        fill_in('Pessoa',                     with: 'Maria')
-        fill_in('Descrição',                  with: 'Comprar Livro')
-        fill_in('Valor do Empréstimo',        with: '14.99')
-        fill_in('Valor Esperado Receber',     with: '15.99')
-        fill_in('Data do Empréstimo',         with: I18n.l(Date.parse('Feb 21 2020'), format: '%Y-%m-%d'))
-        fill_in('Data Estimada para Receber', with: I18n.l(Date.parse('Mar 21 2020'), format: '%Y-%m-%d'))
+        fill_in('Pessoa',              with: 'Maria')
+        fill_in('Descrição',           with: 'Comprar Livro')
+        fill_in('Valor do Empréstimo', with: '14.99')
+        fill_in('Data do Empréstimo',  with: I18n.l(Date.parse('Feb 21 2020'), format: '%Y-%m-%d'))
       end
 
       scenario 'creates loan' do
@@ -43,8 +39,6 @@ feature 'Loan', type: :feature do
         expect(loan.description).to eq('Comprar Livro')
         expect(loan.borrowed_amount).to eq(14.99)
         expect(loan.loan_date).to eq(Date.parse('Feb 21 2020'))
-        expect(loan.estimated_receipt_at).to eq(Date.parse('Mar 21 2020'))
-        expect(loan.expected_amount_to_receive).to eq(15.99)
         expect(loan.received_amount).to be_blank
         expect(loan.received_at).to be_blank
         expect(page).to have_content('Empréstimo adicionado.')
@@ -59,8 +53,6 @@ feature 'Loan', type: :feature do
         expect(loan.description).to eq('Comprar Livro')
         expect(loan.borrowed_amount).to eq(14.99)
         expect(loan.loan_date).to eq(Date.parse('Feb 21 2020'))
-        expect(loan.estimated_receipt_at).to eq(Date.parse('Mar 21 2020'))
-        expect(loan.expected_amount_to_receive).to eq(15.99)
         expect(loan.received_amount).to eq(15.4)
         expect(loan.received_at).to eq(Time.zone.today)
         expect(page).to have_content('Empréstimo adicionado.')

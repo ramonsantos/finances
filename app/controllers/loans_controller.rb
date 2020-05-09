@@ -55,10 +55,8 @@ class LoansController < ApplicationController
     params.require(:loan).permit(
       :description,
       :loan_date,
-      :estimated_receipt_at,
       :received_at,
       :borrowed_amount,
-      :expected_amount_to_receive,
       :person,
       :received_amount
     ).tap do |hash|

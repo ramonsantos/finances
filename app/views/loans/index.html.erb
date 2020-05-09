@@ -21,9 +21,6 @@
           <th scope="col">Descrição</th>
           <th scope="col">Valor</th>
           <th scope="col">Data</th>
-
-          <th scope="col">Valor Esperado Receber</th>
-          <th scope="col">Data Estimada para Receber</th>
           <th scope="col">Valor Recebido</th>
           <th scope="col">Recebido em</th>
           <th scope="col" colspan="3"></th>
@@ -37,8 +34,6 @@
             <td><%= loan.description %></td>
             <td class="td-right"><%= format_to_money(loan.borrowed_amount) %></td>
             <td class="td-right"><%= format_date(loan.loan_date) %></td>
-            <td class="td-right"><%= format_to_money(loan.expected_amount_to_receive) %></td>
-            <td class="td-right"><%= format_date(loan.estimated_receipt_at) %></td>
             <td class="td-right"><%= format_to_money(loan.received_amount) %></td>
             <td class="td-right"><%= format_date(loan.received_at) %></td>
             <td class="td-center"><%= link_to 'Editar', loan_path(loan), class: 'btn btn-primary btn-sm' %></td>

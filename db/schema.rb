@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_02_211245) do
+ActiveRecord::Schema.define(version: 2020_05_09_144542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,14 +52,12 @@ ActiveRecord::Schema.define(version: 2020_05_02_211245) do
 
   create_table "loans", force: :cascade do |t|
     t.date "loan_date"
-    t.date "estimated_receipt_at"
     t.date "received_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "description_ciphertext"
     t.text "person_ciphertext"
     t.text "borrowed_amount_ciphertext"
-    t.text "expected_amount_to_receive_ciphertext"
     t.text "received_amount_ciphertext"
     t.bigint "user_id"
     t.index ["user_id"], name: "index_loans_on_user_id"

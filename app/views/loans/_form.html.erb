@@ -38,22 +38,6 @@
   </div>
 
   <div class="field form-group col-md-4">
-    <%= form.label :expected_amount_to_receive, 'Valor Esperado Receber' %>
-    <%= form.text_field(
-      :expected_amount_to_receive,
-      oninput: only_numbers_script,
-      required: false,
-      class: 'form-control',
-      value: formated_float_value(loan.expected_amount_to_receive)
-    )%>
-  </div>
-
-  <div class="field form-group col-md-4">
-    <%= form.label :estimated_receipt_at, 'Data Estimada para Receber' %>
-    <%= form.text_field :estimated_receipt_at, class: 'form-control', type: 'date', value: date_field(loan.estimated_receipt_at) %>
-  </div>
-
-  <div class="field form-group col-md-4">
     <%= form.label :received_amount, 'Valor Recebido' %>
     <%= form.text_field(
       :received_amount,

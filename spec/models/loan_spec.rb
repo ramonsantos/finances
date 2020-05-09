@@ -18,8 +18,6 @@ describe Loan, type: :model do
       end
 
       context 'when false' do
-        it { is_expected.not_to validate_presence_of(:estimated_receipt_at) }
-        it { is_expected.not_to validate_presence_of(:expected_amount_to_receive) }
         it { is_expected.not_to validate_presence_of(:received_amount) }
         it { is_expected.not_to validate_presence_of(:received_at) }
       end

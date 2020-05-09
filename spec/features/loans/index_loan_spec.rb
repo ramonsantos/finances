@@ -18,8 +18,6 @@ feature 'Loans', type: :feature do
         expect(page).to have_selector('th', text: 'Descrição')
         expect(page).to have_selector('th', text: 'Valor')
         expect(page).to have_selector('th', text: 'Data')
-        expect(page).to have_selector('th', text: 'Valor Esperado Receber')
-        expect(page).to have_selector('th', text: 'Data Estimada para Receber')
         expect(page).to have_selector('th', text: 'Valor Recebido')
         expect(page).to have_selector('th', text: 'Recebido em')
 
@@ -37,10 +35,8 @@ feature 'Loans', type: :feature do
         expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[2]').text).to eq(loan.description)
         expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[3]').text).to eq('100,50 R$')
         expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[4]').text).to eq('06/03/2020')
-        expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[5]').text).to eq('110,00 R$')
-        expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[6]').text).to eq('06/04/2020')
-        expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[7]').text).to be_blank
-        expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[8]').text).to be_blank
+        expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[5]').text).to be_blank
+        expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[6]').text).to be_blank
       end
     end
 

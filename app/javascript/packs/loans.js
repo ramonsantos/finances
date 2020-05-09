@@ -1,9 +1,6 @@
 var borrowedAmountElement = document.getElementById("loan_borrowed_amount");
 borrowedAmountElement.addEventListener("change", moneyFormatOnChange);
 
-var expectedAmountToReceiveElement = document.getElementById("loan_expected_amount_to_receive");
-expectedAmountToReceiveElement.addEventListener("change", moneyFormatOnChange);
-
 var receivedAmountElement = document.getElementById("loan_received_amount");
 receivedAmountElement.addEventListener("change", moneyFormatOnChange);
 
