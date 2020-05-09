@@ -103,9 +103,13 @@ class ExpensesController < ApplicationController
   end
 
   def expense_month
-    return Time.zone.today if params[:expense_month].blank?
+    @expense_month ||= choose_expense_month(params[:expense_month])
+  end
 
-    Date.parse(params[:expense_month])
+  def choose_expense_month(expense_month)
+    return Time.zone.today if expense_month.blank?
+
+    Date.parse(expense_month)
   end
 
   def enqueue_create_from_csv

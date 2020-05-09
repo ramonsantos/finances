@@ -23,7 +23,7 @@ detectors:
     max_calls: 1
     allow_calls: []
   FeatureEnvy:
-    enabled: true
+    enabled: false
     exclude: []
   InstanceVariableAssumption:
     enabled: false
@@ -117,6 +117,7 @@ detectors:
     - "/[A-Z]/"
     accept:
     - "/^_$/"
+    - e
   UnusedParameters:
     enabled: true
     exclude: []

@@ -11,35 +11,15 @@ module ExpensesHelper
   end
 
   def month_label(month, current_expense_month)
-    current_date = current_expense_month
-
-    case month
-    when :prev
-      build_month_label(current_date - 1.month)
-    when :current
-      build_month_label(current_date)
-    when :next
-      build_month_label(current_date + 1.month)
-    end
+    build_month_label(choose_date_by_month(current_expense_month, month))
   end
 
   def month_param(current_expense_month, month = :current)
-    current_date = current_expense_month
-
-    case month
-    when :prev
-      (current_date - 1.month).to_s
-    when :current
-      current_date.to_s
-    when :next
-      (current_date + 1.month).to_s
-    end
+    choose_date_by_month(current_expense_month, month).to_s
   end
 
   def fixed_label(fixed)
-    return 'Sim' if fixed
-
-    'Não'
+    fixed ? 'Sim' : 'Não'
   end
 
   def remark_preview(remark)
@@ -52,5 +32,9 @@ module ExpensesHelper
 
   def build_month_label(date)
     "#{(I18n.t :abbr_month_names, scope: :date)[date.month].capitalize}/#{date.year}"
+  end
+
+  def choose_date_by_month(current_date, month_sym)
+    current_date + { prev: -1, current: 0, next: 1 }[month_sym].month
   end
 end

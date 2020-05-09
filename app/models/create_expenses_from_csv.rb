@@ -68,7 +68,7 @@ class CreateExpensesFromCsv
   end
 
   def amount(value)
-    raise 'Valor não pode fica em branco' if value.blank?
+    raise_if_blank_value(value, 'Valor não pode fica em branco')
 
     amount = value.gsub(/[R$ .]/, '').tr(',', '.').to_f
 
@@ -76,7 +76,7 @@ class CreateExpensesFromCsv
   end
 
   def date(value)
-    raise 'Data não pode fica em branco' if value.blank?
+    raise_if_blank_value(value, 'Data não pode fica em branco')
 
     begin
       Date.strptime(value, '%d/%m/%y')
@@ -86,7 +86,7 @@ class CreateExpensesFromCsv
   end
 
   def expense_category(value)
-    raise 'Categoria não pode fica em branco' if value.blank?
+    raise_if_blank_value(value, 'Categoria não pode fica em branco')
 
     @expense_categories[value] ||= fetch_expense_category(value)
   end
@@ -96,7 +96,7 @@ class CreateExpensesFromCsv
   end
 
   def expense_group(value)
-    raise 'Grupo de Despesa não pode fica em branco' if value.blank?
+    raise_if_blank_value(value, 'Grupo de Despesa não pode fica em branco')
 
     @expense_groups[value] ||= fetch_expense_group(value)
   end
@@ -106,7 +106,7 @@ class CreateExpensesFromCsv
   end
 
   def place(value)
-    raise 'Local não pode fica em branco' if value.blank?
+    raise_if_blank_value(value, 'Local não pode fica em branco')
 
     @places[value] ||= fetch_place(value)
   end
@@ -116,8 +116,12 @@ class CreateExpensesFromCsv
   end
 
   def fixed(value)
-    raise 'Fixo? não pode fica em branco' if value.blank?
+    raise_if_blank_value(value, 'Fixo? não pode fica em branco')
 
     value.casecmp('sim').zero?
+  end
+
+  def raise_if_blank_value(value, message)
+    raise(message) if value.blank?
   end
 end
