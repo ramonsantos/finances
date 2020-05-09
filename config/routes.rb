@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { sessions: 'sessions', registrations: 'registrations' }
 
-  resources :expenses do
+  resources :expenses, except: [:edit] do
     collection do
       get :report
       get :new_from_csv

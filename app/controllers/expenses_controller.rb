@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ExpensesController < ApplicationController
+  include CreateAction
+
   before_action :set_expense,        only: [:destroy, :show, :update]
   before_action :places,             only: [:new, :show]
   before_action :expense_groups,     only: [:new, :show]
@@ -38,11 +40,7 @@ class ExpensesController < ApplicationController
   def create
     @expense = Expense.new(expense_params.merge!(user: current_user))
 
-    if @expense.save
-      redirect_to(expenses_path, notice: 'Despesa adicionada.')
-    else
-      render(:new)
-    end
+    create_action(@expense, expenses_path, 'Despesa adicionada.')
   end
 
   # POST /expenses/create_from_csv

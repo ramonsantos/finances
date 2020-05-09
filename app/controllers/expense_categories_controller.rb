@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ExpenseCategoriesController < ApplicationController
+  include CreateAction
+
   before_action :set_expense_category, only: [:show, :update, :destroy]
 
   # GET /expense_categories
@@ -21,11 +23,7 @@ class ExpenseCategoriesController < ApplicationController
   def create
     @expense_category = ExpenseCategory.new(expense_category_params.merge!(user: current_user))
 
-    if @expense_category.save
-      redirect_to(expense_categories_path, notice: 'Categoria de Despesa adicionada.')
-    else
-      render(:new)
-    end
+    create_action(@expense_category, expense_categories_path, 'Categoria de Despesa adicionada.')
   end
 
   # PATCH/PUT /expense_categories/1

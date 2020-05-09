@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class LoansController < ApplicationController
+  include CreateAction
+
   before_action :set_loan, only: [:show, :update, :destroy]
 
   # GET /loans
@@ -22,11 +24,7 @@ class LoansController < ApplicationController
   def create
     @loan = Loan.new(loan_params.merge!(user: current_user))
 
-    if @loan.save
-      redirect_to(loans_path, notice: 'Empréstimo adicionado.')
-    else
-      render(:new)
-    end
+    create_action(@loan, loans_path, 'Empréstimo adicionado.')
   end
 
   # PATCH/PUT /loans/1

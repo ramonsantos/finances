@@ -2,7 +2,8 @@
 
 module ExpensesHelper
   def formated_percent(value)
-    number_with_precision((value || 0.0).round(2), precision: 2)
+    value ||= 0.0
+    number_with_precision(value.round(2), precision: 2)
   end
 
   def current_option(expense, attribute_method, attribute_list)
@@ -36,7 +37,9 @@ module ExpensesHelper
   end
 
   def fixed_label(fixed)
-    fixed ? 'Sim' : 'Não'
+    return 'Sim' if fixed
+
+    'Não'
   end
 
   def remark_preview(remark)

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ExpenseGroupsController < ApplicationController
+  include CreateAction
+
   # GET /expense_groups
   def index
     @expense_groups = ExpenseGroup.where(user: current_user)
@@ -11,11 +13,7 @@ class ExpenseGroupsController < ApplicationController
   def create
     @expense_group = ExpenseGroup.new(expense_group_params.merge!(user: current_user))
 
-    if @expense_group.save
-      redirect_to(expense_groups_path, notice: 'Grupo de Despesas adicionado.')
-    else
-      render(:index)
-    end
+    create_action(@expense_group, expense_groups_path, 'Grupo de Despesas adicionado.', :index)
   end
 
   # DELETE /expense_groups/1
@@ -41,6 +39,8 @@ class ExpenseGroupsController < ApplicationController
   end
 
   def destroy_notice(result)
-    result ? 'Grupo de Despesas removido.' : 'Ocorreu um erro ao remover o grupo de despesas.'
+    return 'Grupo de Despesas removido.' if result
+
+    'Ocorreu um erro ao remover o grupo de despesas.'
   end
 end

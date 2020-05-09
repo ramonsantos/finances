@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class PlacesController < ApplicationController
+  include CreateAction
+
   # GET /places
   def index
     @places = Place.where(user: current_user)
@@ -11,11 +13,7 @@ class PlacesController < ApplicationController
   def create
     @place = Place.new(place_params.merge!(user: current_user))
 
-    if @place.save
-      redirect_to(places_path, notice: 'Local adicionado.')
-    else
-      render(:index)
-    end
+    create_action(@place, places_path, 'Local adicionado.', :index)
   end
 
   # DELETE /places/1
