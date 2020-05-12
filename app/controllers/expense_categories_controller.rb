@@ -7,7 +7,7 @@ class ExpenseCategoriesController < ApplicationController
 
   # GET /expense_categories
   def index
-    @expense_categories = ExpenseCategory.where(user: current_user)
+    @expense_categories = ExpenseCategory.where(user: current_user).order(:name)
   end
 
   # GET /expense_categories/1

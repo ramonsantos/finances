@@ -16,14 +16,10 @@ class User < ApplicationRecord
     ExpenseCategory.create!(
       [
         { user: self, name: 'Alimentação' },
-        { user: self, name: 'Doação e Presentes' },
         { user: self, name: 'Educação' },
         { user: self, name: 'Lazer' },
-        { user: self, name: 'Pet' },
         { user: self, name: 'Saúde' },
-        { user: self, name: 'Trabalho e Prospecção' },
-        { user: self, name: 'Transporte' },
-        { user: self, name: 'Vestuário e Cosmético' }
+        { user: self, name: 'Transporte' }
       ]
     )
   end

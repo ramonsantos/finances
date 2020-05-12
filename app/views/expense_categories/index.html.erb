@@ -1,42 +1,44 @@
-<% if notice %>
-  <div class="alert alert-primary alert-dismissible fade show" role="alert">
-    <%= notice %>
+<section class="col-md-12">
+  <% if notice %>
+    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+      <%= notice %>
 
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <% end %>
+
+  <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+    <h1>Categorias de Despesa</h1>
+
+    <div class="page-title-buttons">
+      <%= link_to 'Criar Categoria', new_expense_category_path, class: 'btn btn-primary btn-sm' %>
+    </div>
   </div>
-<% end %>
 
-<div class="col-sm-12 btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-  <h1>Categorias de Despesa</h1>
-
-  <div class="page-title-buttons">
-    <%= link_to 'Criar Categoria', new_expense_category_path, class: 'btn btn-primary btn-sm' %>
-  </div>
-</div>
-
-<div class="col-md-12">
-  <div class="table-responsive">
-    <table class="table table-hover table-bordered">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Nome</th>
-          <th scope="col">Descrição</th>
-          <th scope="col" colspan="3"></th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @expense_categories.each do |expense_category| %>
+  <div>
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered">
+        <thead class="thead-dark">
           <tr>
-            <td><%= expense_category.name %></td>
-            <td><%= expense_category.description %></td>
-            <td class="td-center"><%= link_to 'Editar', expense_category_path(expense_category), class: 'btn btn-primary btn-sm' %></td>
-            <td class="td-center"><%= link_to 'Remover', expense_category, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn btn-danger btn-sm' %></td>
+            <th scope="col">Nome</th>
+            <th scope="col">Descrição</th>
+            <th scope="col" colspan="3"></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+          <% @expense_categories.each do |expense_category| %>
+            <tr>
+              <td><%= expense_category.name %></td>
+              <td><%= expense_category.description %></td>
+              <td class="td-center"><%= link_to 'Editar', expense_category_path(expense_category), class: 'btn btn-primary btn-sm' %></td>
+              <td class="td-center"><%= link_to 'Remover', expense_category, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn btn-danger btn-sm' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
+</section>

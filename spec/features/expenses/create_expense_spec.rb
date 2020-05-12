@@ -24,14 +24,10 @@ feature 'Expenses', type: :feature do
     let(:category_options) do
       [
         'Alimentação',
-        'Doação e Presentes',
         'Educação',
         'Lazer',
-        'Pet',
         'Saúde',
-        'Trabalho e Prospecção',
-        'Transporte',
-        'Vestuário e Cosmético'
+        'Transporte'
       ]
     end
 
