@@ -23,12 +23,12 @@ class Expense < ApplicationRecord
 
   scope :fetch_by_month, lambda { |user, date|
     where(user: user, date: date.beginning_of_month..date.end_of_month)
-      .order(:date).includes(:place, :expense_group)
+      .order(:date).includes(:place, :expense_group, :expense_category)
   }
 
   scope :fetch_expenses_grouped_by_groups, lambda { |user, date|
     where(user: user, date: date.beginning_of_month..date.end_of_month)
-      .includes(:expense_group).group_by { |expense| expense.expense_group.name }
+      .includes(:expense_group, :expense_category).group_by { |expense| expense.expense_group.name }
   }
 
   class << self
