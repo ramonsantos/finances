@@ -31,10 +31,20 @@
         <tbody>
           <% @expense_categories.each do |expense_category| %>
             <tr>
-              <td><%= expense_category.name %></td>
+            <td><%= expense_category.name %></td>
               <td><%= expense_category.description %></td>
               <td class="td-center"><%= link_to 'Editar', expense_category_path(expense_category), class: 'btn btn-primary btn-sm' %></td>
-              <td class="td-center"><%= link_to 'Remover', expense_category, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn btn-danger btn-sm' %></td>
+              <td class="td-center">
+                <% if (@expense_categories.count > 1) && (expense_category.expenses_count.zero?) %>
+                  <%= link_to(
+                    'Remover',
+                    expense_category_path(expense_category),
+                    method: :delete,
+                    data: { confirm: 'Você tem certeza?' },
+                    class: 'btn btn-danger btn-sm'
+                  ) %>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         </tbody>
