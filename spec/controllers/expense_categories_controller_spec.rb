@@ -92,20 +92,35 @@ describe ExpenseCategoriesController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    it 'destroys the requested expense_category' do
-      expect do
+    context 'when success' do
+      it 'destroys the requested expense_category' do
+        expect do
+          delete(:destroy, params: { id: expense_category.to_param })
+        end.to change(ExpenseCategory, :count).by(-1)
+      end
+
+      it 'shows flash notice' do
         delete(:destroy, params: { id: expense_category.to_param })
-      end.to change(ExpenseCategory, :count).by(-1)
+        expect(flash[:notice]).to eq('Categoria de Despesa removida.')
+      end
+
+      it 'redirects to the expense_categories list' do
+        delete(:destroy, params: { id: expense_category.to_param })
+        expect(response).to redirect_to(expense_categories_url)
+      end
     end
 
-    it 'shows flash notice' do
-      delete(:destroy, params: { id: expense_category.to_param })
-      expect(flash[:notice]).to eq('Categoria de Despesa removida.')
-    end
+    context 'when error' do
+      before { create(:expense, expense_category_id: expense_category.id) }
 
-    it 'redirects to the expense_categories list' do
-      delete(:destroy, params: { id: expense_category.to_param })
-      expect(response).to redirect_to(expense_categories_url)
+      it 'does not destroy the Expense Category' do
+        expect do
+          delete(:destroy, params: { id: expense_category.to_param })
+        end.not_to change(ExpenseCategory, :count)
+
+        expect(response).to redirect_to(expense_categories_url)
+        expect(flash[:alert]).to eq('Error ao remover Categoria de Despesa.')
+      end
     end
   end
 end

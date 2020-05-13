@@ -37,8 +37,7 @@ class ExpenseCategoriesController < ApplicationController
 
   # DELETE /expense_categories/1
   def destroy
-    @expense_category.destroy
-    redirect_to(expense_categories_url, notice: 'Categoria de Despesa removida.')
+    redirect_to(expense_categories_url, try_destroy)
   end
 
   private
@@ -49,5 +48,12 @@ class ExpenseCategoriesController < ApplicationController
 
   def expense_category_params
     params.require(:expense_category).permit(:name, :description)
+  end
+
+  def try_destroy
+    @expense_category.destroy
+    { notice: 'Categoria de Despesa removida.' }
+  rescue StandardError
+    { alert: 'Error ao remover Categoria de Despesa.' }
   end
 end
