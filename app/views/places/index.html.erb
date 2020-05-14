@@ -25,7 +25,15 @@
             <tr>
               <td scope="row"><%= place.name %></td>
               <td class="td-center">
-                <%= link_to('Remover', place, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn btn-danger btn-sm') %>
+                <% if (@places.count > 1) && (place.expenses_count.zero?) %>
+                  <%= link_to(
+                    'Remover',
+                    place,
+                    method: :delete,
+                    data: { confirm: 'Você tem certeza?' },
+                    class: 'btn btn-danger btn-sm'
+                  ) %>
+                <% end %>
               </td>
             </tr>
           <% end %>

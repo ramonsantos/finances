@@ -8,7 +8,7 @@ describe Expense, type: :model do
 
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
-    it { is_expected.to belong_to(:place) }
+    it { is_expected.to belong_to(:place).counter_cache(true) }
     it { is_expected.to belong_to(:expense_group) }
     it { is_expected.to belong_to(:expense_category).counter_cache(true) }
   end

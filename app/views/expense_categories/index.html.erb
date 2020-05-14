@@ -31,7 +31,7 @@
         <tbody>
           <% @expense_categories.each do |expense_category| %>
             <tr>
-            <td><%= expense_category.name %></td>
+              <td><%= expense_category.name %></td>
               <td><%= expense_category.description %></td>
               <td class="td-center"><%= link_to 'Editar', expense_category_path(expense_category), class: 'btn btn-primary btn-sm' %></td>
               <td class="td-center">

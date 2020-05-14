@@ -4,7 +4,7 @@ class Expense < ApplicationRecord
   paginates_per 20
 
   belongs_to :user
-  belongs_to :place
+  belongs_to :place,            counter_cache: true
   belongs_to :expense_group
   belongs_to :expense_category, counter_cache: true
 

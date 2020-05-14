@@ -82,7 +82,7 @@ describe PlacesController, type: :controller do
 
       it 'shows flash notice' do
         delete(:destroy, params: params)
-        expect(flash[:notice]).to eq('Ocorreu um erro ao remover o local.')
+        expect(flash[:alert]).to eq('Ocorreu um erro ao remover o local.')
       end
 
       it 'redirects to the places list' do

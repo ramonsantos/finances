@@ -18,11 +18,7 @@ class PlacesController < ApplicationController
 
   # DELETE /places/1
   def destroy
-    if destroy_place
-      redirect_to(places_path, notice: 'Local removido.')
-    else
-      redirect_to(places_path, notice: 'Ocorreu um erro ao remover o local.')
-    end
+    redirect_to(places_path, try_destroy)
   end
 
   private
@@ -35,10 +31,10 @@ class PlacesController < ApplicationController
     Place.find(params[:id])
   end
 
-  def destroy_place
+  def try_destroy
     fetch_place.destroy
-    true
+    { notice: 'Local removido.' }
   rescue StandardError
-    false
+    { alert: 'Ocorreu um erro ao remover o local.' }
   end
 end
