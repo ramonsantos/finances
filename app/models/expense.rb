@@ -5,7 +5,7 @@ class Expense < ApplicationRecord
 
   belongs_to :user
   belongs_to :place,            counter_cache: true
-  belongs_to :expense_group
+  belongs_to :expense_group,    counter_cache: true
   belongs_to :expense_category, counter_cache: true
 
   validates :description,      presence: true

@@ -24,7 +24,17 @@
           <% @expense_groups.each do |expense_group| %>
             <tr>
               <td scope="row"><%= expense_group.name %></td>
-              <td class="td-center"><%= link_to 'Remover', expense_group, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn btn-danger btn-sm' %></td>
+              <td class="td-center">
+                <% if (@expense_groups.count > 1) && (expense_group.expenses_count.zero?) %>
+                  <%= link_to(
+                    'Remover',
+                    expense_group,
+                    method: :delete,
+                    data: { confirm: 'Você tem certeza?' },
+                    class: 'btn btn-danger btn-sm')
+                  %>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         </tbody>

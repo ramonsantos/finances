@@ -18,7 +18,7 @@ class ExpenseGroupsController < ApplicationController
 
   # DELETE /expense_groups/1
   def destroy
-    redirect_to(expense_groups_path, notice: destroy_notice(destroy_expense_group))
+    redirect_to(expense_groups_path, try_destroy)
   end
 
   private
@@ -31,16 +31,10 @@ class ExpenseGroupsController < ApplicationController
     ExpenseGroup.find(params[:id])
   end
 
-  def destroy_expense_group
+  def try_destroy
     fetch_expense_group.destroy
-    true
+    { notice: 'Grupo de Despesas removido.' }
   rescue StandardError
-    false
-  end
-
-  def destroy_notice(result)
-    return 'Grupo de Despesas removido.' if result
-
-    'Ocorreu um erro ao remover o grupo de despesas.'
+    { alert: 'Ocorreu um erro ao remover o grupo de despesas.' }
   end
 end

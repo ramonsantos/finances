@@ -82,7 +82,7 @@ describe ExpenseGroupsController, type: :controller do
 
       it 'shows flash notice' do
         delete(:destroy, params: params)
-        expect(flash[:notice]).to eq('Ocorreu um erro ao remover o grupo de despesas.')
+        expect(flash[:alert]).to eq('Ocorreu um erro ao remover o grupo de despesas.')
       end
 
       it 'redirects to the Expense Groups list' do

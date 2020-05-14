@@ -35,7 +35,7 @@ describe ApplicationHelper, type: :helper do
   end
 
   describe '.date_field' do
-    context 'with present ' do
+    context 'with present' do
       it 'returns date' do
         expect(date_field(Date.parse('2020-02-15'))).to eq('2020-02-15')
       end
