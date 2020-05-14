@@ -2,8 +2,9 @@
 
 class ExpenseCategoriesController < ApplicationController
   include CreateAction
+  include DestroyAction
 
-  before_action :set_expense_category, only: [:show, :update, :destroy]
+  before_action :expense_category, only: [:show, :update, :destroy]
 
   # GET /expense_categories
   def index
@@ -37,23 +38,27 @@ class ExpenseCategoriesController < ApplicationController
 
   # DELETE /expense_categories/1
   def destroy
-    redirect_to(expense_categories_url, try_destroy)
+    redirect_to(expense_categories_url, try_destroy(@expense_category, destroy_messages))
   end
 
   private
 
-  def set_expense_category
-    @expense_category = ExpenseCategory.find_by(id: params[:id], user: current_user)
+  def expense_category
+    @expense_category ||= fetch_expense_category
+  end
+
+  def fetch_expense_category
+    ExpenseCategory.find_by(id: params[:id], user: current_user)
   end
 
   def expense_category_params
     params.require(:expense_category).permit(:name, :description)
   end
 
-  def try_destroy
-    @expense_category.destroy
-    { notice: 'Categoria de Despesa removida.' }
-  rescue StandardError
-    { alert: 'Error ao remover Categoria de Despesa.' }
+  def destroy_messages
+    {
+      success: 'Categoria de Despesa removida.',
+      error: 'Error ao remover Categoria de Despesa.'
+    }
   end
 end

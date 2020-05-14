@@ -2,6 +2,9 @@
 
 class PlacesController < ApplicationController
   include CreateAction
+  include DestroyAction
+
+  before_action :place, only: [:destroy]
 
   # GET /places
   def index
@@ -18,7 +21,7 @@ class PlacesController < ApplicationController
 
   # DELETE /places/1
   def destroy
-    redirect_to(places_path, try_destroy)
+    redirect_to(places_path, try_destroy(@place, destroy_messages))
   end
 
   private
@@ -27,14 +30,18 @@ class PlacesController < ApplicationController
     params.require(:place).permit(:name)
   end
 
-  def fetch_place
-    Place.find(params[:id])
+  def place
+    @place ||= fetch_place
   end
 
-  def try_destroy
-    fetch_place.destroy
-    { notice: 'Local removido.' }
-  rescue StandardError
-    { alert: 'Ocorreu um erro ao remover o local.' }
+  def fetch_place
+    Place.find_by(id: params[:id], user: current_user)
+  end
+
+  def destroy_messages
+    {
+      success: 'Local removido.',
+      error: 'Ocorreu um erro ao remover o local.'
+    }
   end
 end

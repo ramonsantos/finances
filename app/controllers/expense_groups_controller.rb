@@ -2,6 +2,9 @@
 
 class ExpenseGroupsController < ApplicationController
   include CreateAction
+  include DestroyAction
+
+  before_action :expense_group, only: [:destroy]
 
   # GET /expense_groups
   def index
@@ -18,7 +21,7 @@ class ExpenseGroupsController < ApplicationController
 
   # DELETE /expense_groups/1
   def destroy
-    redirect_to(expense_groups_path, try_destroy)
+    redirect_to(expense_groups_path, try_destroy(@expense_group, destroy_messages))
   end
 
   private
@@ -27,14 +30,18 @@ class ExpenseGroupsController < ApplicationController
     params.require(:expense_group).permit(:name)
   end
 
-  def fetch_expense_group
-    ExpenseGroup.find(params[:id])
+  def expense_group
+    @expense_group ||= fetch_expense_group
   end
 
-  def try_destroy
-    fetch_expense_group.destroy
-    { notice: 'Grupo de Despesas removido.' }
-  rescue StandardError
-    { alert: 'Ocorreu um erro ao remover o grupo de despesas.' }
+  def fetch_expense_group
+    ExpenseGroup.find_by(id: params[:id], user: current_user)
+  end
+
+  def destroy_messages
+    {
+      success: 'Grupo de Despesas removido.',
+      error: 'Ocorreu um erro ao remover o grupo de despesas.'
+    }
   end
 end
