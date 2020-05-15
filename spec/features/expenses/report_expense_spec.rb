@@ -25,7 +25,7 @@ feature 'Expenses', type: :feature do
       end
 
       scenario 'user visits report expense page and click on "Lista de Despesas"' do
-        find(:xpath, '/html/body/main/div[1]/div/a[2]').click
+        find(:xpath, '/html/body/main/section/div[1]/div/a[2]').click
 
         expect(page).to have_selector(:link_or_button, 'Relatório de Despesas')
       end
@@ -75,7 +75,7 @@ feature 'Expenses', type: :feature do
 
       scenario 'user visits previous month report expense page and click on "Lista de Despesas"' do
         click_on('Jan/2020')
-        find(:xpath, '/html/body/main/div[1]/div/a[2]').click
+        find(:xpath, '/html/body/main/section/div[1]/div/a[2]').click
 
         expect(page).to have_selector(:link_or_button, 'Relatório de Despesas')
         expect(page).to have_selector('h1', text: 'Despesas - Jan/2020')
@@ -98,7 +98,7 @@ feature 'Expenses', type: :feature do
 
       scenario 'user visits next month report expense page and click on "Lista de Despesas"' do
         click_on('Mar/2020')
-        find(:xpath, '/html/body/main/div[1]/div/a[2]').click
+        find(:xpath, '/html/body/main/section/div[1]/div/a[2]').click
 
         expect(page).to have_selector(:link_or_button, 'Relatório de Despesas')
         expect(page).to have_selector('h1', text: 'Despesas - Mar/2020')

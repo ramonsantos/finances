@@ -1,60 +1,62 @@
-<% if notice %>
-  <div class="alert alert-primary alert-dismissible fade show" role="alert">
-    <%= notice %>
+<section class="col-md-12">
+  <% if notice %>
+    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+      <%= notice %>
 
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-<% end %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <% end %>
 
-<%= render(
-  'expenses_title',
-  current_expense_month: @current_expense_month,
-  switch_page_to: 'Relatório de Despesas',
-  switch_page_path: :report_expenses_path,
-  switch_month_path: :expenses_path)
-%>
+  <%= render(
+    'expenses_title',
+    current_expense_month: @current_expense_month,
+    switch_page_to: 'Relatório de Despesas',
+    switch_page_path: :report_expenses_path,
+    switch_month_path: :expenses_path)
+  %>
 
-<div class="col-md-12">
-  <div class="table-responsive">
-    <table class="table table-hover table-bordered">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Descrição</th>
-          <th scope="col">Valor</th>
-          <th scope="col">Data</th>
-          <th scope="col">Fixo?</th>
-          <th scope="col">Categoria</th>
-          <th scope="col">Local</th>
-          <th scope="col">Grupo</th>
-          <th scope="col">Observações</th>
-          <th scope="col" colspan="3"></th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @expenses.each do |expense| %>
+  <div>
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered">
+        <thead class="thead-dark">
           <tr>
-            <td scope="row"><%= expense.description %></td>
-            <td class="td-right"><%= format_to_money(expense.amount) %></td>
-            <td class="td-right"><%= format_date(expense.date) %></td>
-            <td class="td-center"><%= fixed_label(expense.fixed) %></td>
-            <td><%= expense.expense_category.name %></td>
-            <td><%= expense.place.name %></td>
-            <td><%= expense.expense_group.name %></td>
-            <td><%= remark_preview(expense.remark) %></td>
-            <td class="td-center"><%= link_to 'Editar', expense_path(expense, expense_month: month_param(@current_expense_month)), class: 'btn btn-primary btn-sm' %></td>
-            <td class="td-center"><%= link_to 'Remover', expense_path(expense, expense_month: month_param(@current_expense_month)), method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn btn-danger btn-sm' %></td>
+            <th scope="col">Descrição</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Data</th>
+            <th scope="col">Fixo?</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Local</th>
+            <th scope="col">Grupo</th>
+            <th scope="col">Observações</th>
+            <th scope="col" colspan="3"></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+          <% @expenses.each do |expense| %>
+            <tr>
+              <td scope="row"><%= expense.description %></td>
+              <td class="td-right"><%= format_to_money(expense.amount) %></td>
+              <td class="td-right"><%= format_date(expense.date) %></td>
+              <td class="td-center"><%= fixed_label(expense.fixed) %></td>
+              <td><%= expense.expense_category.name %></td>
+              <td><%= expense.place.name %></td>
+              <td><%= expense.expense_group.name %></td>
+              <td><%= remark_preview(expense.remark) %></td>
+              <td class="td-center"><%= link_to 'Editar', expense_path(expense, expense_month: month_param(@current_expense_month)), class: 'btn btn-primary btn-sm' %></td>
+              <td class="td-center"><%= link_to 'Remover', expense_path(expense, expense_month: month_param(@current_expense_month)), method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn btn-danger btn-sm' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
 
-<div class="col-sm-12 btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-  <h3>Total de Despesas: <%= format_to_money(@total_expense_amount) %></h3>
+  <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+    <h3>Total de Despesas: <%= format_to_money(@total_expense_amount) %></h3>
 
-  <%= paginate @expenses %>
-</div>
+    <%= paginate @expenses %>
+  </div>
+</section>

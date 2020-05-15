@@ -64,14 +64,14 @@ feature 'Expenses', type: :feature do
 
       expect(page).to have_content('Despesa atualizada.')
       expect(page).to have_selector('h1', text: 'Despesas - Fev/2020')
-      expect(find(:xpath, '/html/body/main/div[3]/div/table/tbody/tr/td[1]').text).to eq('Book 1984')
-      expect(find(:xpath, '/html/body/main/div[3]/div/table/tbody/tr/td[2]').text).to eq('16,99 R$')
-      expect(find(:xpath, '/html/body/main/div[3]/div/table/tbody/tr/td[3]').text).to eq('22/02/2020')
-      expect(find(:xpath, '/html/body/main/div[3]/div/table/tbody/tr/td[4]').text).to eq('Sim')
-      expect(find(:xpath, '/html/body/main/div[3]/div/table/tbody/tr/td[5]').text).to eq('Saúde')
-      expect(find(:xpath, '/html/body/main/div[3]/div/table/tbody/tr/td[6]').text).to eq('Surubim')
-      expect(find(:xpath, '/html/body/main/div[3]/div/table/tbody/tr/td[7]').text).to eq('Casa')
-      expect(find(:xpath, '/html/body/main/div[3]/div/table/tbody/tr/td[8]').text).to eq('Money')
+      expect(find(:xpath, '/html/body/main/section/div[3]/div/table/tbody/tr/td[1]').text).to eq('Book 1984')
+      expect(find(:xpath, '/html/body/main/section/div[3]/div/table/tbody/tr/td[2]').text).to eq('16,99 R$')
+      expect(find(:xpath, '/html/body/main/section/div[3]/div/table/tbody/tr/td[3]').text).to eq('22/02/2020')
+      expect(find(:xpath, '/html/body/main/section/div[3]/div/table/tbody/tr/td[4]').text).to eq('Sim')
+      expect(find(:xpath, '/html/body/main/section/div[3]/div/table/tbody/tr/td[5]').text).to eq('Saúde')
+      expect(find(:xpath, '/html/body/main/section/div[3]/div/table/tbody/tr/td[6]').text).to eq('Surubim')
+      expect(find(:xpath, '/html/body/main/section/div[3]/div/table/tbody/tr/td[7]').text).to eq('Casa')
+      expect(find(:xpath, '/html/body/main/section/div[3]/div/table/tbody/tr/td[8]').text).to eq('Money')
 
       expect(page).to have_selector('h3', text: 'Total de Despesas: 16,99 R$')
     end
@@ -87,7 +87,7 @@ feature 'Expenses', type: :feature do
 
       expect(page).to have_content('Despesa atualizada.')
       expect(page).to have_selector('h1', text: 'Despesas - Mar/2020')
-      expect(find(:xpath, '/html/body/main/div[3]/div/table/tbody/tr/td[1]').text).to eq('Book 1984')
+      expect(find(:xpath, '/html/body/main/section/div[3]/div/table/tbody/tr/td[1]').text).to eq('Book 1984')
     end
   end
 end

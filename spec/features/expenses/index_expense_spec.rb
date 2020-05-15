@@ -37,7 +37,7 @@ feature 'Expenses', type: :feature do
       end
 
       scenario 'user visits expenses page and click on "Relatório de Despesas"' do
-        find(:xpath, '/html/body/main/div[1]/div/a[2]').click
+        find(:xpath, '/html/body/main/section/div[1]/div/a[2]').click
 
         expect(page).to have_selector(:link_or_button, 'Lista de Despesas')
       end
@@ -49,14 +49,14 @@ feature 'Expenses', type: :feature do
       before { visit(expenses_path) }
 
       scenario 'user visits expenses page' do
-        expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[1]').text).to eq(expense.description)
-        expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[2]').text).to eq('21,50 R$')
-        expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[3]').text).to eq('15/02/2020')
-        expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[4]').text).to eq('Não')
-        expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[5]').text).to eq('Alimentação')
-        expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[6]').text).to eq('Recife')
-        expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[7]').text).to eq('Trabalho')
-        expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[8]').text).to be_blank
+        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[1]').text).to eq(expense.description)
+        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[2]').text).to eq('21,50 R$')
+        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[3]').text).to eq('15/02/2020')
+        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[4]').text).to eq('Não')
+        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[5]').text).to eq('Alimentação')
+        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[6]').text).to eq('Recife')
+        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[7]').text).to eq('Trabalho')
+        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[8]').text).to be_blank
 
         expect(page).to have_selector('h3', text: 'Total de Despesas: 21,50 R$')
       end
@@ -76,14 +76,14 @@ feature 'Expenses', type: :feature do
         expect(page).to have_selector(:link_or_button, 'Relatório de Despesas')
         expect(page).to have_selector(:link_or_button, 'Fev/2020')
 
-        expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[3]').text).to eq('25/01/2020')
-        expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[8]').text).to eq('12345678901234567890')
+        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[3]').text).to eq('25/01/2020')
+        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[8]').text).to eq('12345678901234567890')
 
         expect(page).to have_selector('h3', text: 'Total de Despesas: 21,50 R$')
       end
 
       scenario 'user visits expenses page and click on "Relatório de Despesas"' do
-        find(:xpath, '/html/body/main/div[1]/div/a[2]').click
+        find(:xpath, '/html/body/main/section/div[1]/div/a[2]').click
 
         expect(page).to have_selector(:link_or_button, 'Lista de Despesas')
         expect(page).to have_selector('h1', text: 'Despesas - Jan/2020')
@@ -102,14 +102,14 @@ feature 'Expenses', type: :feature do
         expect(page).to have_selector(:link_or_button, 'Relatório de Despesas')
         expect(page).to have_selector(:link_or_button, 'Abr/2020')
 
-        expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[3]').text).to eq('01/03/2020')
-        expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr/td[8]').text).to eq('12345678901234567...')
+        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[3]').text).to eq('01/03/2020')
+        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[8]').text).to eq('12345678901234567...')
 
         expect(page).to have_selector('h3', text: 'Total de Despesas: 21,50 R$')
       end
 
       scenario 'user visits expenses page and click on "Relatório de Despesas"' do
-        find(:xpath, '/html/body/main/div[1]/div/a[2]').click
+        find(:xpath, '/html/body/main/section/div[1]/div/a[2]').click
 
         expect(page).to have_selector(:link_or_button, 'Lista de Despesas')
         expect(page).to have_selector('h1', text: 'Despesas - Mar/2020')
@@ -130,7 +130,7 @@ feature 'Expenses', type: :feature do
         expect(page).to have_selector(:link_or_button, '»')
         expect(page).not_to have_selector(:link_or_button, '3')
 
-        expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr[20]')).to be_present
+        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr[20]')).to be_present
         expect(page).to have_selector('h3', text: 'Total de Despesas: 451,50 R$')
       end
 
@@ -142,7 +142,7 @@ feature 'Expenses', type: :feature do
         expect(page).to have_selector(:link_or_button, '2')
         expect(page).not_to have_selector(:link_or_button, '3')
 
-        expect(find(:xpath, '/html/body/main/div[2]/div/table/tbody/tr')).to be_present
+        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr')).to be_present
         expect(page).to have_selector('h3', text: 'Total de Despesas: 451,50 R$')
       end
     end
