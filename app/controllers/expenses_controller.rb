@@ -83,7 +83,7 @@ class ExpensesController < ApplicationController
   end
 
   def fetch_places
-    Place.where(user: current_user).pluck(:name, :id)
+    Place.where(user: current_user).order(:name).pluck(:name, :id)
   end
 
   def expense_groups
@@ -91,7 +91,7 @@ class ExpensesController < ApplicationController
   end
 
   def fetch_expense_groups
-    ExpenseGroup.where(user: current_user).pluck(:name, :id)
+    ExpenseGroup.where(user: current_user).order(:name).pluck(:name, :id)
   end
 
   def expense_categories
@@ -99,7 +99,7 @@ class ExpensesController < ApplicationController
   end
 
   def fetch_expense_categories
-    ExpenseCategory.where(user: current_user).pluck(:name, :id)
+    ExpenseCategory.where(user: current_user).order(:name).pluck(:name, :id)
   end
 
   def expense_month

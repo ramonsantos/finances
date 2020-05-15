@@ -64,7 +64,7 @@ feature 'Expenses', type: :feature do
         expect(expense.fixed).to be_falsey
         expect(expense.expense_category.name).to eq('Alimentação')
         expect(expense.place.name).to eq('Recife')
-        expect(expense.expense_group.name).to eq('Trabalho')
+        expect(expense.expense_group.name).to eq('Casa')
         expect(expense.remark).to be_blank
       end
 
