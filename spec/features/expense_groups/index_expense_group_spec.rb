@@ -5,10 +5,7 @@ require 'rails_helper'
 feature 'ExpenseGroup', type: :feature do
   let!(:user) { create(:user) }
 
-  before do
-    login_as(user)
-    create(:expense_group)
-  end
+  before { login_as(user) }
 
   feature 'list expense groups' do
     context 'with one expense group' do
@@ -17,7 +14,7 @@ feature 'ExpenseGroup', type: :feature do
       scenario 'user visits expense groups page' do
         expect(page).to have_selector('h1', text: 'Grupos de Despesa')
         expect(page).to have_selector('th', text: 'Grupo')
-        expect(page).to have_selector('td', text: 'Trabalho')
+        expect(page).to have_selector('td', text: 'Pessoal')
         expect(page).not_to have_selector(:link_or_button, 'Remover')
       end
     end
@@ -31,7 +28,7 @@ feature 'ExpenseGroup', type: :feature do
       scenario 'user visits expense groups page' do
         expect(page).to have_selector('h1', text: 'Grupos de Despesa')
         expect(page).to have_selector('th', text: 'Grupo')
-        expect(page).to have_selector('td', text: 'Trabalho')
+        expect(page).to have_selector('td', text: 'Pessoal')
         expect(page).to have_selector(:link_or_button, 'Remover')
       end
     end
@@ -47,7 +44,7 @@ feature 'ExpenseGroup', type: :feature do
       scenario 'user visits expense groups page' do
         expect(page).to have_selector('h1', text: 'Grupos de Despesa')
         expect(page).to have_selector('th', text: 'Grupo')
-        expect(page).to have_selector('td', text: 'Trabalho')
+        expect(page).to have_selector('td', text: 'Pessoal')
         expect(find(:xpath, '/html/body/main/section/div/table/tbody/tr[2]/td[2]').text).to be_blank
         expect(find(:xpath, '/html/body/main/section/div/table/tbody/tr[1]/td[2]').text).to eq('Remover')
       end
@@ -80,7 +77,7 @@ feature 'ExpenseGroup', type: :feature do
         expect(page).to have_selector('div', text: 'Grupo de Despesas removido.')
         expect(page).to have_selector('h1', text: 'Grupos de Despesa')
         expect(page).to have_selector('th', text: 'Grupo')
-        expect(page).to have_selector('td', text: 'Trabalho')
+        expect(page).to have_selector('td', text: 'Pessoal')
         expect(page).not_to have_selector('td', text: 'Casa')
         expect(page).to have_selector('input', id: 'expense_group_name', text: '')
       end.to change(ExpenseGroup, :count).by(-1)

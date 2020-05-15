@@ -67,7 +67,7 @@ feature 'Expenses', type: :feature do
         expect(page).to have_selector(:link_or_button, 'Dez/2019')
         expect(page).to have_selector(:link_or_button, 'Lista de Despesas')
         expect(page).to have_selector(:link_or_button, 'Fev/2020')
-        expect(page).to have_selector('div', text: 'Trabalho')
+        expect(page).to have_selector('div', text: 'Pessoal')
         expect(page).to have_selector('div', text: 'Alimentação')
         expect(page).to have_selector('div', text: '100,00%')
         expect(page).to have_selector('div', text: 'Total 21,50 R$')

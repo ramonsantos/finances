@@ -6,7 +6,6 @@ class RegistrationsController < Devise::RegistrationsController
     if place_name.present?
       super
       Place.create(name: place_name, user: current_user)
-      ExpenseGroup.create(name: 'Pessoal', user: current_user)
       flash.delete(:notice)
     else
       redirect_to(new_user_registration_path)

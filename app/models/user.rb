@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :expense_categories, dependent: :delete_all
 
   after_create :create_dafult_expense_categories
+  after_create :create_dafult_expense_groups
 
   private
 
@@ -22,5 +23,9 @@ class User < ApplicationRecord
         { user: self, name: 'Transporte' }
       ]
     )
+  end
+
+  def create_dafult_expense_groups
+    ExpenseGroup.create!(name: 'Pessoal', user: self)
   end
 end

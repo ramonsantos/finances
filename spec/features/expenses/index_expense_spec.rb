@@ -55,7 +55,7 @@ feature 'Expenses', type: :feature do
         expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[4]').text).to eq('Não')
         expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[5]').text).to eq('Alimentação')
         expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[6]').text).to eq('Recife')
-        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[7]').text).to eq('Trabalho')
+        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[7]').text).to eq('Pessoal')
         expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[8]').text).to be_blank
 
         expect(page).to have_selector('h3', text: 'Total de Despesas: 21,50 R$')

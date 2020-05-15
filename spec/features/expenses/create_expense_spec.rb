@@ -40,7 +40,7 @@ feature 'Expenses', type: :feature do
       expect(page).to have_field('expense_fixed', checked: false)
       expect(page).to have_select('Categoria', options: category_options)
       expect(page).to have_select('Local', options: ['Recife', 'Surubim'])
-      expect(page).to have_select('Grupo de Despesa', options: ['Trabalho', 'Casa'])
+      expect(page).to have_select('Grupo de Despesa', options: ['Casa', 'Pessoal', 'Trabalho'])
       expect(page).to have_selector('textarea', id: 'expense_remark')
       expect(page).to have_selector(:link_or_button, 'Salvar')
     end

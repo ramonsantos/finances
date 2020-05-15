@@ -54,7 +54,7 @@ describe Expense, type: :model do
       let(:result) { described_class.fetch_expenses_grouped_by_groups(User.first, Date.parse('2020-02-21')) }
 
       it { expect(result.count).to eq(2) }
-      it { expect(result['Trabalho'].count).to eq(2) }
+      it { expect(result['Pessoal'].count).to eq(2) }
       it { expect(result['Casa']).to eq([expense_home_1, expense_home_2]) }
     end
   end
