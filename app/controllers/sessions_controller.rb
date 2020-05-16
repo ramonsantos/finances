@@ -9,12 +9,12 @@ class SessionsController < Devise::SessionsController
   # POST /users/sign_in
   def create
     super
-    flash.delete(:notice)
+    flash.clear
   end
 
   # DELETE /users/sign_out
   def destroy
     super
-    flash.delete(:notice)
+    flash.clear
   end
 end

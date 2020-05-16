@@ -1,4 +1,14 @@
 <section class="login-form">
+  <% if show_sign_in_error?(alert) %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      E-mail ou senha inválidos
+
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <% end %>
+
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <h2 class="text-center">Entrar</h2>
 
