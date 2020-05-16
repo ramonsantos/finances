@@ -16,7 +16,7 @@ describe RegistrationsController, type: :controller do
       end
 
       it 'creates user correctly' do
-        expect(flash[:notice]).to be_blank
+        expect(flash).to be_blank
         expect(subject.current_user).to be_present
       end
     end
@@ -29,9 +29,9 @@ describe RegistrationsController, type: :controller do
       end
 
       it 'does not creates user' do
-        expect(flash[:notice]).to be_blank
+        expect(flash).to be_blank
         expect(subject.current_user).to be_blank
-        expect(response).to redirect_to(new_user_registration_path)
+        expect(response).to be_successful
       end
     end
   end

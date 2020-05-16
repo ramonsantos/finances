@@ -3,7 +3,6 @@
 class RegistrationsController < Devise::RegistrationsController
   # GET /users/sign_up
   def new
-    flash[:notice] = nil
     super
   end
 
@@ -14,18 +13,29 @@ class RegistrationsController < Devise::RegistrationsController
         build_create_response(user)
       end
     else
+      place_error = {
+        name: {
+          status: :error,
+          message: 'não pode ficar vazio'
+        }
+      }
+
+      build_resource(user_params).validate
+      build_create_response(resource, place_error)
+
       render(:new)
     end
+
+    flash.clear
   end
 
   private
 
-  def build_create_response(user)
-    if user.errors.details.blank?
+  def build_create_response(user, place_error = {})
+    if user.errors.details.blank? && place_error.blank?
       Place.create(name: place_name, user: current_user)
-      flash.clear
     else
-      @fields_validation = {}.tap do |hash|
+      @fields_validation = place_error.tap do |hash|
         messages = user.errors.messages
 
         messages.keys.map do |key|
@@ -36,6 +46,10 @@ class RegistrationsController < Devise::RegistrationsController
         end
       end
     end
+  end
+
+  def user_params
+    resource_params.permit(:email, :password, :password_confirmation)
   end
 
   def place_params

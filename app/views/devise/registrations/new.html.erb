@@ -1,14 +1,4 @@
 <section class="col-md-12">
-  <% if alert %>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-      <%= alert %>
-
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-  <% end %>
-
   <div class="login-form">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <h2 class="text-center">Cadastro</h2>
