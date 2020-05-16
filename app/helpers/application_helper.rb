@@ -38,4 +38,8 @@ module ApplicationHelper
   def normalize_float_values(elements)
     elements.map! { |element| normalize_float_value(element) }.join
   end
+
+  def validation_class(validation_status)
+    validation_status == :error ? ' is-invalid' : nil
+  end
 end

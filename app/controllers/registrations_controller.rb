@@ -1,18 +1,42 @@
 # frozen_string_literal: true
 
 class RegistrationsController < Devise::RegistrationsController
+  # GET /users/sign_up
+  def new
+    flash[:notice] = nil
+    super
+  end
+
   # POST /users
   def create
     if place_name.present?
-      super
-      Place.create(name: place_name, user: current_user)
-      flash.delete(:notice)
+      super do |user|
+        build_create_response(user)
+      end
     else
-      redirect_to(new_user_registration_path)
+      render(:new)
     end
   end
 
   private
+
+  def build_create_response(user)
+    if user.errors.details.blank?
+      Place.create(name: place_name, user: current_user)
+      flash.clear
+    else
+      @fields_validation = {}.tap do |hash|
+        messages = user.errors.messages
+
+        messages.keys.map do |key|
+          hash[key] = {
+            status: :error,
+            message: messages[key].first
+          }
+        end
+      end
+    end
+  end
 
   def place_params
     params.require(:user).require(:places).permit(:name)
