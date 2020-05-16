@@ -33,7 +33,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def build_create_response(user, place_error = {})
     if user.errors.details.blank? && place_error.blank?
-      Place.create(name: place_name, user: current_user)
+      Place.create(name: place_name, user: resource)
     else
       @fields_validation = place_error.tap do |hash|
         messages = user.errors.messages

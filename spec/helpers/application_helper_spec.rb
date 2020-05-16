@@ -81,4 +81,14 @@ describe ApplicationHelper, type: :helper do
       )
     end
   end
+
+  describe '.validation_class' do
+    context 'with error' do
+      it { expect(validation_class(:error)).to eq(' is-invalid') }
+    end
+
+    context 'without erro' do
+      it { expect(validation_class(nil)).to be_nil }
+    end
+  end
 end

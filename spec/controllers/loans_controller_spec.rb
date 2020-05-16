@@ -63,13 +63,21 @@ describe LoansController, type: :controller do
 
   describe 'PUT #update' do
     context 'with valid params' do
-      let(:new_attributes) { { description: 'Pagar Luz' } }
+      let(:new_attributes) { { description: 'Pagar Luz', received_amount: 110.42 } }
 
-      before { put(:update, params: { id: loan.to_param, loan: new_attributes }) }
+      before do
+        Timecop.freeze(2020, 5, 16)
+
+        put(:update, params: { id: loan.to_param, loan: new_attributes })
+      end
+
+      after { Timecop.return }
 
       it 'updates the requested loan' do
         loan.reload
         expect(loan.description).to eq('Pagar Luz')
+        expect(loan.received_amount).to eq(110.42)
+        expect(loan.received_at).to eq(Date.parse('May 16 2020'))
       end
 
       it 'shows flash notice' do
