@@ -111,7 +111,7 @@ pt-BR:
     messages:
       accepted: deve ser aceito
       blank: não pode ficar em branco
-      confirmation: não é igual a %{attribute}
+      confirmation: não é igual a Senha
       empty: não pode ficar vazio
       equal_to: deve ser igual a %{count}
       even: deve ser par
