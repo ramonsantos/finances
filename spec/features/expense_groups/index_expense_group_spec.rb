@@ -58,7 +58,7 @@ feature 'ExpenseGroup', type: :feature do
 
     scenario 'user creates expense group' do
       expect(page).not_to have_selector(:link_or_button, 'Remover')
-      fill_in('expense_group_name', with: 'Pessoal')
+      fill_in('expense_group_name', with: 'pessoal')
       click_on('Salvar')
       expect(page).to have_selector('div', text: 'Grupo de Despesas adicionado.')
       expect(page).to have_selector('td', text: 'Pessoal')

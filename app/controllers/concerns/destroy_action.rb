@@ -3,6 +3,8 @@
 module DestroyAction
   extend ActiveSupport::Concern
 
+  private
+
   def try_destroy(model, messages)
     model.destroy
 

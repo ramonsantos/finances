@@ -61,7 +61,7 @@ feature 'Places', type: :feature do
 
     scenario 'user creates place' do
       expect(page).not_to have_selector(:link_or_button, 'Remover')
-      fill_in('place_name', with: 'Garanhuns')
+      fill_in('place_name', with: 'garanhuns')
       click_on('Salvar')
       expect(page).to have_selector('div', text: 'Local adicionado.')
       expect(page).to have_selector('td', text: 'Garanhuns')

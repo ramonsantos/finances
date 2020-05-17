@@ -22,7 +22,7 @@ feature 'ExpenseCategory', type: :feature do
       let(:expense_category) { ExpenseCategory.where(user: user).last }
 
       before do
-        fill_in('Nome',      with: 'Transporte Público')
+        fill_in('Nome',      with: 'transporte Público')
         fill_in('Descrição', with: 'Despesas com Transporte Público')
       end
 

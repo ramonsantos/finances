@@ -20,6 +20,7 @@ feature 'ExpenseCategory', type: :feature do
     end
 
     scenario 'user edits a expense_category' do
+      fill_in('Nome', with: 'saúde')
       fill_in('Descrição', with: 'Gastos com Remédios')
 
       find('input[name="commit"]').click
