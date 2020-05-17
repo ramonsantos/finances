@@ -32,21 +32,24 @@
 
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <%= link_to 'Criar Despesa', new_expense_path, class: 'dropdown-item' %>
-
                   <%= link_to 'Criar Despesas por CSV', new_from_csv_expenses_path, class: 'dropdown-item' %>
 
                   <div class="dropdown-divider"></div>
 
                   <%= link_to 'Lista de Despesas', expenses_path, class: 'dropdown-item' %>
-
                   <%= link_to 'Relatório de Despesas', report_expenses_path, class: 'dropdown-item' %>
 
                   <div class="dropdown-divider"></div>
 
                   <%= link_to 'Locais', places_path, class: 'dropdown-item' %>
 
+                  <div class="dropdown-divider"></div>
+
                   <%= link_to 'Grupos de Despesa', expense_groups_path, class: 'dropdown-item' %>
 
+                  <div class="dropdown-divider"></div>
+
+                  <%= link_to 'Criar Categoria de Despesa', new_expense_category_path, class: 'dropdown-item' %>
                   <%= link_to 'Categorias de Despesa', expense_categories_path, class: 'dropdown-item' %>
                 </div>
               </li>

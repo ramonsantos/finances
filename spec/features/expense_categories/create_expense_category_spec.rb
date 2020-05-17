@@ -14,7 +14,7 @@ feature 'ExpenseCategory', type: :feature do
     scenario 'user visits new expense_category page' do
       expect(page).to have_selector('h1', text: 'Adicionar Categoria de Despesa')
       expect(page).to have_selector('input', id: 'expense_category_name')
-      expect(page).to have_selector('input', id: 'expense_category_description')
+      expect(page).to have_selector('textarea', id: 'expense_category_description')
       expect(page).to have_selector(:link_or_button, 'Salvar')
     end
 

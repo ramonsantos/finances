@@ -8,7 +8,7 @@ class PlacesController < ApplicationController
 
   # GET /places
   def index
-    @places = Place.where(user: current_user)
+    @places = Place.where(user: current_user).order(:name)
     @place  = Place.new
   end
 

@@ -8,7 +8,7 @@ class ExpenseGroupsController < ApplicationController
 
   # GET /expense_groups
   def index
-    @expense_groups = ExpenseGroup.where(user: current_user)
+    @expense_groups = ExpenseGroup.where(user: current_user).order(:name)
     @expense_group  = ExpenseGroup.new
   end
 

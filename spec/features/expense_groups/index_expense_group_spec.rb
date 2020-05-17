@@ -45,8 +45,8 @@ feature 'ExpenseGroup', type: :feature do
         expect(page).to have_selector('h1', text: 'Grupos de Despesa')
         expect(page).to have_selector('th', text: 'Grupo')
         expect(page).to have_selector('td', text: 'Pessoal')
-        expect(find(:xpath, '/html/body/main/section/div/table/tbody/tr[2]/td[2]').text).to be_blank
-        expect(find(:xpath, '/html/body/main/section/div/table/tbody/tr[1]/td[2]').text).to eq('Remover')
+        expect(find(:xpath, '/html/body/main/section/div/table/tbody/tr[1]/td[2]').text).to be_blank
+        expect(find(:xpath, '/html/body/main/section/div/table/tbody/tr[2]/td[2]').text).to eq('Remover')
       end
     end
   end
