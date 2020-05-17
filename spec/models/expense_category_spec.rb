@@ -14,7 +14,7 @@ describe ExpenseCategory, type: :model do
   end
 
   context 'validations' do
-    context 'when presense_of' do
+    context 'when presense' do
       context 'when true' do
         it { is_expected.to validate_presence_of(:user) }
         it { is_expected.to validate_presence_of(:name) }
@@ -23,6 +23,12 @@ describe ExpenseCategory, type: :model do
       context 'when false' do
         it { is_expected.not_to validate_presence_of(:description) }
       end
+    end
+
+    context 'when uniqueness' do
+      subject { build(:expense_category) }
+
+      it { is_expected.to validate_uniqueness_of(:name).ignoring_case_sensitivity }
     end
   end
 end

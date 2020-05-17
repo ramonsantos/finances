@@ -5,6 +5,6 @@ class ExpenseCategory < ApplicationRecord
   has_many :expenses, dependent: :restrict_with_exception
 
   validates :user,        presence: true
-  validates :name,        presence: true
+  validates :name,        presence: true, uniqueness: { case_sensitive: false }
   validates :description, presence: false
 end

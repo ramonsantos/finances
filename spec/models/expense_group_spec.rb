@@ -14,7 +14,15 @@ describe ExpenseGroup, type: :model do
   end
 
   describe 'validations' do
-    it { is_expected.to validate_presence_of(:name) }
-    it { is_expected.to validate_presence_of(:user) }
+    context 'when presence' do
+      it { is_expected.to validate_presence_of(:name) }
+      it { is_expected.to validate_presence_of(:user) }
+    end
+
+    context 'when uniqueness' do
+      subject { build(:expense_group) }
+
+      it { is_expected.to validate_uniqueness_of(:name).ignoring_case_sensitivity }
+    end
   end
 end
