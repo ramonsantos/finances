@@ -6,19 +6,14 @@ module LoansHelper
   end
 
   def loans_title(loan_status)
-    "Empréstimos#{build_status(loan_status)}"
+    "Empréstimos #{build_status(loan_status)}"
   end
 
   private
 
   def build_status(loan_status)
-    case loan_status
-    when :open
-      ' em Aberto'
-    when :received
-      ' fechados'
-    else
-      'body_else'
-    end
+    return 'fechados' if loan_status == :received
+
+    'em Aberto'
   end
 end
