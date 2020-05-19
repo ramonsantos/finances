@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 describe Loan, type: :model do
+  let(:user) { User.first }
+
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
   end
@@ -27,12 +29,12 @@ describe Loan, type: :model do
   describe 'scopes' do
     before do
       create(:loan)
-      create(:loan, loan_date: Date.parse('2020-03-15'))
+      create(:loan, loan_date: Date.parse('2020-03-15'), borrowed_amount: 52.62)
       create(:loan, loan_date: Date.parse('2020-03-15'), received_amount: 110.0)
     end
 
-    describe '.fetch_order_by_loan_date' do
-      let(:loans) { described_class.fetch_order_by_loan_date(User.first) }
+    describe '.open' do
+      let(:loans) { described_class.open(user) }
 
       it 'returns loans' do
         expect(loans.count).to eq(2)
@@ -40,20 +42,22 @@ describe Loan, type: :model do
         expect(loans.last.loan_date).to eq(Date.parse('2020-03-15'))
       end
     end
-  end
 
-  describe '.fetch_amount_of_loans_to_receive' do
-    before do
-      create(:loan)
-      create(:loan, borrowed_amount: 52.62)
-      create(:loan, borrowed_amount: 2.42)
-      create(:loan, received_amount: 110.00)
+    describe '.received' do
+      let(:loans) { described_class.received(user) }
+
+      it 'returns loans' do
+        expect(loans.count).to eq(1)
+        expect(loans.first.loan_date).to eq(Date.parse('2020-03-15'))
+      end
     end
 
-    let(:total) { described_class.fetch_amount_of_loans_to_receive(User.first) }
+    describe '.amount_of_loans_to_receive' do
+      let(:amount) { described_class.amount_of_loans_to_receive(user) }
 
-    it 'returns amount of loans to receive' do
-      expect(total).to eq(155.54)
+      it 'returns amount of loans to receive' do
+        expect(amount).to eq(153.12)
+      end
     end
   end
 end
