@@ -9,9 +9,11 @@
     </div>
   <% end %>
 
-  <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-    <h1>Empréstimos</h1>
-  </div>
+  <%= render(
+    'loans_title',
+    loan_status: @loan_status
+  )
+  %>
 
   <div>
     <div class="table-responsive">

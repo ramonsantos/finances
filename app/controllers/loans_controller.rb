@@ -9,6 +9,7 @@ class LoansController < ApplicationController
   def index
     @loans = Loan.fetch_order_by_loan_date(current_user, {}).page(params[:page])
     @amount_of_loans_to_receive = Loan.fetch_amount_of_loans_to_receive(current_user)
+    @loan_status = :open
   end
 
   # GET /loans/1
