@@ -11,7 +11,8 @@
 
   <%= render(
     'loans_title',
-    loan_status: @loan_status
+    loan_status: @loan_status,
+    params_to_toggle_loan_status: @params_to_toggle_loan_status
   )
   %>
 
@@ -49,7 +50,7 @@
   </div>
 
   <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-    <h3>Total em Empréstimos: <%= format_to_money(@amount_of_loans_to_receive) %></h3>
+    <h3>Total em Empréstimos a Receber: <%= format_to_money(@amount_of_loans_to_receive) %></h3>
 
     <%= paginate @loans %>
   </div>

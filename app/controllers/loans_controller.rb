@@ -7,9 +7,9 @@ class LoansController < ApplicationController
 
   # GET /loans
   def index
-    @loans = Loan.fetch_order_by_loan_date(current_user, {}).page(params[:page])
-    @amount_of_loans_to_receive = Loan.fetch_amount_of_loans_to_receive(current_user)
-    @loan_status = :open
+    @loans = Loan.send(loan_status, current_user).order(order_by).page(params[:page])
+    @amount_of_loans_to_receive = Loan.amount_of_loans_to_receive(current_user)
+    @params_to_toggle_loan_status = { loan_status: next_loan_status }
   end
 
   # GET /loans/1
@@ -45,12 +45,22 @@ class LoansController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_loan
     @loan = Loan.find_by(id: params[:id], user: current_user)
   end
 
-  # Only allow a list of trusted parameters through.
+  def loan_status
+    @loan_status ||= (params[:loan_status].try(:to_sym) || :open)
+  end
+
+  def next_loan_status
+    { open: :received, received: :open }[loan_status]
+  end
+
+  def order_by
+    :loan_date
+  end
+
   def loan_params
     params.require(:loan).permit(
       :description,

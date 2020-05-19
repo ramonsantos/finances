@@ -5,7 +5,7 @@ aria-label="Toolbar with button groups">
   <div class="page-title-buttons">
     <%= link_to(
       'Empréstimos Recebidos',
-      loans_path,
+      loans_path(params_to_toggle_loan_status),
       class: 'btn btn-success btn-sm')
     %>
 
