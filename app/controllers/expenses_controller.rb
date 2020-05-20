@@ -83,7 +83,7 @@ class ExpensesController < ApplicationController
   end
 
   def fetch_places
-    Place.where(user: current_user).order(:name).pluck(:name, :id)
+    Place.where(user: current_user).pluck(:name, :id)
   end
 
   def expense_groups
