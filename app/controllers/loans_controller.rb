@@ -3,11 +3,11 @@
 class LoansController < ApplicationController
   include CreateAction
 
-  before_action :set_loan, only: [:show, :update, :destroy]
+  before_action :set_loan, only: [:destroy, :show, :update]
 
   # GET /loans
   def index
-    @loans = Loan.send(loan_status, current_user).order(order_by).page(params[:page])
+    @loans = Loan.send(loan_status, current_user).order(:loan_date).page(params[:page])
     @amount_of_loans_to_receive = Loan.amount_of_loans_to_receive(current_user)
     @params_to_toggle_loan_status = { loan_status: next_loan_status }
   end
@@ -55,10 +55,6 @@ class LoansController < ApplicationController
 
   def next_loan_status
     { open: :received, received: :open }[loan_status]
-  end
-
-  def order_by
-    :loan_date
   end
 
   def loan_params
