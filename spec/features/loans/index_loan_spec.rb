@@ -22,21 +22,47 @@ feature 'Loans', type: :feature do
         expect(page).to have_selector('th', text: 'Recebido em')
 
         expect(page).not_to have_selector(:link_or_button, '1')
+        expect(find(:xpath, '/html/body/main/section/div[3]/h3').text).to eq('Total em Empréstimos a Receber: 0,00 R$')
       end
     end
 
     context 'with one loan' do
-      let!(:loan) { create(:loan) }
+      context 'when open loans' do
+        let!(:loan) { create(:loan) }
 
-      before { visit(loans_path) }
+        before { visit(loans_path) }
 
-      scenario 'user visits loans page' do
-        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[1]').text).to eq(loan.person)
-        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[2]').text).to eq(loan.description)
-        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[3]').text).to eq('100,50 R$')
-        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[4]').text).to eq('06/03/2020')
-        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[5]').text).to be_blank
-        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[6]').text).to be_blank
+        scenario 'user visits loans page' do
+          expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[1]').text).to eq(loan.person)
+          expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[2]').text).to eq(loan.description)
+          expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[3]').text).to eq('100,50 R$')
+          expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[4]').text).to eq('06/03/2020')
+          expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[5]').text).to be_blank
+          expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[6]').text).to be_blank
+
+          expect(find(:xpath, '/html/body/main/section/div[3]/h3').text).to eq('Total em Empréstimos a Receber: 100,50 R$')
+        end
+      end
+
+      context 'when received loans' do
+        let!(:loan) { create(:loan, received_at: Date.parse('2020-04-15'), received_amount: 110.42) }
+
+        before do
+          create(:loan, borrowed_amount: 52.62)
+          visit(loans_path({ loan_status: :received }))
+        end
+
+        scenario 'user visits loans page' do
+          expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[1]').text).to eq(loan.person)
+          expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[2]').text).to eq(loan.description)
+          expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[3]').text).to eq('100,50 R$')
+          expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[4]').text).to eq('06/03/2020')
+          expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[5]').text).to eq('110,42 R$')
+          expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[6]').text).to eq('15/04/2020')
+          expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[6]').text).to eq('15/04/2020')
+
+          expect(find(:xpath, '/html/body/main/section/div[3]/h3').text).to eq('Total em Empréstimos a Receber: 52,62 R$')
+        end
       end
     end
 
@@ -55,6 +81,7 @@ feature 'Loans', type: :feature do
         expect(page).not_to have_selector(:link_or_button, '3')
 
         expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr[20]')).to be_present
+        expect(find(:xpath, '/html/body/main/section/div[3]/h3').text).to eq('Total em Empréstimos a Receber: 2.110,50 R$')
       end
 
       scenario 'user visits second loans page' do
@@ -66,6 +93,7 @@ feature 'Loans', type: :feature do
         expect(page).not_to have_selector(:link_or_button, '3')
 
         expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr')).to be_present
+        expect(find(:xpath, '/html/body/main/section/div[3]/h3').text).to eq('Total em Empréstimos a Receber: 2.110,50 R$')
       end
     end
   end
