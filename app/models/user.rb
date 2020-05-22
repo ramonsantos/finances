@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :places,             dependent: :delete_all
   has_many :expense_groups,     dependent: :delete_all
   has_many :expense_categories, dependent: :delete_all
+  has_many :expense_creators,   dependent: :delete_all
 
   after_create :create_dafult_expense_categories
   after_create :create_dafult_expense_groups
