@@ -7,6 +7,10 @@ RSpec.describe ExpenseCreator, type: :model do
     context 'when belong_to' do
       it { is_expected.to belong_to(:user) }
     end
+
+    context 'when have_many' do
+      it { is_expected.to have_many(:expense_creator_results).dependent(:restrict_with_exception) }
+    end
   end
 
   describe 'validations' do

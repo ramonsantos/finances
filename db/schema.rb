@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_22_210958) do
+ActiveRecord::Schema.define(version: 2020_05_22_213418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 2020_05_22_210958) do
     t.bigint "user_id"
     t.integer "expenses_count", default: 0
     t.index ["user_id"], name: "index_expense_categories_on_user_id"
+  end
+
+  create_table "expense_creator_results", force: :cascade do |t|
+    t.text "raw_content"
+    t.boolean "success"
+    t.string "details"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "expense_creator_id"
+    t.index ["expense_creator_id"], name: "index_expense_creator_results_on_expense_creator_id"
   end
 
   create_table "expense_creators", force: :cascade do |t|
@@ -95,6 +105,7 @@ ActiveRecord::Schema.define(version: 2020_05_22_210958) do
   end
 
   add_foreign_key "expense_categories", "users"
+  add_foreign_key "expense_creator_results", "expense_creators"
   add_foreign_key "expense_creators", "users"
   add_foreign_key "expense_groups", "users"
   add_foreign_key "expenses", "expense_categories"
