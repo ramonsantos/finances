@@ -5,6 +5,6 @@ class ExpenseCreatorResult < ApplicationRecord
 
   validates :expense_creator, presence: true
   validates :raw_content,     presence: true
-  validates :success,         presence: true
   validates :details,         presence: true
+  validates :success,         presence: false
 end

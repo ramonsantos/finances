@@ -14,8 +14,11 @@ RSpec.describe ExpenseCreatorResult, type: :model do
       context 'when true' do
         it { is_expected.to validate_presence_of(:expense_creator) }
         it { is_expected.to validate_presence_of(:raw_content) }
-        it { is_expected.to validate_presence_of(:success) }
         it { is_expected.to validate_presence_of(:details) }
+      end
+
+      context 'when false' do
+        it { is_expected.not_to validate_presence_of(:success) }
       end
     end
   end
