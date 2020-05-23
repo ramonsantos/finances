@@ -3,12 +3,10 @@
 class CreateExpensesFromCsv
   require 'csv'
 
-  def initialize(user, file_path)
-    @user = user
+  def initialize(expense_creator, file_path)
+    @expense_creator = expense_creator
+    @user = expense_creator.user
     @file_path = file_path
-    @rows_detail = []
-    @total_success = 0
-    @total_errors = 0
     @expense_categories = {}
     @expense_groups = {}
     @places = {}
@@ -16,7 +14,6 @@ class CreateExpensesFromCsv
 
   def create_expenses
     CSV.foreach(@file_path, headers: true) { |row| create_expense(row) }
-    build_result
   end
 
   private
@@ -24,19 +21,9 @@ class CreateExpensesFromCsv
   def create_expense(row)
     Expense.create!(expense_attributes_from_row(row))
 
-    @total_success += 1
-    @rows_detail << build_row_detail(row)
+    create_expense_creator_result(row, true, 'Sucesso')
   rescue StandardError => e
-    @total_errors += 1
-    @rows_detail << build_row_detail(row, :error, e.message)
-  end
-
-  def build_result
-    {
-      rows_detail: @rows_detail,
-      total_success: @total_success,
-      total_errors: @total_errors
-    }
+    create_expense_creator_result(row, false, "Erro: #{e.message}")
   end
 
   def expense_attributes_from_row(row)
@@ -53,12 +40,13 @@ class CreateExpensesFromCsv
     }
   end
 
-  def build_row_detail(row, result = :success, message = nil)
-    {
-      row: row.to_s.strip,
-      result: result,
-      message: message
-    }
+  def create_expense_creator_result(row, success, details)
+    ExpenseCreatorResult.create!(
+      expense_creator_id: @expense_creator.id,
+      raw_content: row.to_s.strip,
+      success: success,
+      details: details
+    )
   end
 
   def description(value)

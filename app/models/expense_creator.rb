@@ -8,6 +8,6 @@ class ExpenseCreator < ApplicationRecord
   validates :date, presence: true
 
   def create_from_csv!(csv_file_path)
-    CreateExpensesFromCsv.new(user, csv_file_path).create_expenses
+    CreateExpensesFromCsv.new(self, csv_file_path).create_expenses
   end
 end
