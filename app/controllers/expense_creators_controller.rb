@@ -3,7 +3,12 @@
 class ExpenseCreatorsController < ApplicationController
   # GET /expense_creators
   def index
-    @results = {}
+    @expense_creators = current_user.expense_creators
+  end
+
+  # GET /expense_creator/1
+  def show
+    @expense_creator = ExpenseCreator.find_by(user: current_user, id: params[:id])
   end
 
   # POST /expense_creators
@@ -11,8 +16,10 @@ class ExpenseCreatorsController < ApplicationController
     if params[:file].blank?
       redirect_to(expense_creators_path, notice: 'Arquivo CSV é obrigatório.')
     else
-      @results = CreateExpensesFromCsv.new(current_user, file_path).create_expenses
-      render(:index)
+      expense_creator = ExpenseCreator.create!(date: Time.zone.now, user: current_user)
+      expense_creator.create_from_csv!(file_path)
+
+      redirect_to(expense_creator_path(expense_creator))
     end
   end
 

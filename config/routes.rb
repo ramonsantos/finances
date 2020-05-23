@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :expense_creators, only: [:create, :index]
+  resources :expense_creators, only: [:create, :index, :show]
 
   resources :loans, except: [:edit]
 

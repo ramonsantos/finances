@@ -5,9 +5,18 @@ require 'rails_helper'
 describe ExpenseCreatorsController, type: :controller do
   login_user
 
+  let(:expense_creator) { create(:expense_creator) }
+
   describe 'GET #index' do
     it 'returns a success response' do
       get(:index)
+      expect(response).to be_successful
+    end
+  end
+
+  describe 'GET #show' do
+    it 'returns a success response' do
+      get(:show, params: { id: expense_creator.to_param })
       expect(response).to be_successful
     end
   end

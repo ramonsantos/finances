@@ -26,25 +26,25 @@
 
     <br>
 
-    <% if @results.try(:dig, :rows_detail).present? %>
+    <% if @expense_creators.present? %>
       <h2>Resultados</h2>
 
       <div class="table-responsive">
         <table class="table table-hover table-bordered">
           <thead class="thead-dark">
             <tr>
-              <th scope="col">Linha</th>
-              <th scope="col">Resultado</th>
-              <th scope="col">Detalhes</th>
+              <th scope="col">Data</th>
+              <th scope="col">Total</th>
+              <th scope="col"></th>
             </tr>
           </thead>
 
           <tbody>
-            <% @results[:rows_detail].each do |row_detail| %>
+            <% @expense_creators.each do |expense_creator| %>
               <tr>
-                <td scope="row"><%= row_detail[:row] %></td>
-                <td scope="row"><%= row_detail[:result] %></td>
-                <td scope="row"><%= row_detail[:message] %></td>
+                <td scope="row"><%= expense_creator.date %></td>
+                <td scope="row"></td>
+                <td scope="row"></td>
               </tr>
             <% end %>
           </tbody>
