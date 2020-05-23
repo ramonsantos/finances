@@ -1,4 +1,4 @@
-<section class="form-section">
+<section class="col-md-12">
   <div class="col-sm-12">
     <% if notice %>
       <div class="alert alert-primary alert-dismissible fade show" role="alert">
@@ -12,6 +12,30 @@
 
     <h1>Resultados </h1>
 
-    <%= @expense_creator.date %>
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Linha</th>
+            <th scope="col">Resultado</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @expense_creator_results.each do |expense_creator_result| %>
+            <tr>
+              <td scope="row"><%= expense_creator_result.raw_content %></td>
+              <td scope="row"><%= expense_creator_result.details %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+      <h3>Total: <%= @total_of_expense_creator_results %></h3>
+
+      <%= paginate @expense_creator_results %>
+    </div>
   </div>
 </section>

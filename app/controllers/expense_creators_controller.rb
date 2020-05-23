@@ -9,6 +9,8 @@ class ExpenseCreatorsController < ApplicationController
   # GET /expense_creator/1
   def show
     @expense_creator = ExpenseCreator.find_by(user: current_user, id: params[:id])
+    @expense_creator_results = @expense_creator.expense_creator_results.page(params[:page])
+    @total_of_expense_creator_results = @expense_creator.expense_creator_results.count
   end
 
   # POST /expense_creators
