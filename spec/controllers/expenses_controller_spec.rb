@@ -60,13 +60,6 @@ describe ExpensesController, type: :controller do
     end
   end
 
-  describe 'GET #new_from_csv' do
-    it 'returns a success response' do
-      get(:new_from_csv)
-      expect(response).to be_successful
-    end
-  end
-
   describe 'POST #create' do
     context 'with valid params' do
       it 'creates a new Expense' do
@@ -91,31 +84,6 @@ describe ExpensesController, type: :controller do
         expect do
           post(:create, params: { expense: invalid_attributes })
         end.not_to change(Expense, :count)
-      end
-    end
-  end
-
-  describe 'POST #create_from_csv' do
-    context 'with valid params' do
-      let(:file) { fixture_file_upload('spec/fixtures/expenses.csv') }
-
-      it 'creates a new Expense' do
-        expect do
-          post(:create_from_csv, params: { file: file })
-        end.to change(Expense, :count).by(2)
-      end
-    end
-
-    context 'with invalid params' do
-      let(:file) { nil }
-
-      it 'does not creates Expenses' do
-        expect do
-          post(:create_from_csv, params: { file: file })
-        end.not_to change(Expense, :count)
-
-        expect(flash[:notice]).to eq('Arquivo CSV é obrigatório.')
-        expect(response).to redirect_to(new_from_csv_expenses_path)
       end
     end
   end

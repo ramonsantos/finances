@@ -8,10 +8,10 @@ Rails.application.routes.draw do
   resources :expenses, except: [:edit] do
     collection do
       get :report
-      get :new_from_csv
-      post :create_from_csv
     end
   end
+
+  resources :expense_creators, only: [:create, :index]
 
   resources :loans, except: [:edit]
 

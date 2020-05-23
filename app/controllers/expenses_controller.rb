@@ -31,26 +31,11 @@ class ExpensesController < ApplicationController
     @expense = Expense.new
   end
 
-  # GET /expenses/new_from_csv
-  def new_from_csv
-    @results = {}
-  end
-
   # POST /expenses
   def create
     @expense = Expense.new(expense_params.merge!(user: current_user))
 
     create_action(@expense, expenses_path, 'Despesa adicionada.')
-  end
-
-  # POST /expenses/create_from_csv
-  def create_from_csv
-    if params[:file].blank?
-      redirect_to(new_from_csv_expenses_path, notice: 'Arquivo CSV é obrigatório.')
-    else
-      @results = enqueue_create_from_csv
-      render(:new_from_csv)
-    end
   end
 
   # PATCH/PUT /expenses/1
@@ -110,13 +95,5 @@ class ExpensesController < ApplicationController
     return Time.zone.today if expense_month.blank?
 
     Date.parse(expense_month)
-  end
-
-  def enqueue_create_from_csv
-    CreateExpensesFromCsv.new(current_user, file_path).create_expenses
-  end
-
-  def file_path
-    params[:file].tempfile.path
   end
 end
