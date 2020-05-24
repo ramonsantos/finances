@@ -43,7 +43,7 @@
             <% @expense_creators.each do |expense_creator| %>
               <tr>
                 <td scope="row"><%= expense_creator.date %></td>
-                <td scope="row"></td>
+                <td scope="row"><%= expense_creator.expense_creator_results_count %></td>
                 <td scope="row"></td>
               </tr>
             <% end %>

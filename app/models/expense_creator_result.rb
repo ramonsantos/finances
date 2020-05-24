@@ -3,7 +3,7 @@
 class ExpenseCreatorResult < ApplicationRecord
   paginates_per 20
 
-  belongs_to :expense_creator
+  belongs_to :expense_creator, counter_cache: true
 
   validates :expense_creator, presence: true
   validates :raw_content,     presence: true

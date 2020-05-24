@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe ExpenseCreatorResult, type: :model do
   context 'associations' do
     context 'when belong_to' do
-      it { is_expected.to belong_to(:expense_creator) }
+      it { is_expected.to belong_to(:expense_creator).counter_cache(true) }
     end
   end
 
