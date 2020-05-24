@@ -11,7 +11,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :expense_creators, only: [:create, :index, :show]
+  resources :expense_creators, only: [:create, :index, :show] do
+    collection do
+      get :download_csv_template
+    end
+  end
 
   resources :loans, except: [:edit]
 

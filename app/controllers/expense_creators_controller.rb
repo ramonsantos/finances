@@ -24,6 +24,11 @@ class ExpenseCreatorsController < ApplicationController
     end
   end
 
+  # GET /expense_creators/download_csv_template
+  def download_csv_template
+    send_file("#{Rails.root}/public/Criar Despesas (Modelo).csv", type: 'text/csv', status: 202)
+  end
+
   private
 
   def file_path

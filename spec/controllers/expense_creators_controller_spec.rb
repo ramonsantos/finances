@@ -47,4 +47,11 @@ describe ExpenseCreatorsController, type: :controller do
       end
     end
   end
+
+  describe 'GET #download_csv_template' do
+    it 'returns a success response' do
+      get(:download_csv_template)
+      expect(response).to be_successful
+    end
+  end
 end

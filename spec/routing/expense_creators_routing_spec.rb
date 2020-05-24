@@ -15,5 +15,9 @@ describe ExpenseCreatorsController, type: :routing do
     it 'routes to #create' do
       expect(post: '/expense_creators').to route_to('expense_creators#create')
     end
+
+    it 'routes to #download_csv_template' do
+      expect(get: '/expense_creators/download_csv_template').to route_to('expense_creators#download_csv_template')
+    end
   end
 end
