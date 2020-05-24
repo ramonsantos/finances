@@ -44,7 +44,7 @@ describe ExpenseCreatorsController, type: :controller do
           post(:create, params: { file: file })
         end.not_to change(Expense, :count)
 
-        expect(flash[:notice]).to eq('Arquivo CSV é obrigatório.')
+        expect(flash[:alert]).to eq('Arquivo CSV é obrigatório.')
         expect(response).to redirect_to(expense_creators_path)
       end
     end

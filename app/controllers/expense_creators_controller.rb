@@ -15,7 +15,7 @@ class ExpenseCreatorsController < ApplicationController
   # POST /expense_creators
   def create
     if params[:file].blank?
-      redirect_to(expense_creators_path, notice: 'Arquivo CSV é obrigatório.')
+      redirect_to(expense_creators_path, alert: 'Arquivo CSV é obrigatório.')
     else
       expense_creator = ExpenseCreator.create!(date: Time.zone.now, user: current_user)
       expense_creator.create_from_csv!(file_path)

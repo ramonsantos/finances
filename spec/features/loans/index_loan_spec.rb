@@ -59,7 +59,6 @@ feature 'Loans', type: :feature do
           expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[4]').text).to eq('06/03/2020')
           expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[5]').text).to eq('110,42 R$')
           expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[6]').text).to eq('15/04/2020')
-          expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[6]').text).to eq('15/04/2020')
 
           expect(find(:xpath, '/html/body/main/section/div[3]/h3').text).to eq('Total em Empréstimos a Receber: 52,62 R$')
         end
