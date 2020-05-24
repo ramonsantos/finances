@@ -56,6 +56,14 @@
   }
 }
 
+.upload-file-form {
+  display: flex;
+
+  .actions {
+    margin-left: 10px;
+  }
+}
+
 .login-form {
   margin: 50px auto;
   width: 440px;

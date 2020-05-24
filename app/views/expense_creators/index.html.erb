@@ -13,13 +13,29 @@
     <h1>Adicionar Despesa por CSV</h1>
 
     <%= form_with(url: expense_creators_path, local: true, method: :post) do |form| %>
-      <div class="inline-form"">
-        <div class="field">
-          <%= form.file_field :file, multiple: false, required: true, class: 'form-control-file' %>
+      <div class="upload-file-form">
+        <div class="custom-file">
+          <%= form.file_field :file, multiple: false, required: true, class: 'custom-file-input' %>
+          <label class="custom-file-label" for="file">Escolher Arquivo</label>
         </div>
 
-        <div class="actions col-md-2">
-          <%= form.submit('Carregar Arquivo', class: 'btn btn-primary') %>
+        <div class="actions">
+          <div class="btn-group">
+            <%= form.submit('Criar Despesas', class: 'btn btn-primary') %>
+
+            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            </button>
+
+            <div class="dropdown-menu dropdown-menu-right">
+              <%= link_to(
+                'Baixar Modelo de CSV',
+                download_csv_template_expense_creators_path,
+                target: '_blank',
+                class: 'dropdown-item'
+              ) %>
+            </div>
+          </div>
         </div>
       </div>
     <% end %>
@@ -53,3 +69,5 @@
     <% end %>
   </div>
 </section>
+
+<%= javascript_pack_tag 'expense_creators' %>
