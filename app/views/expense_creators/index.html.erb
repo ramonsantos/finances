@@ -1,16 +1,6 @@
 <section class="form-section">
   <div class="col-sm-12">
-    <% if notice %>
-      <div class="alert alert-primary alert-dismissible fade show" role="alert">
-        <%= notice %>
-
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    <% end %>
-
-    <h1>Adicionar Despesa por CSV</h1>
+    <h1>Criar Despesas por CSV</h1>
 
     <%= form_with(url: expense_creators_path, local: true, method: :post) do |form| %>
       <div class="upload-file-form">
@@ -43,13 +33,13 @@
     <br>
 
     <% if @expense_creators.present? %>
-      <h2>Resultados</h2>
+      <h2>Anteriores</h2>
 
       <div class="table-responsive">
         <table class="table table-hover table-bordered">
           <thead class="thead-dark">
             <tr>
-              <th scope="col">Data</th>
+              <th scope="col">Data de Criação</th>
               <th scope="col">Total</th>
               <th scope="col"></th>
             </tr>
@@ -58,15 +48,19 @@
           <tbody>
             <% @expense_creators.each do |expense_creator| %>
               <tr>
-                <td scope="row"><%= expense_creator.date %></td>
+                <td scope="row"><%= expense_creator.date.strftime("%d/%m/%Y - %H:%M:%S") %></td>
                 <td scope="row"><%= expense_creator.expense_creator_results_count %></td>
-                <td scope="row"></td>
+                <td class="td-center"><%= link_to 'Detalhes', expense_creator_path(expense_creator), class: 'btn btn-primary btn-sm' %></td>
               </tr>
             <% end %>
           </tbody>
         </table>
       </div>
     <% end %>
+
+    <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
+      <%= paginate @expense_creators %>
+    </div>
   </div>
 </section>
 

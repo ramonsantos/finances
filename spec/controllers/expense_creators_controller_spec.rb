@@ -31,6 +31,8 @@ describe ExpenseCreatorsController, type: :controller do
         expect do
           post(:create, params: { file: file })
         end.to change(Expense, :count).by(2)
+
+        expect(flash[:notice]).to eq('Processo de criação de despesas finalizado.')
       end
     end
 

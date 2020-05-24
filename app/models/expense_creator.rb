@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ExpenseCreator < ApplicationRecord
+  paginates_per 20
+
   belongs_to :user
   has_many :expense_creator_results, dependent: :restrict_with_exception
 

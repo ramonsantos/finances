@@ -3,7 +3,7 @@
 class ExpenseCreatorsController < ApplicationController
   # GET /expense_creators
   def index
-    @expense_creators = current_user.expense_creators
+    @expense_creators = current_user.expense_creators.order(date: :desc).page(params[:page])
   end
 
   # GET /expense_creator/1
@@ -20,7 +20,7 @@ class ExpenseCreatorsController < ApplicationController
       expense_creator = ExpenseCreator.create!(date: Time.zone.now, user: current_user)
       expense_creator.create_from_csv!(file_path)
 
-      redirect_to(expense_creator_path(expense_creator))
+      redirect_to(expense_creator_path(expense_creator), notice: 'Processo de criação de despesas finalizado.')
     end
   end
 
