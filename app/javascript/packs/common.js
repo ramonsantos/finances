@@ -1,5 +1,5 @@
 export function moneyFormatOnChange() {
-  var temp_value = parseInt(event.target.value.replace(/[R][$][ ]/, "").replace(",", "").replace(".", ""))
+  var temp_value = valueToInt(event.target.value)
 
   if (temp_value === 0) {
     event.target.value = ""
@@ -31,5 +31,15 @@ function formatedReal(real) {
     return `${real.substring(0, real.length - 3)}.${real.substring(real.length - 3)}`
   } else {
     return real
+  }
+}
+
+function valueToInt(value) {
+  var raw_value = value.replace(/[R][$][ ]/, "").replace(",", "").replace(".", "")
+
+  if (raw_value.length === 0) {
+    return 0
+  } else {
+    return parseInt(raw_value)
   }
 }
