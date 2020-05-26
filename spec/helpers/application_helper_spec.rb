@@ -41,13 +41,19 @@ describe ApplicationHelper, type: :helper do
       end
     end
 
-    context 'without date' do
+    context 'without date but with "use_current_time_when_date_blank"' do
       before { Timecop.freeze(2020, 2, 20) }
 
       after { Timecop.return }
 
       it 'returns current date' do
         expect(date_field(nil)).to eq('2020-02-20')
+      end
+    end
+
+    context 'without date and and "use_current_time_when_date_blank"' do
+      it 'returns current date' do
+        expect(date_field(nil, false)).to eq('')
       end
     end
   end

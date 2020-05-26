@@ -87,6 +87,18 @@ describe LoansController, type: :controller do
       it 'redirects to the loans' do
         expect(response).to redirect_to(loans_path)
       end
+
+      context 'when receives loan' do
+        let(:new_attributes) { { received_amount: 110.42, received_at: '2020-05-21' } }
+
+        before { put(:update, params: { id: loan.to_param, loan: new_attributes }) }
+
+        it 'updates the requested loan' do
+          loan.reload
+          expect(loan.received_amount).to eq(110.42)
+          expect(loan.received_at).to eq(Date.parse('May 21 2020'))
+        end
+      end
     end
 
     context 'with invalid params' do

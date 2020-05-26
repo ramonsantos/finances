@@ -66,11 +66,14 @@ class LoansController < ApplicationController
       :person,
       :received_amount
     ).tap do |hash|
-      if hash[:received_amount].blank?
-        hash[:received_at] = nil
-      else
-        hash[:received_at] ||= Time.zone.today.to_s
-      end
+      hash[:received_at] = received_at_value(hash)
     end
+  end
+
+  def received_at_value(params)
+    return nil if params[:received_amount].blank?
+    return Time.zone.today.to_s if params[:received_at].blank?
+
+    params[:received_at]
   end
 end

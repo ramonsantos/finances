@@ -19,7 +19,7 @@ feature 'Loans', type: :feature do
       expect(find(id: 'loan_loan_date').value).to eq('2020-03-06')
       expect(find(id: 'loan_borrowed_amount').value).to eq('R$ 100,50')
       expect(find(id: 'loan_received_amount').value).to be_blank
-      expect(find(id: 'loan_received_at').value).to eq(Time.zone.today.to_s)
+      expect(find(id: 'loan_received_at').value).to be_blank
       expect(page).to have_selector(:link_or_button, 'Salvar')
     end
 

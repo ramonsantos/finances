@@ -21,8 +21,8 @@ module ApplicationHelper
     date.strftime('%d/%m/%Y')
   end
 
-  def date_field(date)
-    (date || Time.zone.today).to_s
+  def date_field(date, use_current_time_when_date_blank = true)
+    choose_date(date, use_current_time_when_date_blank).to_s
   end
 
   def current_year
@@ -41,5 +41,14 @@ module ApplicationHelper
 
   def validation_class(validation_status)
     validation_status == :error ? ' is-invalid' : nil
+  end
+
+  private
+
+  def choose_date(date, use_current_time_when_date_blank)
+    return date if date.present?
+    return Time.zone.today if use_current_time_when_date_blank
+
+    nil
   end
 end

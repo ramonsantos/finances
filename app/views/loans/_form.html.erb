@@ -50,7 +50,7 @@
 
   <div class="field form-group col-md-4">
     <%= form.label :received_at, 'Recebido em' %>
-    <%= form.text_field :received_at, class: 'form-control', type: 'date', value: date_field(loan.received_at) %>
+    <%= form.text_field :received_at, class: 'form-control', type: 'date', value: date_field(loan.received_at, false) %>
   </div>
 
   <div class="actions col-md-2">
