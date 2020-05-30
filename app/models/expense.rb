@@ -31,13 +31,13 @@ class Expense < ApplicationRecord
       .includes(:expense_group, :expense_category).group_by { |expense| expense.expense_group.name }
   }
 
-  class << self
-    def fetch_total_monthly_spend(user, date)
-      Expense.where(user: user, date: date.beginning_of_month..date.end_of_month).reduce(0) do |sum, element|
-        sum + element.amount
-      end
+  scope :fetch_total_monthly_spend, lambda { |user, date|
+    where(user: user, date: date.beginning_of_month..date.end_of_month).reduce(0) do |sum, element|
+      sum + element.amount
     end
+  }
 
+  class << self
     def group_for_report(user, date)
       fetch_expenses_grouped_by_groups(user, date).map do |name, expenses|
         total_expense_amount = total(expenses)
