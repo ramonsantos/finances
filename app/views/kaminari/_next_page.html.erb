@@ -7,6 +7,12 @@
     remote:        data-remote
 -%>
 <li class="page-item">
-  <%= link_to_unless(current_page.last?, t('views.pagination.next').html_safe,
-      url, rel: 'next', remote: remote, class: 'page-link') %>
+  <%= link_to_unless(
+    current_page.last?,
+    t('views.pagination.next').html_safe,
+    url,
+    rel: 'next',
+    remote: remote,
+    class: 'page-link'
+  ) %>
 </li>
