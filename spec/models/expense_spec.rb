@@ -36,7 +36,7 @@ describe Expense, type: :model do
     before do
       create(:expense)
       create(:expense_other_month)
-      create(:expense, amount: 2.42)
+      create(:expense, amount: 2.42, date: '2020-02-01')
     end
 
     describe '.fetch_by_month' do
@@ -45,6 +45,17 @@ describe Expense, type: :model do
       it 'returns one expense from February' do
         expect(expeses.count).to eq(2)
         expect(expeses.first.date).to eq(Date.parse('2020-02-15'))
+        expect(expeses.last.date).to eq(Date.parse('2020-02-01'))
+      end
+    end
+
+    describe '.fetch_by_month_order_by_date' do
+      let(:expeses) { described_class.fetch_by_month_order_by_date(User.first, Date.parse('2020-02-21')) }
+
+      it 'returns one expense from February' do
+        expect(expeses.count).to eq(2)
+        expect(expeses.first.date).to eq(Date.parse('2020-02-01'))
+        expect(expeses.last.date).to eq(Date.parse('2020-02-15'))
       end
     end
 

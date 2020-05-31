@@ -27,7 +27,7 @@ feature 'Loans', type: :feature do
     end
 
     context 'with one loan' do
-      context 'when open loans' do
+      context 'when loan to receive ' do
         let!(:loan) { create(:loan) }
 
         before { visit(loans_path) }

@@ -33,8 +33,8 @@ describe Loan, type: :model do
       create(:loan, loan_date: Date.parse('2020-03-15'), received_amount: 110.0)
     end
 
-    describe '.open' do
-      let(:loans) { described_class.open(user) }
+    describe '.to_receive' do
+      let(:loans) { described_class.to_receive(user) }
 
       it 'returns loans' do
         expect(loans.count).to eq(2)
@@ -51,13 +51,19 @@ describe Loan, type: :model do
         expect(loans.first.loan_date).to eq(Date.parse('2020-03-15'))
       end
     end
+  end
 
-    describe '.amount_of_loans_to_receive' do
-      let(:amount) { described_class.amount_of_loans_to_receive(user) }
+  describe '.amount_of_loans_to_receive' do
+    before do
+      create(:loan)
+      create(:loan, loan_date: Date.parse('2020-03-15'), borrowed_amount: 52.62)
+      create(:loan, loan_date: Date.parse('2020-03-15'), received_amount: 110.0)
+    end
 
-      it 'returns amount of loans to receive' do
-        expect(amount).to eq(153.12)
-      end
+    let(:amount) { described_class.amount_of_loans_to_receive(user) }
+
+    it 'returns amount of loans to receive' do
+      expect(amount).to eq(153.12)
     end
   end
 end

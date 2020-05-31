@@ -50,11 +50,11 @@ class LoansController < ApplicationController
   end
 
   def loan_status
-    @loan_status ||= (params[:loan_status].try(:to_sym) || :open)
+    @loan_status ||= (params[:loan_status].try(:to_sym) || :to_receive)
   end
 
   def next_loan_status
-    { open: :received, received: :open }[loan_status]
+    { to_receive: :received, received: :to_receive }[loan_status]
   end
 
   def loan_params

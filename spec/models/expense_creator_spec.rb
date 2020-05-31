@@ -18,13 +18,13 @@ RSpec.describe ExpenseCreator, type: :model do
     it { is_expected.to validate_presence_of(:user) }
   end
 
-  describe '#create_from_csv!' do
+  describe '#create_from_csv' do
     let(:csv_file_path) { 'spec/fixtures/expenses.csv' }
     let!(:expense_creator) { create(:expense_creator) }
 
     it 'creates two ExpenseCreatorResult' do
       expect do
-        expense_creator.create_from_csv!(csv_file_path)
+        expense_creator.create_from_csv(csv_file_path)
       end.to change(ExpenseCreatorResult, :count).by(2)
     end
   end

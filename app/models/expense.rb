@@ -21,18 +21,20 @@ class Expense < ApplicationRecord
   encrypts :description
   encrypts :amount, type: :float
 
-  scope :fetch_by_month, lambda { |user, date|
-    where(user: user, date: date.beginning_of_month..date.end_of_month)
-      .order(:date).includes(:place, :expense_group, :expense_category)
+  scope :fetch_by_month, ->(user, date) { where(user: user, date: date.beginning_of_month..date.end_of_month) }
+
+  scope :fetch_by_month_order_by_date, lambda { |user, date|
+    fetch_by_month(user, date).order(:date).includes(:place, :expense_group, :expense_category)
   }
 
   scope :fetch_expenses_grouped_by_groups, lambda { |user, date|
-    where(user: user, date: date.beginning_of_month..date.end_of_month)
-      .includes(:expense_group, :expense_category).group_by { |expense| expense.expense_group.name }
+    fetch_by_month(user, date).includes(:expense_group, :expense_category).group_by do
+      |expense| expense.expense_group.name
+    end
   }
 
   scope :fetch_total_monthly_spend, lambda { |user, date|
-    where(user: user, date: date.beginning_of_month..date.end_of_month).reduce(0) do |sum, element|
+    fetch_by_month(user, date).reduce(0) do |sum, element|
       sum + element.amount
     end
   }

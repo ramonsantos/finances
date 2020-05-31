@@ -18,7 +18,7 @@ class ExpenseCreatorsController < ApplicationController
       redirect_to(expense_creators_path, alert: 'Arquivo CSV é obrigatório.')
     else
       expense_creator = ExpenseCreator.create!(date: Time.zone.now, user: current_user)
-      expense_creator.create_from_csv!(file_path)
+      expense_creator.create_from_csv(file_path)
 
       redirect_to(expense_creator_path(expense_creator), notice: 'Processo de criação de despesas finalizado.')
     end

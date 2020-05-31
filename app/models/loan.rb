@@ -18,13 +18,13 @@ class Loan < ApplicationRecord
   encrypts :borrowed_amount, type: :float
   encrypts :received_amount, type: :float
 
-  scope :open, ->(user) { where(user: user).where(received_amount_ciphertext: nil) }
+  scope :to_receive, ->(user) { where(user: user, received_amount_ciphertext: nil) }
 
   scope :received, ->(user) { where(user: user).where.not(received_amount_ciphertext: nil) }
 
-  scope :amount_of_loans_to_receive, lambda { |user|
-    where(user: user, received_amount_ciphertext: nil).reduce(0) do |sum, element|
-      sum + element.borrowed_amount
+  def self.amount_of_loans_to_receive(user)
+    to_receive(user).select(:borrowed_amount_ciphertext).reduce(0) do |sum, loan|
+      sum + loan.borrowed_amount
     end
-  }
+  end
 end
