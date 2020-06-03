@@ -99,7 +99,7 @@ describe CreateExpensesFromCsv do
         context 'when ExpenseCategory not found' do
           let(:csv_content) { 'Plano de Saúde,"R$ 244,27",01/05/2020,Esporte,Trabalho,Recife,sim,' }
           let(:success) { false }
-          let(:details) { 'Erro: Categoria não encontrada' }
+          let(:details) { 'Erro: Categoria não existe' }
 
           it_behaves_like 'creates expense_creator_results'
         end
@@ -115,7 +115,7 @@ describe CreateExpensesFromCsv do
         context 'when ExpenseGroup not found' do
           let(:csv_content) { 'Plano de Saúde,"R$ 244,27",01/05/2020,Saúde,Casa,Recife,sim,' }
           let(:success) { false }
-          let(:details) { 'Erro: Grupo de Despesa não encontrado' }
+          let(:details) { 'Erro: Grupo de Despesa não existe' }
 
           it_behaves_like 'creates expense_creator_results'
         end
@@ -131,7 +131,7 @@ describe CreateExpensesFromCsv do
         context 'when Place not found' do
           let(:csv_content) { 'Plano de Saúde,"R$ 244,27",01/05/2020,Saúde,Trabalho,Garanhuns,sim,' }
           let(:success) { false }
-          let(:details) { 'Erro: Local não encontrado' }
+          let(:details) { 'Erro: Local não existe' }
 
           it_behaves_like 'creates expense_creator_results'
         end

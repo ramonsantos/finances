@@ -162,6 +162,24 @@ pt-BR:
       create: Criar %{model}
       submit: Salvar %{model}
       update: Atualizar %{model}
+  models:
+    create_expenses_from_csv:
+      csv_headers:
+        description: 'Descrição'
+        amount: 'Valor'
+        date: 'Data'
+        expense_category: 'Categoria'
+        expense_group: 'Grupo de Despesa'
+        place: 'Local'
+        fixed: 'Fixo?'
+        remark: 'Observações'
+      details:
+        error: "Erro: %{error_message}"
+        success: 'Sucesso'
+      error_messages:
+        cant_be_blank: "%{column} não pode fica em branco"
+        invalid_format: "Formato de %{column} inválido"
+        nonexistent: "%{column} não existe"
   number:
     currency:
       format:
