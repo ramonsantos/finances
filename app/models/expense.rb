@@ -28,8 +28,8 @@ class Expense < ApplicationRecord
   }
 
   scope :fetch_expenses_grouped_by_groups, lambda { |user, date|
-    fetch_by_month(user, date).includes(:expense_group, :expense_category).group_by do
-      |expense| expense.expense_group.name
+    fetch_by_month(user, date).includes(:expense_group, :expense_category).group_by do |expense|
+      expense.expense_group.name
     end
   }
 

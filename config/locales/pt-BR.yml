@@ -7,6 +7,17 @@ pt-BR:
         restrict_dependent_destroy:
           has_one: Não é possível excluir o registro pois existe um %{record} dependente
           has_many: Não é possível excluir o registro pois existem %{record} dependentes
+    models:
+      expense_categories:
+      user:
+        default_expense_categories:
+          education: Educação
+          food: 'Alimentação'
+          health: 'Saúde'
+          recreation: 'Lazer'
+          transport: 'Transporte'
+        default_expense_groups:
+          personal: 'Pessoal'
   date:
     abbr_day_names:
     - dom
