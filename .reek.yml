@@ -4,13 +4,13 @@ detectors:
     enabled: true
     exclude: []
   BooleanParameter:
-    enabled: true
+    enabled: false
     exclude: []
   ClassVariable:
     enabled: true
     exclude: []
   ControlParameter:
-    enabled: true
+    enabled: false
     exclude: []
   DataClump:
     enabled: true
@@ -34,7 +34,7 @@ detectors:
   LongParameterList:
     enabled: true
     exclude: []
-    max_params: 3
+    max_params: 4
     overrides:
       initialize:
         max_params: 5
