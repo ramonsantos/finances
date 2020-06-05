@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class RegistrationsController < Devise::RegistrationsController
+  include ClearFlash
+
+  after_action :clear_flash, only: :create
+
   # GET /users/sign_up
   def new
     super
@@ -51,7 +55,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def place_error
-    { name: build_field_validation(:error, 'não pode ficar vazio') }
+    { name: build_field_validation(:error, I18n.t('controllers.registrations.errors.cant_be_blank')) }
   end
 
   def build_field_validation(status, message)

@@ -18,6 +18,10 @@ pt-BR:
           transport: 'Transporte'
         default_expense_groups:
           personal: 'Pessoal'
+  controllers:
+    registrations:
+      errors:
+        cant_be_blank: "não pode ficar vazio"
   date:
     abbr_day_names:
     - dom
