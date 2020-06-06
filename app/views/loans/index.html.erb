@@ -1,13 +1,5 @@
 <section class="col-md-12">
-  <% if notice %>
-    <div class="alert alert-primary alert-dismissible fade show" role="alert">
-      <%= notice %>
-
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-  <% end %>
+  <%= render('layouts/shared/notice', message: notice) if notice %>
 
   <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
     <h1><%= loans_title(@loan_status) %> </h1>
@@ -45,8 +37,8 @@
               <td class="td-right"><%= format_date(loan.loan_date) %></td>
               <td class="td-right"><%= format_to_money(loan.received_amount) %></td>
               <td class="td-right"><%= format_date(loan.received_at) %></td>
-              <td class="td-center"><%= link_to 'Editar', loan_path(loan), class: 'btn btn-primary btn-sm' %></td>
-              <td class="td-center"><%= link_to 'Remover', loan, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn btn-danger btn-sm' %></td>
+              <td class="td-center"><%= link_to t('views.app.button.edit'), loan_path(loan), class: 'btn btn-primary btn-sm' %></td>
+              <td class="td-center"><%= link_to t('views.app.button.remove'), loan, method: :delete, data: { confirm: t('views.app.dialog.confirm') }, class: 'btn btn-danger btn-sm' %></td>
             </tr>
           <% end %>
         </tbody>

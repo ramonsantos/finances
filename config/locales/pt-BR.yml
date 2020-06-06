@@ -282,6 +282,13 @@ pt-BR:
       short: "%d de %B, %H:%M"
     pm: ''
   views:
+    app:
+      button:
+        remove: Remover
+        save: Salvar
+        edit: Editar
+      dialog:
+        confirm: 'Você tem certeza?'
     expense_groups:
       index:
         title: Grupos de Despesa

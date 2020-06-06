@@ -1,13 +1,5 @@
 <section class="col-md-12">
-  <% if notice %>
-    <div class="alert alert-primary alert-dismissible fade show" role="alert">
-      <%= notice %>
-
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-  <% end %>
+  <%= render('layouts/shared/notice', message: notice) if notice %>
 
   <%= render(
     'expenses_title',
@@ -45,8 +37,8 @@
               <td><%= expense.place.name %></td>
               <td><%= expense.expense_group.name %></td>
               <td><%= remark_preview(expense.remark) %></td>
-              <td class="td-center"><%= link_to 'Editar', expense_path(expense, expense_month: month_param(@current_expense_month)), class: 'btn btn-primary btn-sm' %></td>
-              <td class="td-center"><%= link_to 'Remover', expense_path(expense, expense_month: month_param(@current_expense_month)), method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn btn-danger btn-sm' %></td>
+              <td class="td-center"><%= link_to t('views.app.button.edit'), expense_path(expense, expense_month: month_param(@current_expense_month)), class: 'btn btn-primary btn-sm' %></td>
+              <td class="td-center"><%= link_to t('views.app.button.remove'), expense_path(expense, expense_month: month_param(@current_expense_month)), method: :delete, data: { confirm: t('views.app.dialog.confirm') }, class: 'btn btn-danger btn-sm' %></td>
             </tr>
           <% end %>
         </tbody>

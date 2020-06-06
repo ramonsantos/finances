@@ -1,14 +1,6 @@
 <section class="col-md-12">
   <div class="col-sm-12">
-    <% if notice %>
-      <div class="alert alert-primary alert-dismissible fade show" role="alert">
-        <%= notice %>
-
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    <% end %>
+    <%= render('layouts/shared/notice', message: notice) if notice %>
 
     <h1>Resultados </h1>
 

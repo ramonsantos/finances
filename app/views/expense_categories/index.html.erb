@@ -1,13 +1,5 @@
 <section class="col-md-12">
-  <% if notice %>
-    <div class="alert alert-primary alert-dismissible fade show" role="alert">
-      <%= notice %>
-
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-  <% end %>
+  <%= render('layouts/shared/notice', message: notice) if notice %>
 
   <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
     <h1>Categorias de Despesa</h1>
@@ -33,14 +25,14 @@
             <tr>
               <td><%= expense_category.name %></td>
               <td><%= expense_category.description %></td>
-              <td class="td-center"><%= link_to 'Editar', expense_category_path(expense_category), class: 'btn btn-primary btn-sm' %></td>
+              <td class="td-center"><%= link_to t('views.app.button.edit'), expense_category_path(expense_category), class: 'btn btn-primary btn-sm' %></td>
               <td class="td-center">
                 <% if (@expense_categories.count > 1) && (expense_category.expenses_count.zero?) %>
                   <%= link_to(
-                    'Remover',
+                    t('views.app.button.remove'),
                     expense_category_path(expense_category),
                     method: :delete,
-                    data: { confirm: 'Você tem certeza?' },
+                    data: { confirm: t('views.app.dialog.confirm') },
                     class: 'btn btn-danger btn-sm'
                   ) %>
                 <% end %>

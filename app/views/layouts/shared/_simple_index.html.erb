@@ -1,12 +1,5 @@
 <section class="form-section">
-  <% if notice %>
-    <div class="alert alert-primary alert-dismissible fade show" role="alert">
-      <%= notice %>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-  <% end %>
+  <%= render('layouts/shared/notice', message: notice) if notice %>
 
   <% if model_list.present? %>
     <h1><%= t("views.#{model_name}.index.title") %></h1>
@@ -27,10 +20,10 @@
               <td class="td-center">
                 <% if (model_list.count > 1) && (model_item.expenses_count.zero?) %>
                   <%= link_to(
-                    'Remover',
+                    t('views.app.button.remove'),
                     model_item,
                     method: :delete,
-                    data: { confirm: 'Você tem certeza?' },
+                    data: { confirm: t('views.app.dialog.confirm') },
                     class: 'btn btn-danger btn-sm'
                   ) %>
                 <% end %>
@@ -44,7 +37,7 @@
     <br>
   <% end %>
 
-  <h1>Adicionar  <%= t("views.#{model_name}.index.model") %></h1>
+  <h1>Adicionar <%= t("views.#{model_name}.index.model") %></h1>
 
   <%= form_with(model: model, local: true) do |form| %>
     <div class="inline-form">
@@ -53,9 +46,8 @@
       </div>
 
       <div class="actions">
-        <%= form.submit('Salvar', class: 'btn btn-primary') %>
+        <%= form.submit(t('views.app.button.save'), class: 'btn btn-primary') %>
       </div>
     </div>
   <% end %>
 </section>
-
