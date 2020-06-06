@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ExpenseCategoriesController < ApplicationController
+  include I18nBasePath
   include CreateAction
   include DestroyAction
 
@@ -24,13 +25,13 @@ class ExpenseCategoriesController < ApplicationController
   def create
     @expense_category = ExpenseCategory.new(expense_category_params.merge!(user: current_user))
 
-    create_action(@expense_category, expense_categories_path, 'Categoria de Despesa adicionada.')
+    create_action(@expense_category, expense_categories_path)
   end
 
   # PATCH/PUT /expense_categories/1
   def update
     if @expense_category.update(expense_category_params)
-      redirect_to(expense_categories_path, notice: 'Categoria de Despesa atualizada.')
+      redirect_to(expense_categories_path, notice: t("#{i18n_base_path}.updated"))
     else
       render(:show)
     end
@@ -38,7 +39,7 @@ class ExpenseCategoriesController < ApplicationController
 
   # DELETE /expense_categories/1
   def destroy
-    redirect_to(expense_categories_url, try_destroy(@expense_category, destroy_messages))
+    redirect_to(expense_categories_url, try_destroy(@expense_category))
   end
 
   private
@@ -53,12 +54,5 @@ class ExpenseCategoriesController < ApplicationController
 
   def expense_category_params
     params.require(:expense_category).permit(:name, :description)
-  end
-
-  def destroy_messages
-    {
-      success: 'Categoria de Despesa removida.',
-      error: 'Error ao remover Categoria de Despesa.'
-    }
   end
 end

@@ -5,11 +5,15 @@ module DestroyAction
 
   private
 
-  def try_destroy(model, messages)
+  def try_destroy(model)
     model.destroy
 
-    { notice: messages[:success] }
+    { notice: destroy_messages(:success) }
   rescue StandardError
-    { alert: messages[:error] }
+    { alert: destroy_messages(:error) }
+  end
+
+  def destroy_messages(result)
+    t("#{i18n_base_path}.destroy_#{result}")
   end
 end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ExpenseGroupsController < ApplicationController
+  include I18nBasePath
   include CreateAction
   include DestroyAction
 
@@ -8,40 +9,29 @@ class ExpenseGroupsController < ApplicationController
 
   # GET /expense_groups
   def index
-    @expense_groups = ExpenseGroup.where(user: current_user).order(:name)
+    @expense_groups = current_user.expense_groups.order(:name)
     @expense_group  = ExpenseGroup.new
   end
 
   # POST /expense_groups
   def create
-    @expense_group = ExpenseGroup.new(expense_group_params.merge!(user: current_user))
+    @expense_group = ExpenseGroup.new(expense_group_params)
 
-    create_action(@expense_group, expense_groups_path, 'Grupo de Despesas adicionado.', :index)
+    create_action(@expense_group, expense_groups_path, :index)
   end
 
   # DELETE /expense_groups/1
   def destroy
-    redirect_to(expense_groups_path, try_destroy(@expense_group, destroy_messages))
+    redirect_to(expense_groups_path, try_destroy(@expense_group))
   end
 
   private
 
   def expense_group_params
-    params.require(:expense_group).permit(:name)
+    params.require(:expense_group).permit(:name).merge!(user: current_user)
   end
 
   def expense_group
-    @expense_group ||= fetch_expense_group
-  end
-
-  def fetch_expense_group
-    ExpenseGroup.find_by(id: params[:id], user: current_user)
-  end
-
-  def destroy_messages
-    {
-      success: 'Grupo de Despesas removido.',
-      error: 'Ocorreu um erro ao remover o grupo de despesas.'
-    }
+    @expense_group ||= current_user.expense_groups.find(params[:id])
   end
 end

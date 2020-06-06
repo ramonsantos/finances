@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class LoansController < ApplicationController
+  include I18nBasePath
   include CreateAction
 
   before_action :set_loan, only: [:destroy, :show, :update]
@@ -25,13 +26,13 @@ class LoansController < ApplicationController
   def create
     @loan = Loan.new(loan_params.merge!(user: current_user))
 
-    create_action(@loan, loans_path, 'Empréstimo adicionado.')
+    create_action(@loan, loans_path)
   end
 
   # PATCH/PUT /loans/1
   def update
     if @loan.update(loan_params)
-      redirect_to(loans_path, notice: 'Empréstimo atualizado.')
+      redirect_to(loans_path, notice: t("#{i18n_base_path}.updated"))
     else
       render(:show)
     end
@@ -40,7 +41,7 @@ class LoansController < ApplicationController
   # DELETE /loans/1
   def destroy
     @loan.destroy
-    redirect_to(loans_url, notice: 'Empréstimo removido.')
+    redirect_to(loans_url, notice: t("#{i18n_base_path}.removed"))
   end
 
   private

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ExpensesController < ApplicationController
+  include I18nBasePath
   include CreateAction
 
   before_action :set_expense,        only: [:destroy, :show, :update]
@@ -35,13 +36,13 @@ class ExpensesController < ApplicationController
   def create
     @expense = Expense.new(expense_params.merge!(user: current_user))
 
-    create_action(@expense, expenses_path, 'Despesa adicionada.')
+    create_action(@expense, expenses_path)
   end
 
   # PATCH/PUT /expenses/1
   def update
     if @expense.update(expense_params)
-      redirect_to(expenses_path(expense_month: expense_month), notice: 'Despesa atualizada.')
+      redirect_to(expenses_path(expense_month: expense_month), notice: t("#{i18n_base_path}.updated"))
     else
       render(:show)
     end
@@ -50,7 +51,7 @@ class ExpensesController < ApplicationController
   # DELETE /expenses/1
   def destroy
     @expense.destroy
-    redirect_to(expenses_path(expense_month: expense_month), notice: 'Despesa removida.')
+    redirect_to(expenses_path(expense_month: expense_month), notice: t("#{i18n_base_path}.removed"))
   end
 
   private

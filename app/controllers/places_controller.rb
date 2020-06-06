@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class PlacesController < ApplicationController
+  include I18nBasePath
   include CreateAction
   include DestroyAction
 
@@ -8,40 +9,29 @@ class PlacesController < ApplicationController
 
   # GET /places
   def index
-    @places = Place.where(user: current_user).order(:name)
+    @places = current_user.places.order(:name)
     @place  = Place.new
   end
 
   # POST /places
   def create
-    @place = Place.new(place_params.merge!(user: current_user))
+    @place = Place.new(place_params)
 
-    create_action(@place, places_path, 'Local adicionado.', :index)
+    create_action(@place, places_path, :index)
   end
 
   # DELETE /places/1
   def destroy
-    redirect_to(places_path, try_destroy(@place, destroy_messages))
+    redirect_to(places_path, try_destroy(@place))
   end
 
   private
 
   def place_params
-    params.require(:place).permit(:name)
+    params.require(:place).permit(:name).merge!(user: current_user)
   end
 
   def place
-    @place ||= fetch_place
-  end
-
-  def fetch_place
-    Place.find_by(id: params[:id], user: current_user)
-  end
-
-  def destroy_messages
-    {
-      success: 'Local removido.',
-      error: 'Ocorreu um erro ao remover o local.'
-    }
+    @place ||= current_user.places.find(params[:id])
   end
 end
