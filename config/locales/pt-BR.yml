@@ -21,7 +21,13 @@ pt-BR:
   controllers:
     registrations:
       errors:
-        cant_be_blank: "não pode ficar vazio"
+        cant_be_blank: não pode ficar vazio
+    expense_creators:
+      alert:
+        required_file: Arquivo CSV é obrigatório.
+      csv_file_name: 'Criar Despesas (Modelo).csv'
+      notice:
+        creation_process_finished: Processo de criação de despesas finalizado.
   date:
     abbr_day_names:
     - dom

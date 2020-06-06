@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class RegistrationsController < Devise::RegistrationsController
+  include I18nBasePath
   include ClearFlash
 
   after_action :clear_flash, only: :create
@@ -55,7 +56,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def place_error
-    { name: build_field_validation(:error, I18n.t('controllers.registrations.errors.cant_be_blank')) }
+    { name: build_field_validation(:error, t("#{i18n_base_path}.errors.cant_be_blank")) }
   end
 
   def build_field_validation(status, message)
