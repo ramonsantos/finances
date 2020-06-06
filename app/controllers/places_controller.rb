@@ -22,7 +22,7 @@ class PlacesController < ApplicationController
 
   # DELETE /places/1
   def destroy
-    redirect_to(places_path, try_destroy(@place))
+    destroy_action(@place, places_path)
   end
 
   private

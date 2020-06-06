@@ -5,6 +5,10 @@ module DestroyAction
 
   private
 
+  def destroy_action(model, redirect_path)
+    redirect_to(redirect_path, try_destroy(model))
+  end
+
   def try_destroy(model)
     model.destroy
 

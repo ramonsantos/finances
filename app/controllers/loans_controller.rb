@@ -3,6 +3,8 @@
 class LoansController < ApplicationController
   include I18nBasePath
   include CreateAction
+  include UpdateAction
+  include DestroyAction
 
   before_action :set_loan, only: [:destroy, :show, :update]
 
@@ -31,23 +33,18 @@ class LoansController < ApplicationController
 
   # PATCH/PUT /loans/1
   def update
-    if @loan.update(loan_params)
-      redirect_to(loans_path, notice: t("#{i18n_base_path}.updated"))
-    else
-      render(:show)
-    end
+    update_action(@loan, loan_params, loans_path)
   end
 
   # DELETE /loans/1
   def destroy
-    @loan.destroy
-    redirect_to(loans_url, notice: t("#{i18n_base_path}.removed"))
+    destroy_action(@loan, loans_path)
   end
 
   private
 
   def set_loan
-    @loan = Loan.find_by(id: params[:id], user: current_user)
+    @loan = current_user.loans.find(params[:id])
   end
 
   def loan_status

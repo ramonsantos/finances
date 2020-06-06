@@ -5,6 +5,7 @@ require 'rails_helper'
 describe User, type: :model do
   context 'associations' do
     it { is_expected.to have_many(:expenses).dependent(:delete_all) }
+    it { is_expected.to have_many(:loans).dependent(:delete_all) }
     it { is_expected.to have_many(:places).dependent(:delete_all) }
     it { is_expected.to have_many(:expense_groups).dependent(:delete_all) }
     it { is_expected.to have_many(:expense_categories).dependent(:delete_all) }

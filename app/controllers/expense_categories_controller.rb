@@ -4,12 +4,13 @@ class ExpenseCategoriesController < ApplicationController
   include I18nBasePath
   include CreateAction
   include DestroyAction
+  include UpdateAction
 
   before_action :expense_category, only: [:show, :update, :destroy]
 
   # GET /expense_categories
   def index
-    @expense_categories = ExpenseCategory.where(user: current_user).order(:name)
+    @expense_categories = current_user.expense_categories.order(:name)
   end
 
   # GET /expense_categories/1
@@ -30,26 +31,18 @@ class ExpenseCategoriesController < ApplicationController
 
   # PATCH/PUT /expense_categories/1
   def update
-    if @expense_category.update(expense_category_params)
-      redirect_to(expense_categories_path, notice: t("#{i18n_base_path}.updated"))
-    else
-      render(:show)
-    end
+    update_action(@expense_category, expense_category_params, expense_categories_path)
   end
 
   # DELETE /expense_categories/1
   def destroy
-    redirect_to(expense_categories_url, try_destroy(@expense_category))
+    destroy_action(@expense_category, expense_categories_path)
   end
 
   private
 
   def expense_category
-    @expense_category ||= fetch_expense_category
-  end
-
-  def fetch_expense_category
-    ExpenseCategory.find_by(id: params[:id], user: current_user)
+    @expense_category ||= current_user.expense_categories.find(params[:id])
   end
 
   def expense_category_params

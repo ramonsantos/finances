@@ -21,8 +21,8 @@ pt-BR:
   controllers:
     expenses:
       created: 'Despesa adicionada.'
+      destroy_success: 'Despesa removida.'
       updated: 'Despesa atualizada.'
-      removed: 'Despesa removida.'
     expense_creators:
       alert:
         required_file: Arquivo CSV é obrigatório.
@@ -31,21 +31,21 @@ pt-BR:
         creation_process_finished: Processo de criação de despesas finalizado.
     expense_categories:
       created: 'Categoria de Despesa adicionada.'
-      updated: 'Categoria de Despesa atualizada.'
-      destroy_success: 'Categoria de Despesa removida.'
       destroy_error: 'Error ao remover Categoria de Despesa.'
+      destroy_success: 'Categoria de Despesa removida.'
+      updated: 'Categoria de Despesa atualizada.'
     expense_groups:
       created: 'Grupo de Despesas adicionado.'
-      destroy_success: 'Grupo de Despesas removido.'
       destroy_error: 'Ocorreu um erro ao remover o grupo de despesas.'
+      destroy_success: 'Grupo de Despesas removido.'
     loans:
       created: 'Empréstimo adicionado.'
+      destroy_success: 'Empréstimo removido.'
       updated: 'Empréstimo atualizado.'
-      removed: 'Empréstimo removido.'
     places:
       created: 'Local adicionado.'
-      destroy_success: 'Local removido.'
       destroy_error: 'Ocorreu um erro ao remover o local.'
+      destroy_success: 'Local removido.'
     registrations:
       errors:
         cant_be_blank: não pode ficar vazio

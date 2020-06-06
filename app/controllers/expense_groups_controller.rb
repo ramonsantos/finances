@@ -22,7 +22,7 @@ class ExpenseGroupsController < ApplicationController
 
   # DELETE /expense_groups/1
   def destroy
-    redirect_to(expense_groups_path, try_destroy(@expense_group))
+    destroy_action(@expense_group, expense_groups_path)
   end
 
   private
