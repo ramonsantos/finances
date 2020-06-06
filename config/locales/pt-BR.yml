@@ -282,12 +282,20 @@ pt-BR:
       short: "%d de %B, %H:%M"
     pm: ''
   views:
+    expense_groups:
+      index:
+        title: Grupos de Despesa
+        model: Grupo de Despesa
     pagination:
       first: "&laquo;"
       last: "&raquo;"
       previous: "&lsaquo;"
       next: "&rsaquo;"
       truncate: "&hellip;"
+    places:
+      index:
+        title: Locais
+        model: Local
   helpers:
     page_entries_info:
       one_page:

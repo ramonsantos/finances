@@ -1,0 +1,61 @@
+<section class="form-section">
+  <% if notice %>
+    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+      <%= notice %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <% end %>
+
+  <% if model_list.present? %>
+    <h1><%= t("views.#{model_name}.index.title") %></h1>
+
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col"><%= t("views.#{model_name}.index.model") %></th>
+            <th scope="col" colspan="3"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% model_list.each do |model_item| %>
+            <tr>
+              <td scope="row"><%= model_item.name %></td>
+              <td class="td-center">
+                <% if (model_list.count > 1) && (model_item.expenses_count.zero?) %>
+                  <%= link_to(
+                    'Remover',
+                    model_item,
+                    method: :delete,
+                    data: { confirm: 'Você tem certeza?' },
+                    class: 'btn btn-danger btn-sm'
+                  ) %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <br>
+  <% end %>
+
+  <h1>Adicionar  <%= t("views.#{model_name}.index.model") %></h1>
+
+  <%= form_with(model: model, local: true) do |form| %>
+    <div class="inline-form">
+      <div class="field">
+        <%= form.text_field :name, required: true, class: 'form-control' %>
+      </div>
+
+      <div class="actions">
+        <%= form.submit('Salvar', class: 'btn btn-primary') %>
+      </div>
+    </div>
+  <% end %>
+</section>
+
