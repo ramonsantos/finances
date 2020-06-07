@@ -39,8 +39,8 @@ module ApplicationHelper
     elements.map! { |element| normalize_float_value(element) }.join
   end
 
-  def validation_class(validation_status)
-    validation_status == :error ? ' is-invalid' : nil
+  def validation_class(fields_validation, field)
+    fields_validation.try(:dig, field, :status) == :error ? ' is-invalid' : nil
   end
 
   private

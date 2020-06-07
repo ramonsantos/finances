@@ -284,25 +284,50 @@ pt-BR:
   views:
     app:
       button:
+        edit: Editar
         remove: Remover
         save: Salvar
-        edit: Editar
       dialog:
         confirm: 'Você tem certeza?'
     expense_groups:
       index:
         title: Grupos de Despesa
         model: Grupo de Despesa
+        inline_form_title: Adicionar Grupo de Despesa
     pagination:
       first: "&laquo;"
       last: "&raquo;"
-      previous: "&lsaquo;"
       next: "&rsaquo;"
+      previous: "&lsaquo;"
       truncate: "&hellip;"
     places:
       index:
-        title: Locais
+        inline_form_title: Adicionar Local
         model: Local
+        title: Locais
+    registrations:
+      form:
+        email: 'E-mail'
+        password: Senha
+        password_confirmation: Confirmar Senha
+        place: Cidade
+        submit_button: Cadastrar
+      label:
+        minimum_characters: "(no mínimo %{minimum_password_length} caracteres)"
+      link:
+        enter: Entrar
+      title: Cadastro
+    sessions:
+      error:
+        invalid_email_or_password: 'E-mail ou senha inválidos'
+      form:
+        email: 'E-mail'
+        password: Senha
+        remember: Lembrar
+        submit_button: Entrar
+      link:
+        new_account: Criar uma conta
+      title: Entrar
   helpers:
     page_entries_info:
       one_page:

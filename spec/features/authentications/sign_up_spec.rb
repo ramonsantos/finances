@@ -13,6 +13,7 @@ feature 'SignUp', type: :feature do
       expect(page).to have_selector('h2', text: 'Cadastro')
       expect(page).to have_selector('input', id: 'user_email')
       expect(page).to have_selector('input', id: 'user_password')
+      expect(page).to have_selector('em', text: '(no mínimo 6 caracteres)')
       expect(page).to have_selector('input', id: 'user_password_confirmation')
       expect(page).to have_selector('input', id: 'user_places_name')
       expect(page).to have_selector(:link_or_button, 'Cadastrar')

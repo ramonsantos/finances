@@ -90,11 +90,22 @@ describe ApplicationHelper, type: :helper do
 
   describe '.validation_class' do
     context 'with error' do
-      it { expect(validation_class(:error)).to eq(' is-invalid') }
+      let(:fields_validation) do
+        {
+          password_confirmation: {
+            status: :error,
+            message: 'não é igual a Senha'
+          }
+        }
+      end
+
+      it { expect(validation_class(fields_validation, :password_confirmation)).to eq(' is-invalid') }
     end
 
     context 'without erro' do
-      it { expect(validation_class(nil)).to be_nil }
+      let(:fields_validation) { {} }
+
+      it { expect(validation_class(fields_validation, :password_confirmation)).to be_nil }
     end
   end
 end

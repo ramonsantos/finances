@@ -37,7 +37,7 @@
     <br>
   <% end %>
 
-  <h1>Adicionar <%= t("views.#{model_name}.index.model") %></h1>
+  <h1><%= t("views.#{model_name}.index.inline_form_title") %></h1>
 
   <%= form_with(model: model, local: true) do |form| %>
     <div class="inline-form">

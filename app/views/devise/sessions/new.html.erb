@@ -1,38 +1,38 @@
 <section class="login-form">
   <% if show_sign_in_error?(alert) %>
-    <%= render 'layouts/shared/alert', message: 'E-mail ou senha inválidos' %>
+    <%= render('layouts/shared/alert', message: t('views.sessions.error.invalid_email_or_password')) %>
   <% end %>
 
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <h2 class="text-center">Entrar</h2>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |form| %>
+    <h2 class="text-center"><%= t('views.sessions.title') %></h2>
 
     <div class="field form-group">
-      <%= f.label :email, 'E-mail' %><br />
-      <%= f.email_field :email, autofocus: true, autocomplete: 'email', required: true, class: 'form-control' %>
+      <%= form.label :email, t('views.sessions.form.email') %><br />
+      <%= form.email_field :email, autofocus: true, autocomplete: 'email', required: true, class: 'form-control' %>
     </div>
 
     <div class="field form-group">
-      <%= f.label :password, 'Senha' %><br />
-      <%= f.password_field :password, autocomplete: 'current-password', required: true, class: 'form-control' %>
+      <%= form.label :password, t('views.sessions.form.password') %><br />
+      <%= form.password_field :password, autocomplete: 'current-password', required: true, class: 'form-control' %>
     </div>
 
     <% if devise_mapping.rememberable? %>
       <div class="field form-group justify-content-between flex-display">
         <div class="form-check">
-          <%= f.check_box :remember_me, class: 'form-check-input' %>
-          <%= f.label :remember_me, 'Lembrar', class: 'form-check-label' %>
+          <%= form.check_box :remember_me, class: 'form-check-input' %>
+          <%= form.label :remember_me, t('views.sessions.form.remember'), class: 'form-check-label' %>
         </div>
       </div>
     <% end %>
 
     <div class="actions">
-      <%= f.submit 'Entrar', class: 'btn btn-primary btn-block' %>
+      <%= form.submit(t('views.sessions.form.submit_button'), class: 'btn btn-primary btn-block') %>
     </div>
   <% end %>
 
   <div class="text-center">
     <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-      <%= link_to "Criar uma conta", new_registration_path(resource_name), class: 'authentication-link' %>
+      <%= link_to(t('views.sessions.link.new_account'), new_registration_path(resource_name), class: 'authentication-link') %>
     <% end %>
   </div>
 </section>
