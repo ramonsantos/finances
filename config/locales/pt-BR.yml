@@ -289,6 +289,25 @@ pt-BR:
         save: Salvar
       dialog:
         confirm: 'Você tem certeza?'
+    expense_creators:
+      index:
+        column:
+          date: Data de Criação
+          total: Total
+        form:
+          file: Escolher Arquivo
+          submit: Criar Despesas
+        link:
+          details: Detalhes
+          download_csv_template: Baixar Modelo de CSV
+        previous: Anteriores
+        title: Criar Despesas por CSV
+      show:
+        column:
+          row: Linha
+          details: Resultado
+        title: Resultados
+        total: "Total: %{results_count}"
     expense_groups:
       index:
         title: Grupos de Despesa
