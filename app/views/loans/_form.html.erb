@@ -1,28 +1,16 @@
 <%= form_with(model: loan, local: true, html: { onsubmit: normalize_float_values(loan_float_fields) }) do |form| %>
-  <% if loan.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(loan.errors.count, "error") %> prohibited this loan from being saved:</h2>
-
-      <ul>
-        <% loan.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="field form-group col-md-6">
-    <%= form.label :person, 'Pessoa' %>
+    <%= form.label :person, t('views.loans.form.person') %>
     <%= form.text_field :person, required: true, class: 'form-control' %>
   </div>
 
   <div class="field form-group col-md-6">
-    <%= form.label :description, 'Descrição' %>
+    <%= form.label :description, t('views.loans.form.description') %>
     <%= form.text_field :description, required: true, class: 'form-control' %>
   </div>
 
   <div class="field form-group col-md-4">
-    <%= form.label :borrowed_amount, 'Valor do Empréstimo' %>
+    <%= form.label :borrowed_amount, t('views.loans.form.borrowed_amount') %>
     <%= form.text_field(
       :borrowed_amount,
       oninput: only_numbers_script,
@@ -33,12 +21,12 @@
   </div>
 
   <div class="field form-group col-md-4">
-    <%= form.label :loan_date, 'Data do Empréstimo' %>
+    <%= form.label :loan_date, t('views.loans.form.loan_date') %>
     <%= form.text_field :loan_date, class: 'form-control', type: 'date', value: date_field(loan.loan_date) %>
   </div>
 
   <div class="field form-group col-md-4">
-    <%= form.label :received_amount, 'Valor Recebido' %>
+    <%= form.label :received_amount, t('views.loans.form.received_amount') %>
     <%= form.text_field(
       :received_amount,
       oninput: only_numbers_script,
@@ -49,7 +37,7 @@
   </div>
 
   <div class="field form-group col-md-4">
-    <%= form.label :received_at, 'Recebido em' %>
+    <%= form.label :received_at, t('views.loans.form.received_at') %>
     <%= form.text_field :received_at, class: 'form-control', type: 'date', value: date_field(loan.received_at, false) %>
   </div>
 

@@ -6,7 +6,7 @@
 
     <div class="page-title-buttons">
       <%= link_to(
-        'Empréstimos Recebidos',
+        t('views.loans.index.link.received_loans'),
         loans_path(@params_to_toggle_loan_status),
         class: 'btn btn-success btn-sm')
       %>
@@ -18,12 +18,12 @@
       <table class="table table-hover table-bordered">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">Pessoa</th>
-            <th scope="col">Descrição</th>
-            <th scope="col">Valor</th>
-            <th scope="col">Data</th>
-            <th scope="col">Valor Recebido</th>
-            <th scope="col">Recebido em</th>
+            <th scope="col"><%= t('views.loans.index.column.person') %></th>
+            <th scope="col"><%= t('views.loans.index.column.description') %></th>
+            <th scope="col"><%= t('views.loans.index.column.borrowed_amount') %></th>
+            <th scope="col"><%= t('views.loans.index.column.loan_date') %></th>
+            <th scope="col"><%= t('views.loans.index.column.received_amount') %></th>
+            <th scope="col"><%= t('views.loans.index.column.received_at') %></th>
             <th scope="col" colspan="3"></th>
           </tr>
         </thead>
@@ -47,7 +47,9 @@
   </div>
 
   <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-    <h3>Total em Empréstimos a Receber: <%= format_to_money(@amount_of_loans_to_receive) %></h3>
+    <h3>
+      <%= t('views.loans.index.total', amount_of_loans_to_receive: format_to_money(@amount_of_loans_to_receive)) %>
+    </h3>
 
     <%= paginate @loans %>
   </div>

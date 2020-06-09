@@ -328,6 +328,29 @@ pt-BR:
         title: Grupos de Despesa
         model: Grupo de Despesa
         inline_form_title: Adicionar Grupo de Despesa
+    loans:
+      form:
+        person: Pessoa
+        description: Descrição
+        borrowed_amount: Valor do Empréstimo
+        loan_date: Data do Empréstimo
+        received_amount: Valor Recebido
+        received_at: Recebido em
+      index:
+        column:
+          person: Pessoa
+          description: Descrição
+          borrowed_amount: Valor
+          loan_date: Data
+          received_amount: Valor Recebido
+          received_at: Recebido em
+        link:
+          received_loans: Empréstimos Recebidos
+        total: "Total em Empréstimos a Receber: %{amount_of_loans_to_receive}"
+      new:
+        title: Adicionar Empréstimo
+      show:
+        title: Editar Empréstimo
     pagination:
       first: "&laquo;"
       last: "&raquo;"
