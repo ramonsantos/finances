@@ -289,6 +289,21 @@ pt-BR:
         save: Salvar
       dialog:
         confirm: 'Você tem certeza?'
+    expense_categories:
+      form:
+        name: Nome
+        description: Descrição
+      index:
+        column:
+          name: Nome
+          description: Descrição
+        link:
+          create_category: Criar Categoria
+        title: Categorias de Despesa
+      new:
+        title: Adicionar Categoria de Despesa
+      show:
+        title: Editar Categoria de Despesa
     expense_creators:
       index:
         column:

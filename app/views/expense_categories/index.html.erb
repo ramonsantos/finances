@@ -2,10 +2,14 @@
   <%= render('layouts/shared/notice', message: notice) if notice %>
 
   <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-    <h1>Categorias de Despesa</h1>
+    <h1><%= t('views.expense_categories.index.title') %></h1>
 
     <div class="page-title-buttons">
-      <%= link_to 'Criar Categoria', new_expense_category_path, class: 'btn btn-primary btn-sm' %>
+      <%= link_to(
+        t('views.expense_categories.index.link.create_category'),
+        new_expense_category_path,
+        class: 'btn btn-primary btn-sm'
+      ) %>
     </div>
   </div>
 
@@ -14,8 +18,8 @@
       <table class="table table-hover table-bordered">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">Nome</th>
-            <th scope="col">Descrição</th>
+            <th scope="col"><%= t('views.expense_categories.index.column.name') %></th>
+            <th scope="col"><%= t('views.expense_categories.index.column.description') %></th>
             <th scope="col" colspan="3"></th>
           </tr>
         </thead>
@@ -25,7 +29,13 @@
             <tr>
               <td><%= expense_category.name %></td>
               <td><%= expense_category.description %></td>
-              <td class="td-center"><%= link_to t('views.app.button.edit'), expense_category_path(expense_category), class: 'btn btn-primary btn-sm' %></td>
+              <td class="td-center">
+                <%= link_to(
+                  t('views.app.button.edit'),
+                  expense_category_path(expense_category),
+                  class: 'btn btn-primary btn-sm'
+                ) %>
+              </td>
               <td class="td-center">
                 <% if (@expense_categories.count > 1) && (expense_category.expenses_count.zero?) %>
                   <%= link_to(
