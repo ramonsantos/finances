@@ -1,9 +1,9 @@
 version: "3.7"
 
 services:
-  postgres:
+  database:
     image: postgres:alpine
-    container_name: dev_postgres
+    container_name: finances_db
     restart: unless-stopped
     environment:
       POSTGRES_USER: "postgres"
@@ -12,28 +12,11 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres:/data/postgres
+      - database:/data/postgres
     networks:
       - services-network
-
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: dev_pgadmin4
-    restart: unless-stopped
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "ramonsantos.pe@gmail.com"
-      PGADMIN_DEFAULT_PASSWORD: "1234"
-    ports:
-      - "5050:80"
-    depends_on:
-      - postgres
-    networks:
-      - services-network
-
 networks:
   services-network:
     driver: bridge
-
 volumes:
-    postgres:
-    pgadmin:
+  database:
