@@ -215,7 +215,7 @@ pt-BR:
     currency:
       format:
         delimiter: "."
-        format: "%u %n"
+        format: "%n %u"
         precision: 2
         separator: ","
         significant: false
@@ -277,7 +277,7 @@ pt-BR:
   time:
     am: ''
     formats:
-      default: "%a, %d de %B de %Y, %H:%M:%S %z"
+      default: "%d/%m/%Y - %H:%M:%S"
       long: "%d de %B de %Y, %H:%M"
       short: "%d de %B, %H:%M"
     pm: ''
@@ -346,6 +346,7 @@ pt-BR:
           received_at: Recebido em
         link:
           received_loans: Empréstimos Recebidos
+        title: "Empréstimos %{loan_status_label}"
         total: "Total em Empréstimos a Receber: %{amount_of_loans_to_receive}"
       new:
         title: Adicionar Empréstimo

@@ -30,8 +30,8 @@
           <% @expenses.each do |expense| %>
             <tr>
               <td scope="row"><%= expense.description %></td>
-              <td class="td-right"><%= format_to_money(expense.amount) %></td>
-              <td class="td-right"><%= format_date(expense.date) %></td>
+              <td class="td-right"><%= number_to_currency(expense.amount) %></td>
+              <td class="td-right"><%= I18n.l(expense.date, default: '') %></td>
               <td class="td-center"><%= fixed_label(expense.fixed) %></td>
               <td><%= expense.expense_category.name %></td>
               <td><%= expense.place.name %></td>
@@ -47,7 +47,7 @@
   </div>
 
   <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-    <h3>Total de Despesas: <%= format_to_money(@total_expense_amount) %></h3>
+    <h3>Total de Despesas: <%= number_to_currency(@total_expense_amount) %></h3>
 
     <%= paginate @expenses %>
   </div>

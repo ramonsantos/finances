@@ -11,13 +11,13 @@ describe LoansHelper, type: :helper do
 
   describe '.loans_title' do
     context 'when loan_status is :to_receive' do
-      let(:expected_result) { 'Empréstimos em Aberto' }
+      let(:expected_result) { 'em Aberto' }
 
       it { expect(loans_title(:to_receive)).to eq(expected_result) }
     end
 
     context 'when loan_status is :received' do
-      let(:expected_result) { 'Empréstimos fechados' }
+      let(:expected_result) { 'fechados' }
 
       it { expect(loans_title(:received)).to eq(expected_result) }
     end

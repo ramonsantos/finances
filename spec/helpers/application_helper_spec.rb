@@ -23,17 +23,6 @@ describe ApplicationHelper, type: :helper do
     end
   end
 
-  describe '.format_to_money' do
-    it { expect(format_to_money(0.1)).to eq('0,10 R$') }
-    it { expect(format_to_money(1.01)).to eq('1,01 R$') }
-    it { expect(format_to_money(1012.1)).to eq('1.012,10 R$') }
-  end
-
-  describe '.format_date' do
-    it { expect(format_date(Date.parse('2020-02-15'))).to eq('15/02/2020') }
-    it { expect(format_date(nil)).to eq('') }
-  end
-
   describe '.date_field' do
     context 'with present' do
       it 'returns date' do

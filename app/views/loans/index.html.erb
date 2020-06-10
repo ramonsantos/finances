@@ -2,7 +2,7 @@
   <%= render('layouts/shared/notice', message: notice) if notice %>
 
   <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-    <h1><%= loans_title(@loan_status) %> </h1>
+    <h1><%= t('views.loans.index.title', loan_status_label: loans_title(@loan_status)) %></h1>
 
     <div class="page-title-buttons">
       <%= link_to(
@@ -33,12 +33,22 @@
             <tr>
               <td><%= loan.person %></td>
               <td><%= loan.description %></td>
-              <td class="td-right"><%= format_to_money(loan.borrowed_amount) %></td>
-              <td class="td-right"><%= format_date(loan.loan_date) %></td>
-              <td class="td-right"><%= format_to_money(loan.received_amount) %></td>
-              <td class="td-right"><%= format_date(loan.received_at) %></td>
-              <td class="td-center"><%= link_to t('views.app.button.edit'), loan_path(loan), class: 'btn btn-primary btn-sm' %></td>
-              <td class="td-center"><%= link_to t('views.app.button.remove'), loan, method: :delete, data: { confirm: t('views.app.dialog.confirm') }, class: 'btn btn-danger btn-sm' %></td>
+              <td class="td-right"><%= number_to_currency(loan.borrowed_amount) %></td>
+              <td class="td-right"><%= I18n.l(loan.loan_date, default: '') %></td>
+              <td class="td-right"><%= number_to_currency(loan.received_amount) %></td>
+              <td class="td-right"><%= I18n.l(loan.received_at, default: '') %></td>
+              <td class="td-center">
+                <%= link_to(t('views.app.button.edit'), loan_path(loan), class: 'btn btn-primary btn-sm') %>
+              </td>
+              <td class="td-center">
+                <%= link_to(
+                  t('views.app.button.remove'),
+                  loan,
+                  method: :delete,
+                  data: { confirm: t('views.app.dialog.confirm') },
+                  class: 'btn btn-danger btn-sm'
+                ) %>
+              </td>
             </tr>
           <% end %>
         </tbody>
@@ -48,7 +58,7 @@
 
   <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
     <h3>
-      <%= t('views.loans.index.total', amount_of_loans_to_receive: format_to_money(@amount_of_loans_to_receive)) %>
+      <%= t('views.loans.index.total', amount_of_loans_to_receive: number_to_currency(@amount_of_loans_to_receive)) %>
     </h3>
 
     <%= paginate @loans %>

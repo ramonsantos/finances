@@ -11,16 +11,6 @@ module ApplicationHelper
     format('R$ %<value>.2f', value: value).tr('.', ',')
   end
 
-  def format_to_money(amount)
-    number_to_currency(amount, unit: 'R$', separator: ',', delimiter: '.', format: '%n %u')
-  end
-
-  def format_date(date)
-    return '' if date.blank?
-
-    date.strftime('%d/%m/%Y')
-  end
-
   def date_field(date, use_current_time_when_date_blank = true)
     choose_date(date, use_current_time_when_date_blank).to_s
   end
