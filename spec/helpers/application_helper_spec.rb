@@ -9,16 +9,16 @@ describe ApplicationHelper, type: :helper do
     end
   end
 
-  describe '.formated_float_value' do
+  describe '.formated_money_value' do
     context 'when value blank' do
       it 'returns blank value' do
-        expect(helper.formated_float_value(nil)).to eq('')
+        expect(helper.formated_money_value(nil)).to eq('')
       end
     end
 
     context 'when value present' do
       it 'returns formated value' do
-        expect(helper.formated_float_value(1.1)).to eq('R$ 1,10')
+        expect(helper.formated_money_value(1.1)).to eq('R$ 1,10')
       end
     end
   end
@@ -52,29 +52,27 @@ describe ApplicationHelper, type: :helper do
 
     after { Timecop.return }
 
-    it 'returns current year' do
-      expect(current_year).to eq('2019')
-    end
+    it { expect(current_year).to eq('2019') }
   end
 
   describe '.normalize_float_value' do
-    it 'returns script' do
-      expect(helper.normalize_float_value('expense_amount')).to eq(
-        'var expenseAmountElement = document.getElementById("expense_amount");' \
-        'expenseAmountElement.value = expenseAmountElement.value.replace(/[R][$][ ]/, "").replace(",", ".");'
-      )
+    let(:expected_result) do
+      'var expenseAmountElement = document.getElementById("expense_amount");' \
+      'expenseAmountElement.value = expenseAmountElement.value.replace(/[R][$][ ]/, "").replace(".", "").replace(",", ".");'
     end
+
+    it { expect(helper.normalize_float_value('expense_amount')).to eq(expected_result) }
   end
 
   describe '.normalize_float_values' do
-    it 'returns script' do
-      expect(helper.normalize_float_values(['borrowed_amount', 'received_amount'])).to eq(
-        'var borrowedAmountElement = document.getElementById("borrowed_amount");' \
-        'borrowedAmountElement.value = borrowedAmountElement.value.replace(/[R][$][ ]/, "").replace(",", ".");' \
-        'var receivedAmountElement = document.getElementById("received_amount");' \
-        'receivedAmountElement.value = receivedAmountElement.value.replace(/[R][$][ ]/, "").replace(",", ".");'
-      )
+    let(:expected_result) do
+      'var borrowedAmountElement = document.getElementById("borrowed_amount");' \
+      'borrowedAmountElement.value = borrowedAmountElement.value.replace(/[R][$][ ]/, "").replace(".", "").replace(",", ".");' \
+      'var receivedAmountElement = document.getElementById("received_amount");' \
+      'receivedAmountElement.value = receivedAmountElement.value.replace(/[R][$][ ]/, "").replace(".", "").replace(",", ".");'
     end
+
+    it { expect(helper.normalize_float_values(['borrowed_amount', 'received_amount'])).to eq(expected_result) }
   end
 
   describe '.validation_class' do

@@ -16,7 +16,7 @@
       oninput: only_numbers_script,
       required: true,
       class: 'form-control',
-      value: formated_float_value(loan.borrowed_amount)
+      value: formated_money_value(loan.borrowed_amount)
     )%>
   </div>
 
@@ -32,7 +32,7 @@
       oninput: only_numbers_script,
       required: false,
       class: 'form-control',
-      value: formated_float_value(loan.received_amount)
+      value: formated_money_value(loan.received_amount)
     )%>
   </div>
 
