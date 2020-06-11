@@ -4,30 +4,22 @@ require 'rails_helper'
 
 describe ApplicationHelper, type: :helper do
   describe '.only_numbers_script' do
-    it 'returns script' do
-      expect(helper.only_numbers_script).to eq("this.value=this.value.replace(/[^0-9]/g,'');")
-    end
+    it { expect(helper.only_numbers_script).to eq("this.value=this.value.replace(/[^0-9]/g,'');") }
   end
 
   describe '.formated_money_value' do
     context 'when value blank' do
-      it 'returns blank value' do
-        expect(helper.formated_money_value(nil)).to eq('')
-      end
+      it { expect(helper.formated_money_value(nil)).to eq('') }
     end
 
     context 'when value present' do
-      it 'returns formated value' do
-        expect(helper.formated_money_value(1.1)).to eq('R$ 1,10')
-      end
+      it { expect(helper.formated_money_value(1.1)).to eq('R$ 1,10') }
     end
   end
 
   describe '.date_field' do
     context 'with present' do
-      it 'returns date' do
-        expect(date_field(Date.parse('2020-02-15'))).to eq('2020-02-15')
-      end
+      it { expect(date_field(Date.parse('2020-02-15'))).to eq('2020-02-15') }
     end
 
     context 'without date but with "use_current_time_when_date_blank"' do
@@ -35,15 +27,11 @@ describe ApplicationHelper, type: :helper do
 
       after { Timecop.return }
 
-      it 'returns current date' do
-        expect(date_field(nil)).to eq('2020-02-20')
-      end
+      it { expect(date_field(nil)).to eq('2020-02-20') }
     end
 
     context 'without date and and "use_current_time_when_date_blank"' do
-      it 'returns current date' do
-        expect(date_field(nil, false)).to eq('')
-      end
+      it { expect(date_field(nil, false)).to eq('') }
     end
   end
 
