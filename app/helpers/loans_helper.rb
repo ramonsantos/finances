@@ -6,6 +6,13 @@ module LoansHelper
   end
 
   def loans_title(loan_status)
-    loan_status == :received ? 'fechados' : 'em Aberto'
+    status = loan_status == :received ? :closed : :open
+    build_loans_title(status)
+  end
+
+  private
+
+  def build_loans_title(status)
+    I18n.t("helpers.loans.#{status}")
   end
 end
