@@ -10,7 +10,7 @@
 
 Web application to manager personal finances.
 
-# Software stack
+## Software stack
 
 Finances is a Ruby on Rails application that runs on the following software:
 
@@ -22,9 +22,9 @@ Finances is a Ruby on Rails application that runs on the following software:
 * Docker
 * PostgreSQL 12+
 
-# Getting Started
+## Getting Started
 
-## Install Ruby
+### Install Ruby
 
 Using [rbenv](https://github.com/rbenv/rbenv)
 
@@ -32,7 +32,7 @@ Using [rbenv](https://github.com/rbenv/rbenv)
 rbenv install 2.7.1
 ```
 
-## Install PostgreSQL
+### Install PostgreSQL
 
 Using [Docker Compose](https://docs.docker.com/compose/)
 
@@ -40,33 +40,33 @@ Using [Docker Compose](https://docs.docker.com/compose/)
 docker-compose up -d
 ```
 
-## Install Project Dependencies
+### Install Project Dependencies
 
-### Ruby dependencies
+#### Ruby dependencies
 
 ``` bash
 bundle install
 ```
 
-### JavaScript dependencies
+#### JavaScript dependencies
 
 ``` bash
 yarn install --check-files
 ```
 
-## Prepare Database
+### Prepare Database
 
 ``` bash
 bundle exec rake db:prepare
 ```
 
-## Run Application
+### Run Application
 
 ``` bash
 foreman start -f Procfile.dev
 ```
 
-## Run Tests
+### Run Tests
 
 ``` bash
 bundle exec rspec
