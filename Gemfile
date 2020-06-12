@@ -28,7 +28,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'awesome_print', '~> 2.0.0.pre2'
+  gem 'amazing_print', '~> 1.2'
   gem 'brakeman'
   gem 'bullet', '~> 6.1'
   gem 'colorize'
