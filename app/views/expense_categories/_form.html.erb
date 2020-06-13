@@ -1,27 +1,15 @@
 <%= form_with(model: expense_category, local: true) do |form| %>
-  <% if expense_category.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(expense_category.errors.count, "error") %> prohibited this expense_category from being saved:</h2>
-
-      <ul>
-        <% expense_category.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="field form-group col-md-6">
-    <%= form.label :name, 'Nome' %>
+    <%= form.label :name, t('views.expense_categories.form.name') %>
     <%= form.text_field :name, required: true, class: 'form-control' %>
   </div>
 
   <div class="field form-group col-md-6">
-    <%= form.label :description, 'Descrição' %>
+    <%= form.label :description, t('views.expense_categories.form.description') %>
     <%= form.text_area :description, class: 'form-control' %>
   </div>
 
   <div class="actions col-md-2">
-    <%= form.submit('Salvar', class: 'btn btn-primary') %>
+    <%= form.submit(t('views.app.button.save'), class: 'btn btn-primary') %>
   </div>
 <% end %>

@@ -12,7 +12,7 @@ feature 'Loans', type: :feature do
       before { visit(loans_path) }
 
       scenario 'user visits loans page' do
-        expect(page).to have_selector('h1', text: 'Empréstimos')
+        expect(page).to have_selector('h1', text: 'Empréstimos em Aberto')
 
         expect(page).to have_selector('th', text: 'Pessoa')
         expect(page).to have_selector('th', text: 'Descrição')

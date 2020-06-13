@@ -2,7 +2,7 @@
   <%= render(
     'expenses_title',
     current_expense_month: @current_expense_month,
-    switch_page_to: 'Lista de Despesas',
+    switch_page_to: :to_index,
     switch_page_path: :expenses_path,
     switch_month_path: :report_expenses_path)
   %>
@@ -29,7 +29,7 @@
           </div>
 
           <div class="card-footer td-right">
-            Total <%= format_to_money(group[:total]) %>
+            <%= t('views.expenses.report.total', total: number_to_currency(group[:total])) %>
           </div>
         </div>
       <% end %>

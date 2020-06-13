@@ -1,23 +1,15 @@
 <section class="col-md-12">
   <div class="col-sm-12">
-    <% if notice %>
-      <div class="alert alert-primary alert-dismissible fade show" role="alert">
-        <%= notice %>
+    <%= render('layouts/shared/notice', message: notice) if notice %>
 
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    <% end %>
-
-    <h1>Resultados </h1>
+    <h1><%= t('views.expense_creators.show.title') %></h1>
 
     <div class="table-responsive">
       <table class="table table-hover table-bordered">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">Linha</th>
-            <th scope="col">Resultado</th>
+            <th scope="col"><%= t('views.expense_creators.show.column.row') %></th>
+            <th scope="col"><%= t('views.expense_creators.show.column.details') %></th>
           </tr>
         </thead>
 
@@ -33,7 +25,9 @@
     </div>
 
     <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-      <h3>Total: <%= @expense_creator.expense_creator_results_count %></h3>
+      <h3>
+        <%= t('views.expense_creators.show.total', results_count: @expense_creator.expense_creator_results_count) %>
+      </h3>
 
       <%= paginate @expense_creator_results %>
     </div>

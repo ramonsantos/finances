@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Finanças</title>
+    <title><%= t('views.app.name') %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -16,7 +16,7 @@
   <body>
     <header>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <%= link_to 'Finanças', root_path, class: 'navbar-brand' %>
+        <%= link_to(t('views.app.name'), root_path, class: 'navbar-brand') %>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,33 +29,33 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Despesas
+                  <%= t('views.app.menu.expense.name') %>
                 </a>
 
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <%= link_to 'Criar Despesa', new_expense_path, class: 'dropdown-item' %>
+                  <%= link_to(t('views.app.menu.expense.new'), new_expense_path, class: 'dropdown-item') %>
 
                   <div class="dropdown-divider"></div>
 
-                  <%= link_to 'Criar Despesas por CSV', expense_creators_path, class: 'dropdown-item' %>
+                  <%= link_to(t('views.app.menu.expense.new_from_csv'), expense_creators_path, class: 'dropdown-item') %>
 
                   <div class="dropdown-divider"></div>
 
-                  <%= link_to 'Lista de Despesas', expenses_path, class: 'dropdown-item' %>
-                  <%= link_to 'Relatório de Despesas', report_expenses_path, class: 'dropdown-item' %>
+                  <%= link_to(t('views.app.menu.expense.index'), expenses_path, class: 'dropdown-item') %>
+                  <%= link_to(t('views.app.menu.expense.report'), report_expenses_path, class: 'dropdown-item') %>
 
                   <div class="dropdown-divider"></div>
 
-                  <%= link_to 'Locais', places_path, class: 'dropdown-item' %>
+                  <%= link_to(t('views.app.menu.expense.places'), places_path, class: 'dropdown-item') %>
 
                   <div class="dropdown-divider"></div>
 
-                  <%= link_to 'Grupos de Despesa', expense_groups_path, class: 'dropdown-item' %>
+                  <%= link_to(t('views.app.menu.expense.expense_groups'), expense_groups_path, class: 'dropdown-item') %>
 
                   <div class="dropdown-divider"></div>
 
-                  <%= link_to 'Criar Categoria de Despesa', new_expense_category_path, class: 'dropdown-item' %>
-                  <%= link_to 'Categorias de Despesa', expense_categories_path, class: 'dropdown-item' %>
+                  <%= link_to(t('views.app.menu.expense.new_category'), new_expense_category_path, class: 'dropdown-item') %>
+                  <%= link_to(t('views.app.menu.expense.index_categories'), expense_categories_path, class: 'dropdown-item') %>
                 </div>
               </li>
             </ul>
@@ -63,21 +63,26 @@
             <ul class="navbar-nav mr-auto">
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Empréstimos
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <%= t('views.app.menu.loan.name') %>
                 </a>
 
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <%= link_to 'Criar Empréstimo', new_loan_path, class: 'dropdown-item' %>
+                  <%= link_to(t('views.app.menu.loan.new'), new_loan_path, class: 'dropdown-item') %>
 
                   <div class="dropdown-divider"></div>
 
-                  <%= link_to 'Lista de Empréstimos', loans_path, class: 'dropdown-item' %>
+                  <%= link_to(t('views.app.menu.loan.index'), loans_path, class: 'dropdown-item') %>
                 </div>
               </li>
             </ul>
 
-            <%= link_to "Sair", destroy_user_session_path, method: :delete, class: 'btn btn-outline-dark' %>
+            <%= link_to(
+              t('views.app.button.exit'),
+              destroy_user_session_path,
+              method: :delete,
+              class: 'btn btn-outline-dark'
+            ) %>
           </div>
         <% end %>
       </nav>
@@ -89,7 +94,7 @@
 
     <footer class="footer">
       <div>
-        © <%= current_year %> Ramon Santos.
+        <%= t('views.app.footer', current_year: current_year) %>
       </div>
     </footer>
   </body>

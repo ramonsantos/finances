@@ -19,19 +19,19 @@ module ExpensesHelper
   end
 
   def fixed_label(fixed)
-    fixed ? 'Sim' : 'Não'
+    fixed ? :fixed : :not_fixed
   end
 
   def remark_preview(remark)
-    return remark if remark.blank? || remark.length <= 20
+    return remark if remark.blank? || remark.length <= 30
 
-    "#{remark.first(17)}..."
+    "#{remark.first(27)}..."
   end
 
   private
 
   def build_month_label(date)
-    "#{(I18n.t :abbr_month_names, scope: :date)[date.month].capitalize}/#{date.year}"
+    "#{t('date.abbr_month_names')[date.month].capitalize}/#{date.year}"
   end
 
   def choose_date_by_month(current_date, month_sym)
