@@ -1,5 +1,7 @@
 <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-  <h1>Despesas - <%= month_label(:current, current_expense_month) %> </h1>
+  <h1>
+    <%= t('views.expenses.expenses_title.title', month: month_label(:current, current_expense_month)) %>
+  </h1>
 
   <div class="page-title-buttons">
     <%= link_to(
@@ -9,7 +11,7 @@
     %>
 
     <%= link_to(
-      switch_page_to,
+      t("views.expenses.title.#{switch_page_to}"),
       send(switch_page_path, { expense_month: month_param(current_expense_month) } ),
       class: 'btn btn-success btn-sm')
     %>

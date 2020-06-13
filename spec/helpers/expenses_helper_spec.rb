@@ -88,9 +88,9 @@ describe ExpensesHelper, type: :helper do
   end
 
   describe '.fixed_label' do
-    it { expect(fixed_label(true)).to eq('Sim') }
+    it { expect(fixed_label(true)).to eq(:fixed) }
 
-    it { expect(fixed_label(false)).to eq('Não') }
+    it { expect(fixed_label(false)).to eq(:not_fixed) }
   end
 
   describe '.remark_preview' do

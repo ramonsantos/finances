@@ -19,7 +19,7 @@ module ExpensesHelper
   end
 
   def fixed_label(fixed)
-    fixed ? 'Sim' : 'Não'
+    fixed ? :fixed : :not_fixed
   end
 
   def remark_preview(remark)

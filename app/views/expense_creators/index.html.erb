@@ -52,7 +52,7 @@
           <tbody>
             <% @expense_creators.each do |expense_creator| %>
               <tr>
-                <td scope="row"><%= I18n.l(expense_creator.date, default: '') %></td>
+                <td scope="row"><%= l(expense_creator.date, default: '') %></td>
                 <td scope="row"><%= expense_creator.expense_creator_results_count %></td>
                 <td class="td-center">
                   <%= link_to(

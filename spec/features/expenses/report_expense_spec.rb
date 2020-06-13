@@ -20,7 +20,7 @@ feature 'Expenses', type: :feature do
       scenario 'user visits report expense page' do
         expect(page).to have_selector('h1', text: 'Despesas - Fev/2020')
         expect(page).to have_selector(:link_or_button, 'Jan/2020')
-        expect(page).to have_selector(:link_or_button, 'Lista de Despesas')
+        expect(find(:xpath, '/html/body/main/section/div[1]/div/a[2]').text).to eq('Lista de Despesas')
         expect(page).to have_selector(:link_or_button, 'Mar/2020')
       end
 

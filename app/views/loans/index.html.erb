@@ -34,9 +34,9 @@
               <td><%= loan.person %></td>
               <td><%= loan.description %></td>
               <td class="td-right"><%= number_to_currency(loan.borrowed_amount) %></td>
-              <td class="td-right"><%= I18n.l(loan.loan_date, default: '') %></td>
+              <td class="td-right"><%= l(loan.loan_date, default: '') %></td>
               <td class="td-right"><%= number_to_currency(loan.received_amount) %></td>
-              <td class="td-right"><%= I18n.l(loan.received_at, default: '') %></td>
+              <td class="td-right"><%= l(loan.received_at, default: '') %></td>
               <td class="td-center">
                 <%= link_to(t('views.app.button.edit'), loan_path(loan), class: 'btn btn-primary btn-sm') %>
               </td>

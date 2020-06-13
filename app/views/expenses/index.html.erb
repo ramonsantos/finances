@@ -4,7 +4,7 @@
   <%= render(
     'expenses_title',
     current_expense_month: @current_expense_month,
-    switch_page_to: 'Relatório de Despesas',
+    switch_page_to: :to_report,
     switch_page_path: :report_expenses_path,
     switch_month_path: :expenses_path)
   %>
@@ -14,14 +14,14 @@
       <table class="table table-hover table-bordered">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">Descrição</th>
-            <th scope="col">Valor</th>
-            <th scope="col">Data</th>
-            <th scope="col">Fixo?</th>
-            <th scope="col">Categoria</th>
-            <th scope="col">Local</th>
-            <th scope="col">Grupo</th>
-            <th scope="col">Observações</th>
+            <th scope="col"><%= t('views.expenses.index.column.description') %></th>
+            <th scope="col"><%= t('views.expenses.index.column.amount') %></th>
+            <th scope="col"><%= t('views.expenses.index.column.date') %></th>
+            <th scope="col"><%= t('views.expenses.index.column.fixed') %></th>
+            <th scope="col"><%= t('views.expenses.index.column.expense_category') %></th>
+            <th scope="col"><%= t('views.expenses.index.column.place') %></th>
+            <th scope="col"><%= t('views.expenses.index.column.expense_group') %></th>
+            <th scope="col"><%= t('views.expenses.index.column.remark') %></th>
             <th scope="col" colspan="3"></th>
           </tr>
         </thead>
@@ -31,14 +31,28 @@
             <tr>
               <td scope="row"><%= expense.description %></td>
               <td class="td-right"><%= number_to_currency(expense.amount) %></td>
-              <td class="td-right"><%= I18n.l(expense.date, default: '') %></td>
-              <td class="td-center"><%= fixed_label(expense.fixed) %></td>
+              <td class="td-right"><%= l(expense.date, default: '') %></td>
+              <td class="td-center"><%= t("views.expenses.index.#{fixed_label(expense.fixed)}") %></td>
               <td><%= expense.expense_category.name %></td>
               <td><%= expense.place.name %></td>
               <td><%= expense.expense_group.name %></td>
               <td><%= remark_preview(expense.remark) %></td>
-              <td class="td-center"><%= link_to t('views.app.button.edit'), expense_path(expense, expense_month: month_param(@current_expense_month)), class: 'btn btn-primary btn-sm' %></td>
-              <td class="td-center"><%= link_to t('views.app.button.remove'), expense_path(expense, expense_month: month_param(@current_expense_month)), method: :delete, data: { confirm: t('views.app.dialog.confirm') }, class: 'btn btn-danger btn-sm' %></td>
+              <td class="td-center">
+                <%= link_to(
+                  t('views.app.button.edit'),
+                  expense_path(expense, expense_month: month_param(@current_expense_month)),
+                  class: 'btn btn-primary btn-sm'
+                ) %>
+              </td>
+              <td class="td-center">
+                <%= link_to(
+                  t('views.app.button.remove'),
+                  expense_path(expense, expense_month: month_param(@current_expense_month)),
+                  method: :delete,
+                  data: { confirm: t('views.app.dialog.confirm') },
+                  class: 'btn btn-danger btn-sm'
+                ) %>
+              </td>
             </tr>
           <% end %>
         </tbody>
@@ -47,7 +61,7 @@
   </div>
 
   <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-    <h3>Total de Despesas: <%= number_to_currency(@total_expense_amount) %></h3>
+    <h3><%= t('views.expenses.index.total', total: number_to_currency(@total_expense_amount)) %></h3>
 
     <%= paginate @expenses %>
   </div>
