@@ -296,10 +296,28 @@ pt-BR:
     app:
       button:
         edit: Editar
+        exit: Sair
         remove: Remover
         save: Salvar
       dialog:
         confirm: 'Você tem certeza?'
+      footer: "© %{current_year} Ramon Santos."
+      menu:
+        expense:
+          name: Despesas
+          new: Criar Despesa
+          new_from_csv: Criar Despesas por CSV
+          index: Lista de Despesas
+          report: Relatório de Despesas
+          places: Locais
+          expense_groups: Grupos de Despesa
+          new_category: Criar Categoria de Despesa
+          index_categories: Categorias de Despesa
+        loan:
+          index: Lista de Empréstimos
+          name: Empréstimos
+          new: Criar Empréstimo
+      name: Finanças
     expenses:
       expenses_title:
         title: "Despesas - %{month}"
