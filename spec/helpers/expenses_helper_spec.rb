@@ -98,12 +98,12 @@ describe ExpensesHelper, type: :helper do
       it { expect(remark_preview('')).to eq('') }
     end
 
-    context 'when remark less than or equal to 20' do
-      it { expect(remark_preview('12345678901234567890')).to eq('12345678901234567890') }
+    context 'when remark less than or equal to 30' do
+      it { expect(remark_preview('123456789012345678901234567890')).to eq('123456789012345678901234567890') }
     end
 
-    context 'when remark greater than 20' do
-      it { expect(remark_preview('123456789012345678901')).to eq('12345678901234567...') }
+    context 'when remark greater than 30' do
+      it { expect(remark_preview('1234567890123456789012345678901')).to eq('123456789012345678901234567...') }
     end
   end
 end

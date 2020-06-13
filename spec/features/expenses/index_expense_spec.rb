@@ -63,6 +63,8 @@ feature 'Expenses', type: :feature do
     end
 
     context 'with one expense in previous month' do
+      let(:expected_remark) { '12345678901234567890' }
+
       before do
         create(:expense, date: '2020-01-25', remark: '12345678901234567890')
 
@@ -77,7 +79,7 @@ feature 'Expenses', type: :feature do
         expect(page).to have_selector(:link_or_button, 'Fev/2020')
 
         expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[3]').text).to eq('25/01/2020')
-        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[8]').text).to eq('12345678901234567890')
+        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[8]').text).to eq(expected_remark)
 
         expect(page).to have_selector('h3', text: 'Total de Despesas: 21,50 R$')
       end
@@ -91,8 +93,10 @@ feature 'Expenses', type: :feature do
     end
 
     context 'with one expense in next month' do
+      let(:expected_remark) { '123456789012345678901234567...' }
+
       before do
-        create(:expense, date: '2020-03-01', remark: '123456789012345678901')
+        create(:expense, date: '2020-03-01', remark: '1234567890123456789012345678901')
         visit(expenses_path(expense_month: '2020-03-31'))
       end
 
@@ -103,7 +107,7 @@ feature 'Expenses', type: :feature do
         expect(page).to have_selector(:link_or_button, 'Abr/2020')
 
         expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[3]').text).to eq('01/03/2020')
-        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[8]').text).to eq('12345678901234567...')
+        expect(find(:xpath, '/html/body/main/section/div[2]/div/table/tbody/tr/td[8]').text).to eq(expected_remark)
 
         expect(page).to have_selector('h3', text: 'Total de Despesas: 21,50 R$')
       end

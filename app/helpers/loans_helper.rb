@@ -13,6 +13,6 @@ module LoansHelper
   private
 
   def build_loans_title(status)
-    I18n.t("helpers.loans.#{status}")
+    t("helpers.loans.#{status}")
   end
 end
