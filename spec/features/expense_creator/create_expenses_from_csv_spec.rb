@@ -9,8 +9,8 @@ feature 'CreateExpensesFromCsv', type: :feature do
 
   feature 'download CSV template' do
     let(:csv_content) do
-      "Descrição,Valor,Data,Categoria,Grupo de Despesa,Local,Fixo?,Observações\r\n" \
-      "Plano de Saúde,\"R$ 244,27\",01/01/2020,Saúde,Pessoal,Recife,Sim,\r\n"
+      "Descrição,Valor,Data,Categoria,Grupo de Despesa,Local,Fixo?,Observações\n" \
+      "Plano de Saúde,\"R$ 244,27\",01/01/2020,Saúde,Pessoal,Recife,Sim,\n"
     end
 
     before do
