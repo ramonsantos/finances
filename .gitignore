@@ -35,4 +35,3 @@ coverage
 
 # VSCodium
 /.vscode/*
-!/.vscode/settings.json
