@@ -14,9 +14,7 @@ class RegistrationsController < Devise::RegistrationsController
   # POST /users
   def create
     if place_name.present?
-      super do |user|
-        build_create_response(user)
-      end
+      super { build_create_response }
     else
       render_error_response
     end
@@ -28,20 +26,20 @@ class RegistrationsController < Devise::RegistrationsController
 
   def render_error_response
     build_resource(user_params).validate
-    build_create_response(resource, place_error)
+    build_create_response(place_error)
 
     render(:new)
   end
 
-  def build_create_response(user, place_error = {})
-    if create_with_success?(user, place_error)
+  def build_create_response(place_error = {})
+    if create_with_success?(place_error)
       Place.create(name: place_name, user: resource)
     else
-      @fields_validation = build_fields_validation(user, place_error)
+      @fields_validation = build_fields_validation(place_error)
     end
   end
 
-  def build_fields_validation(user, place_error)
+  def build_fields_validation(place_error)
     place_error.tap do |hash|
       messages = user.errors.messages
 
@@ -51,7 +49,7 @@ class RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  def create_with_success?(user, place_error)
+  def create_with_success?(place_error)
     user.errors.details.blank? && place_error.blank?
   end
 
@@ -65,6 +63,10 @@ class RegistrationsController < Devise::RegistrationsController
 
   def user_params
     resource_params.permit(:email, :password, :password_confirmation)
+  end
+
+  def user
+    resource
   end
 
   def place_params
