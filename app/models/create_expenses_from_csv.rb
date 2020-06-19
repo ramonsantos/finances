@@ -52,7 +52,7 @@ class CreateExpensesFromCsv
   def description(value)
     return value if value.present?
 
-    raise build_error_message(:cant_be_blank, :description)
+    raise StandardError, build_error_message(:cant_be_blank, :description)
   end
 
   def amount(value)
@@ -60,7 +60,7 @@ class CreateExpensesFromCsv
 
     amount = value.gsub(/[R$ .]/, '').tr(',', '.').to_f
 
-    amount >= 0.1 ? amount : raise(build_error_message(:invalid_format, :amount))
+    amount >= 0.1 ? amount : raise(StandardError, build_error_message(:invalid_format, :amount))
   end
 
   def date(value)
@@ -69,7 +69,7 @@ class CreateExpensesFromCsv
     begin
       Date.strptime(value, '%d/%m/%y')
     rescue StandardError
-      raise(build_error_message(:invalid_format, :date))
+      raise(StandardError, build_error_message(:invalid_format, :date))
     end
   end
 
@@ -80,7 +80,7 @@ class CreateExpensesFromCsv
   end
 
   def fetch_expense_category(value)
-    ExpenseCategory.find_by(name: value, user: @user) || raise(build_error_message(:nonexistent, :expense_category))
+    ExpenseCategory.find_by(name: value, user: @user) || raise_if_nonexistent(:expense_category)
   end
 
   def expense_group(value)
@@ -90,7 +90,7 @@ class CreateExpensesFromCsv
   end
 
   def fetch_expense_group(value)
-    ExpenseGroup.find_by(name: value, user: @user) || raise(build_error_message(:nonexistent, :expense_group))
+    ExpenseGroup.find_by(name: value, user: @user) || raise_if_nonexistent(:expense_group)
   end
 
   def place(value)
@@ -100,7 +100,7 @@ class CreateExpensesFromCsv
   end
 
   def fetch_place(value)
-    Place.find_by(name: value, user: @user) || raise(build_error_message(:nonexistent, :place))
+    Place.find_by(name: value, user: @user) || raise_if_nonexistent(:place)
   end
 
   def fixed(value)
@@ -126,6 +126,10 @@ class CreateExpensesFromCsv
   end
 
   def raise_if_blank_value(value, message)
-    raise(message) if value.blank?
+    raise StandardError, message if value.blank?
+  end
+
+  def raise_if_nonexistent(model)
+    raise StandardError, build_error_message(:nonexistent, model)
   end
 end
