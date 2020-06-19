@@ -70,8 +70,7 @@ class LoansController < ApplicationController
 
   def received_at_value(params)
     return nil if params[:received_amount].blank?
-    return Time.zone.today.to_s if params[:received_at].blank?
 
-    params[:received_at]
+    params[:received_at].presence || Time.zone.today.to_s
   end
 end

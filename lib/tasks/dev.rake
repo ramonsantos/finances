@@ -7,8 +7,7 @@ namespace :dev do
   end
 
   def run_tool(tool)
-    title = "Running #{tool.to_s.humanize.titleize}..."
-    puts "#{title}#{' ' * (`tput cols`.to_i - title.length)}".colorize(:light_white).colorize(background: :blue)
+    puts title(tool)
     send(:"run_#{tool}")
     puts
   end
@@ -29,6 +28,11 @@ namespace :dev do
     result = `rubycritic app config lib`
 
     puts build_rubycritic_score(result.match(/Score: (?<score>\d+.\d+)/)[:score].to_d)
+  end
+
+  def title(tool)
+    title = "Running #{tool.to_s.humanize.titleize}..."
+    "#{title}#{' ' * (`tput cols`.to_i - title.length)}".colorize(:light_white).colorize(background: :blue)
   end
 
   def build_result_output(result, message)
