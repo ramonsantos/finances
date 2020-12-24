@@ -5,7 +5,7 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/db90ecff0ae3a8718b6d/test_coverage)](https://codeclimate.com/github/ramonsantos/finances/test_coverage)
 ![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/ramonsantos/finances)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-![ruby](https://img.shields.io/badge/ruby-2.7.1-dc143c)
+![ruby](https://img.shields.io/badge/ruby-2.7.2-dc143c)
 ![rails](https://img.shields.io/badge/rails-6.0.3.1-dc143c)
 
 Web application to manager personal finances.
@@ -15,7 +15,7 @@ Web application to manager personal finances.
 Finances is a Ruby on Rails application that runs on the following software:
 
 * Linux
-* Ruby (MRI) 2.7.1
+* Ruby (MRI) 2.7.2
 * Ruby on Rails 6
 * NodeJS 12.x
 * Yarn 1.x
@@ -29,7 +29,7 @@ Finances is a Ruby on Rails application that runs on the following software:
 Using [rbenv](https://github.com/rbenv/rbenv)
 
 ``` bash
-rbenv install 2.7.1
+rbenv install 2.7.2
 ```
 
 ### Install PostgreSQL
