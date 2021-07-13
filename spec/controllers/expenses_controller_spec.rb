@@ -143,7 +143,7 @@ describe ExpensesController, type: :controller do
 
       it 'destroys the requested accept test' do
         expect do
-          delete(:destroy, params: params)
+          delete(:destroy, params: { id: expense.id })
         end.to change(Expense, :count).by(-1)
       end
 
