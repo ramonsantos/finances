@@ -1,0 +1,43 @@
+<% content_for :title, t("expense_creators.show.title") %>
+
+<% polling = @expense_creator.queued? || @expense_creator.processing? %>
+<div <%= "data-controller=poll-import".html_safe if polling %>>
+  <h1 class="mb-2 text-2xl font-bold text-slate-900"><%= t("expense_creators.show.title") %></h1>
+  <p class="mb-6 text-sm text-slate-600">
+    <%= t("expense_creators.show.status.#{@expense_creator.status}") %>
+    <% if polling %>
+      — <%= t("expense_creators.show.processing") %>
+    <% elsif @expense_creator.failed? %>
+      — <%= t("expense_creators.show.failed") %>
+    <% end %>
+  </p>
+
+  <% if @expense_creator.finished? || @expense_creator.failed? %>
+    <% if @expense_creator_results.any? %>
+      <div class="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-200">
+        <table class="min-w-full text-sm">
+          <thead class="bg-slate-50 text-left text-xs font-semibold uppercase text-slate-500">
+            <tr>
+              <th class="px-4 py-3">Linha</th>
+              <th class="px-4 py-3">Resultado</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <% @expense_creator_results.each do |result| %>
+              <tr>
+                <td class="px-4 py-3 font-mono text-xs text-slate-700"><%= result.raw_content %></td>
+                <td class="px-4 py-3">
+                  <span class="<%= result.success? ? 'text-emerald-700' : 'text-red-700' %>"><%= result.details %></span>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-4 flex items-center justify-between text-sm text-slate-600">
+        <span><%= t("expense_creators.show.total", count: @expense_creator.expense_creator_results_count) %></span>
+        <%== pagy_nav(@pagy) %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

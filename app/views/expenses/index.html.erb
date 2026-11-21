@@ -1,0 +1,60 @@
+<% content_for :title, t("expenses.index.title", month: expense_month_label(@current_expense_month)) %>
+
+<div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+  <h1 class="text-2xl font-bold text-slate-900">
+    <%= t("expenses.index.title", month: expense_month_label(@current_expense_month)) %>
+  </h1>
+  <div class="flex flex-wrap gap-2">
+    <%= link_to expense_month_label(@current_expense_month, :prev), expenses_path(expense_month: expense_month_param(@current_expense_month, :prev)), class: btn_outline %>
+    <%= link_to t("layout.nav.expenses_report"), report_expenses_path(expense_month: expense_month_param(@current_expense_month)), class: btn_primary_sm %>
+    <%= link_to expense_month_label(@current_expense_month, :next), expenses_path(expense_month: expense_month_param(@current_expense_month, :next)), class: btn_outline %>
+  </div>
+</div>
+
+<div class="mb-6 rounded-xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
+  <p class="text-sm text-slate-500"><%= t("expenses.index.total") %></p>
+  <p class="text-3xl font-bold tabular-nums text-emerald-700"><%= formatted_money(@total_expense_amount) %></p>
+</div>
+
+<% if @expenses.any? %>
+  <div class="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-200">
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-slate-200 text-sm">
+        <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+          <tr>
+            <th class="px-4 py-3">Descrição</th>
+            <th class="px-4 py-3 text-right">Valor</th>
+            <th class="px-4 py-3">Data</th>
+            <th class="px-4 py-3">Tipo</th>
+            <th class="px-4 py-3">Categoria</th>
+            <th class="px-4 py-3">Grupo</th>
+            <th class="px-4 py-3">Obs.</th>
+            <th class="px-4 py-3"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          <% @expenses.each do |expense| %>
+            <tr class="hover:bg-slate-50">
+              <td class="px-4 py-3 font-medium text-slate-900"><%= expense.description %></td>
+              <td class="px-4 py-3 text-right tabular-nums"><%= formatted_money(expense.amount) %></td>
+              <td class="px-4 py-3"><%= l(expense.date) %></td>
+              <td class="px-4 py-3">
+                <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs"><%= fixed_badge(expense.fixed) %></span>
+              </td>
+              <td class="px-4 py-3"><%= expense.expense_category.name %></td>
+              <td class="px-4 py-3"><%= expense.expense_group.name %></td>
+              <td class="px-4 py-3 text-slate-500"><%= remark_preview(expense.remark) %></td>
+              <td class="px-4 py-3 text-right whitespace-nowrap">
+                <%= link_to t("forms.edit"), expense_path(expense, expense_month: expense_month_param(@current_expense_month)), class: btn_primary_xs %>
+                <%= button_to t("forms.remove"), expense_path(expense, expense_month: expense_month_param(@current_expense_month)), method: :delete, form: { data: { turbo_confirm: t("flash.confirm_destroy") } }, class: btn_danger_xs %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="mt-4 flex justify-end"><%== pagy_nav(@pagy) %></div>
+<% else %>
+  <p class="rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500"><%= t("expenses.index.empty") %></p>
+<% end %>

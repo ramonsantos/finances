@@ -1,0 +1,52 @@
+<%= form_with(model: expense, class: "space-y-5", data: { controller: "money-input", action: "submit->money-input#beforeSubmit" }) do |form| %>
+  <% if expense.errors.any? %>
+    <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+      <%= expense.errors.full_messages.to_sentence %>
+    </div>
+  <% end %>
+
+  <div class="grid gap-5 sm:grid-cols-2">
+    <div class="sm:col-span-2">
+      <%= form.label :description, class: label_class %>
+      <%= form.text_field :description, required: true, class: input_class %>
+    </div>
+
+    <div data-money-input-target="wrapper">
+      <%= form.label :amount, class: label_class %>
+      <%= form.text_field :amount, required: true, class: "#{input_class} tabular-nums", value: form_amount_value(expense.amount), data: { money_input_target: "input", action: "input->money-input#input" } %>
+    </div>
+
+    <div>
+      <%= form.label :date, class: label_class %>
+      <%= form.date_field :date, required: true, class: input_class, value: expense.date %>
+    </div>
+
+    <div class="flex items-end">
+      <label class="flex items-center gap-2 text-sm text-slate-700">
+        <%= form.check_box :fixed, class: "rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" %>
+        Despesa fixa
+      </label>
+    </div>
+
+    <div>
+      <%= form.label :expense_category_id, "Categoria", class: label_class %>
+      <%= form.select :expense_category_id, options_from_collection_for_select(ExpenseCategory.order(:name), :id, :name, expense.expense_category_id), {}, class: input_class %>
+    </div>
+
+    <div>
+      <%= form.label :expense_group_id, "Grupo", class: label_class %>
+      <%= form.select :expense_group_id, options_from_collection_for_select(ExpenseGroup.order(:name), :id, :name, expense.expense_group_id), {}, class: input_class %>
+    </div>
+
+    <div class="sm:col-span-2">
+      <%= form.label :remark, "Observações", class: label_class %>
+      <%= form.text_area :remark, rows: 3, class: input_class %>
+    </div>
+  </div>
+
+  <%= hidden_field_tag :expense_month, @current_expense_month %>
+
+  <div class="pt-2">
+    <%= form.submit t("forms.save"), class: btn_primary %>
+  </div>
+<% end %>

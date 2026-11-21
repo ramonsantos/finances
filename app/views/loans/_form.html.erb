@@ -1,0 +1,42 @@
+<%= form_with(model: loan, class: "space-y-5", data: { controller: "money-input", action: "submit->money-input#beforeSubmit" }) do |form| %>
+  <% if loan.errors.any? %>
+    <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+      <%= loan.errors.full_messages.to_sentence %>
+    </div>
+  <% end %>
+
+  <div class="grid gap-5 sm:grid-cols-2">
+    <div class="sm:col-span-2">
+      <%= form.label :person, class: label_class %>
+      <%= form.text_field :person, required: true, class: input_class %>
+    </div>
+    <div class="sm:col-span-2">
+      <%= form.label :description, class: label_class %>
+      <%= form.text_field :description, required: true, class: input_class %>
+    </div>
+
+    <div>
+      <%= form.label :borrowed_amount, "Valor emprestado", class: label_class %>
+      <%= form.text_field :borrowed_amount, required: true, class: "#{input_class} tabular-nums", value: form_amount_value(loan.borrowed_amount), data: { money_input_target: "input", action: "input->money-input#input" } %>
+    </div>
+
+    <div>
+      <%= form.label :loan_date, "Data do empréstimo", class: label_class %>
+      <%= form.date_field :loan_date, required: true, class: input_class %>
+    </div>
+
+    <div>
+      <%= form.label :received_amount, "Valor recebido", class: label_class %>
+      <%= form.text_field :received_amount, class: "#{input_class} tabular-nums", value: form_amount_value(loan.received_amount), data: { money_input_target: "input", action: "input->money-input#input" } %>
+    </div>
+
+    <div>
+      <%= form.label :received_at, "Recebido em", class: label_class %>
+      <%= form.date_field :received_at, class: input_class %>
+    </div>
+  </div>
+
+  <div class="pt-2">
+    <%= form.submit t("forms.save"), class: btn_primary %>
+  </div>
+<% end %>

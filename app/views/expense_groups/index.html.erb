@@ -1,0 +1,27 @@
+<% content_for :title, t("expense_groups.index.title") %>
+
+<h1 class="mb-6 text-2xl font-bold text-slate-900"><%= t("expense_groups.index.title") %></h1>
+
+<div class="mb-8 rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+  <h2 class="mb-4 text-sm font-semibold text-slate-700"><%= t("expense_groups.index.add") %></h2>
+  <%= form_with(model: @expense_group, url: expense_groups_path, class: "flex flex-wrap gap-3") do |form| %>
+    <%= form.text_field :name, required: true, placeholder: "Nome do grupo", class: "#{input_class} max-w-xs" %>
+    <%= form.submit t("forms.save"), class: btn_primary_sm %>
+  <% end %>
+</div>
+
+<% if @expense_groups.any? %>
+  <ul class="divide-y divide-slate-100 overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-200">
+    <% @expense_groups.each do |group| %>
+      <li class="flex items-center justify-between px-4 py-3 hover:bg-slate-50">
+        <div>
+          <p class="font-medium text-slate-900"><%= group.name %></p>
+          <p class="text-xs text-slate-500"><%= group.expenses_count %> despesas</p>
+        </div>
+        <%= button_to t("forms.remove"), expense_group_path(group), method: :delete, form: { data: { turbo_confirm: t("flash.confirm_destroy") } }, class: btn_danger_xs %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500"><%= t("expense_groups.index.empty") %></p>
+<% end %>

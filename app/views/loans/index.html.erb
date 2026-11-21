@@ -1,0 +1,52 @@
+<% content_for :title, t("loans.index.title", status: loans_title(@loan_status)) %>
+
+<div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+  <h1 class="text-2xl font-bold text-slate-900">
+    <%= t("loans.index.title", status: loans_title(@loan_status)) %>
+  </h1>
+  <%= link_to t("loans.index.toggle", status: loans_title(@next_loan_status)), loans_path(loan_status: @next_loan_status), class: btn_outline %>
+</div>
+
+<% if @loan_status == :to_receive %>
+  <div class="mb-6 rounded-xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
+    <p class="text-sm text-slate-500"><%= t("loans.index.total_open") %></p>
+    <p class="text-3xl font-bold tabular-nums text-emerald-700"><%= formatted_money(@amount_of_loans_to_receive) %></p>
+  </div>
+<% end %>
+
+<% if @loans.any? %>
+  <div class="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-200">
+    <table class="min-w-full divide-y divide-slate-200 text-sm">
+      <thead class="bg-slate-50 text-left text-xs font-semibold uppercase text-slate-500">
+        <tr>
+          <th class="px-4 py-3">Pessoa</th>
+          <th class="px-4 py-3">Descrição</th>
+          <th class="px-4 py-3 text-right">Valor</th>
+          <th class="px-4 py-3">Data</th>
+          <th class="px-4 py-3 text-right">Recebido</th>
+          <th class="px-4 py-3">Recebido em</th>
+          <th class="px-4 py-3"></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100">
+        <% @loans.each do |loan| %>
+          <tr class="hover:bg-slate-50">
+            <td class="px-4 py-3"><%= loan.person %></td>
+            <td class="px-4 py-3"><%= loan.description %></td>
+            <td class="px-4 py-3 text-right tabular-nums"><%= formatted_money(loan.borrowed_amount) %></td>
+            <td class="px-4 py-3"><%= l(loan.loan_date) %></td>
+            <td class="px-4 py-3 text-right tabular-nums"><%= formatted_money(loan.received_amount) %></td>
+            <td class="px-4 py-3"><%= loan.received_at ? l(loan.received_at) : "—" %></td>
+            <td class="px-4 py-3 text-right whitespace-nowrap">
+              <%= link_to t("forms.edit"), loan_path(loan), class: btn_primary_xs %>
+              <%= button_to t("forms.remove"), loan_path(loan), method: :delete, form: { data: { turbo_confirm: t("flash.confirm_destroy") } }, class: btn_danger_xs %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="mt-4 flex justify-end"><%== pagy_nav(@pagy) %></div>
+<% else %>
+  <p class="rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500"><%= t("loans.index.empty") %></p>
+<% end %>

@@ -33,5 +33,11 @@ yarn-debug.log*
 # Test coverage files
 coverage
 
-# VSCodium
+# RSpec example status persistence (local only)
+/spec/examples.txt
+
+# VS Code
 /.vscode/*
+
+# Cursor
+/.cursor/*

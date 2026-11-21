@@ -1,0 +1,174 @@
+pt-BR:
+  activerecord:
+    attributes:
+      expense:
+        description: Descrição
+        amount: Valor
+        date: Data
+        remark: Observações
+      loan:
+        person: Pessoa
+        description: Descrição
+        borrowed_amount: Valor emprestado
+        received_amount: Valor recebido
+        loan_date: Data do empréstimo
+        received_at: Recebido em
+    errors:
+      messages:
+        invalid: não é válido
+        taken: já está em uso
+        restrict_dependent_destroy:
+          has_many: Não é possível excluir o registro pois existem %{record} dependentes
+  date:
+    abbr_month_names:
+      -
+      - jan
+      - fev
+      - mar
+      - abr
+      - mai
+      - jun
+      - jul
+      - ago
+      - set
+      - out
+      - nov
+      - dez
+    formats:
+      default: "%d/%m/%Y"
+  number:
+    currency:
+      format:
+        delimiter: "."
+        format: "%n %u"
+        precision: 2
+        separator: ","
+        unit: R$
+  layout:
+    app_name: Finanças
+    footer: "© %{year} Ramon Santos."
+    nav:
+      expenses_index: Lista de despesas
+      expenses_new: Nova despesa
+      expenses_report: Relatório
+      expense_creators: Importar CSV
+      expense_categories: Categorias
+      expense_groups: Grupos
+      loans_index: Empréstimos
+      loans_new: Novo empréstimo
+  flash:
+    confirm_destroy: Tem certeza?
+  pagination:
+    aria_label: Páginas
+  expenses:
+    index:
+      title: "Despesas — %{month}"
+      total: "Total do mês"
+      empty: Nenhuma despesa neste mês.
+    report:
+      title: "Relatório — %{month}"
+      total: "Total do grupo"
+      to_index: Ver lista
+    new:
+      title: Nova despesa
+    show:
+      title: Editar despesa
+    fixed:
+      "yes": Fixa
+      "no": Avulsa
+    create:
+      created: Despesa adicionada.
+    update:
+      updated: Despesa atualizada.
+    destroy:
+      destroyed: Despesa removida.
+  expense_categories:
+    index:
+      title: Categorias de despesa
+      new: Nova categoria
+      empty: Nenhuma categoria cadastrada.
+    new:
+      title: Nova categoria
+    show:
+      title: Editar categoria
+    create:
+      created: Categoria adicionada.
+    update:
+      updated: Categoria atualizada.
+    destroy:
+      destroyed: Categoria removida.
+      destroy_failed: Não é possível excluir uma categoria com despesas vinculadas.
+  expense_groups:
+    index:
+      title: Grupos de despesa
+      add: Adicionar grupo
+      empty: Nenhum grupo cadastrado.
+    create:
+      created: Grupo adicionado.
+    destroy:
+      destroyed: Grupo removido.
+      destroy_failed: Não é possível excluir um grupo com despesas vinculadas.
+  loans:
+    index:
+      title: "Empréstimos %{status}"
+      total_open: Total a receber
+      toggle: Ver %{status}
+      empty: Nenhum empréstimo nesta lista.
+    new:
+      title: Novo empréstimo
+    show:
+      title: Editar empréstimo
+    status:
+      open: em aberto
+      closed: recebidos
+    create:
+      created: Empréstimo adicionado.
+    update:
+      updated: Empréstimo atualizado.
+    destroy:
+      destroyed: Empréstimo removido.
+      destroy_failed: Não foi possível remover o empréstimo.
+  expense_creators:
+    template_filename: "Criar Despesas (Modelo).csv"
+    index:
+      title: Importar despesas por CSV
+      submit: Iniciar importação
+      history: Importações anteriores
+      empty: Nenhuma importação ainda.
+      download_template: Baixar modelo
+    show:
+      title: Resultado da importação
+      processing: Processando arquivo…
+      failed: A importação falhou.
+      total: "%{count} linhas processadas"
+      status:
+        queued: Na fila
+        processing: Processando
+        finished: Concluído
+        failed: Falhou
+    create:
+      file_required: Selecione um arquivo CSV.
+      enqueued: Importação iniciada. Acompanhe o progresso nesta página.
+  services:
+    create_expenses_from_csv_service:
+      csv_headers:
+        description: Descrição
+        amount: Valor
+        date: Data
+        expense_category: Categoria
+        expense_group: Grupo de Despesa
+        fixed: Fixo?
+        remark: Observações
+      details:
+        error: "Erro: %{error_message}"
+        success: Sucesso
+      error_messages:
+        cant_be_blank: "%{column} não pode ficar em branco"
+        invalid_format: "Formato de %{column} inválido"
+        nonexistent: "%{column} não existe"
+  forms:
+    save: Salvar
+    remove: Excluir
+    edit: Editar
+    details: Detalhes
+    back: Voltar

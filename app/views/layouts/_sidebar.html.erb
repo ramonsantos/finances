@@ -1,0 +1,27 @@
+<aside class="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col bg-slate-900 text-slate-100 md:flex">
+  <div class="flex h-16 items-center border-b border-slate-700 px-6">
+    <%= link_to t("layout.app_name"), root_path, class: "text-lg font-semibold tracking-tight text-white" %>
+  </div>
+
+  <nav class="flex-1 space-y-6 overflow-y-auto px-4 py-6 text-sm">
+    <div>
+      <p class="mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-slate-400">Despesas</p>
+      <ul class="space-y-1">
+        <%= sidebar_link t("layout.nav.expenses_index"), expenses_path %>
+        <%= sidebar_link t("layout.nav.expenses_new"), new_expense_path %>
+        <%= sidebar_link t("layout.nav.expenses_report"), report_expenses_path %>
+        <%= sidebar_link t("layout.nav.expense_creators"), expense_creators_path %>
+        <%= sidebar_link t("layout.nav.expense_categories"), expense_categories_path %>
+        <%= sidebar_link t("layout.nav.expense_groups"), expense_groups_path %>
+      </ul>
+    </div>
+
+    <div>
+      <p class="mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-slate-400">Empréstimos</p>
+      <ul class="space-y-1">
+        <%= sidebar_link t("layout.nav.loans_index"), loans_path %>
+        <%= sidebar_link t("layout.nav.loans_new"), new_loan_path %>
+      </ul>
+    </div>
+  </nav>
+</aside>

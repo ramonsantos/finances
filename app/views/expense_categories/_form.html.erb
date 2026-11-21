@@ -1,0 +1,16 @@
+<%= form_with(model: expense_category, class: "space-y-4") do |form| %>
+  <% if expense_category.errors.any? %>
+    <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+      <%= expense_category.errors.full_messages.to_sentence %>
+    </div>
+  <% end %>
+  <div>
+    <%= form.label :name, class: label_class %>
+    <%= form.text_field :name, required: true, class: input_class %>
+  </div>
+  <div>
+    <%= form.label :description, class: label_class %>
+    <%= form.text_area :description, rows: 3, class: input_class %>
+  </div>
+  <%= form.submit t("forms.save"), class: btn_primary %>
+<% end %>

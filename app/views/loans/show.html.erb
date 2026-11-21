@@ -1,0 +1,10 @@
+<% content_for :title, t("loans.show.title") %>
+<div class="mx-auto max-w-2xl">
+  <h1 class="mb-6 text-2xl font-bold text-slate-900"><%= t("loans.show.title") %></h1>
+  <div class="rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+    <%= render "form", loan: @loan %>
+    <div class="mt-4 border-t border-slate-100 pt-4">
+      <%= button_to t("forms.remove"), loan_path(@loan), method: :delete, form: { data: { turbo_confirm: t("flash.confirm_destroy") } }, class: btn_danger_xs %>
+    </div>
+  </div>
+</div>
