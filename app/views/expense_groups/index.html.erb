@@ -4,6 +4,11 @@
 
 <div class="mb-8 rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
   <h2 class="mb-4 text-sm font-semibold text-slate-700"><%= t("expense_groups.index.add") %></h2>
+  <% if @expense_group&.errors&.any? %>
+    <div class="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+      <%= @expense_group.errors.full_messages.to_sentence %>
+    </div>
+  <% end %>
   <%= form_with(model: @expense_group, url: expense_groups_path, class: "flex flex-wrap gap-3") do |form| %>
     <%= form.text_field :name, required: true, placeholder: "Nome do grupo", class: "#{input_class} max-w-xs" %>
     <%= form.submit t("forms.save"), class: btn_primary_sm %>

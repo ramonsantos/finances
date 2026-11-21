@@ -4,9 +4,9 @@ class ExpenseGroupsController < ApplicationController
   include ResourceResponses
 
   before_action :set_expense_group, only: :destroy
+  before_action :load_expense_groups, only: [:index, :create]
 
   def index
-    @expense_groups = ExpenseGroup.order(:name)
     @expense_group = ExpenseGroup.new
   end
 
@@ -27,5 +27,9 @@ class ExpenseGroupsController < ApplicationController
 
   def expense_group_params
     params.expect(expense_group: [:name])
+  end
+
+  def load_expense_groups
+    @expense_groups = ExpenseGroup.order(:name)
   end
 end

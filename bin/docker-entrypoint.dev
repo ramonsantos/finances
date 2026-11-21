@@ -30,6 +30,14 @@ fi
 if [ "${prepare_database}" = true ]; then
   rm -f tmp/pids/server.pid
   ./bin/rails db:prepare
+
+  queue_db="storage/development_queue.sqlite3"
+  if command -v sqlite3 >/dev/null && [ -f "${queue_db}" ]; then
+    if ! sqlite3 "${queue_db}" "SELECT 1 FROM sqlite_master WHERE type='table' AND name='solid_queue_jobs';" | grep -q solid_queue_jobs; then
+      echo "Loading Solid Queue schema into queue database..."
+      ./bin/rails db:schema:load:queue
+    fi
+  fi
 fi
 
 exec "${@}"

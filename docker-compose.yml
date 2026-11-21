@@ -22,7 +22,6 @@ x-app-common: &app_common
     RUBY_DEBUG_OPEN: "true"
     RUBY_DEBUG_HOST: "0.0.0.0"
     RUBY_DEBUG_LAZY: "true"
-    SOLID_QUEUE_IN_PUMA: "1"
   init: true
 
 services:

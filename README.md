@@ -51,6 +51,12 @@ docker compose build
 docker compose up
 ```
 
+Na primeira subida o entrypoint roda `db:prepare` e, se o SQLite da fila ainda não tiver tabelas do Solid Queue, carrega `db/queue_schema.rb`. Se o container já existiu com fila vazia, rode uma vez:
+
+```bash
+docker compose run --rm app bin/rails db:schema:load:queue
+```
+
 Acesse [http://localhost:3000](http://localhost:3000).
 
 O serviço `app` executa `bin/dev` (Foreman): servidor Rails, Tailwind watch e Solid Queue no mesmo container.
