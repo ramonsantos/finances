@@ -11,10 +11,8 @@ class Expense < ApplicationRecord
   validates :description, presence: true
   validates :amount, presence: true, numericality: { greater_than_or_equal_to: 0.01 }
   validates :date, presence: true
-  validates :expense_category, presence: true
-  validates :expense_group, presence: true
 
-  scope :for_month, ->(date) { where(date: date.beginning_of_month..date.end_of_month) }
+  scope :for_month, ->(date) { where(date: date.all_month) }
 
   scope :for_month_ordered, lambda { |date|
     for_month(date).order(:date).includes(:expense_group, :expense_category)

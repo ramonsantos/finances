@@ -3,14 +3,13 @@
 class ExpenseCategoriesController < ApplicationController
   include ResourceResponses
 
-  before_action :set_expense_category, only: %i[show update destroy]
+  before_action :set_expense_category, only: [:show, :update, :destroy]
 
   def index
     @expense_categories = ExpenseCategory.order(:name)
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @expense_category = ExpenseCategory.new
@@ -32,10 +31,10 @@ class ExpenseCategoriesController < ApplicationController
   private
 
   def set_expense_category
-    @expense_category = ExpenseCategory.find(params[:id])
+    @expense_category = ExpenseCategory.find(params.expect(:id))
   end
 
   def expense_category_params
-    params.require(:expense_category).permit(:name, :description)
+    params.expect(expense_category: [:name, :description])
   end
 end

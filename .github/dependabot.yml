@@ -5,8 +5,22 @@ updates:
   schedule:
     interval: weekly
   open-pull-requests-limit: 10
+  groups:
+    patch-dependencies:
+      update-types:
+      - "patch"
+    minor-dependencies:
+      update-types:
+      - "minor"
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
     interval: weekly
   open-pull-requests-limit: 10
+  groups:
+    patch-dependencies:
+      update-types:
+      - "patch"
+    minor-dependencies:
+      update-types:
+      - "minor"

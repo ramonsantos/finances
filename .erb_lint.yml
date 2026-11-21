@@ -1,0 +1,18 @@
+linters:
+  ParserErrors:
+    enabled: true
+    allow_frontend_js_attributes: true
+    frontend_js_attributes:
+      - '@click'
+      - ':class'
+      - 'x-on:click'
+      - 'x-data'
+      - 'x-show'
+      - 'x-bind'
+      - ':href'
+      - ':value'
+      - '@input'
+      - '@change'
+      - ':style'
+      - '@keydown'
+      - '@keyup'

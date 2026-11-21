@@ -9,8 +9,8 @@ FactoryBot.define do
       after(:build) do |creator|
         creator.csv_file.attach(
           io: StringIO.new("Descrição,Valor,Data,Categoria,Grupo de Despesa,Fixo?,Observações\n"),
-          filename: "test.csv",
-          content_type: "text/csv"
+          filename: 'test.csv',
+          content_type: 'text/csv'
         )
       end
     end

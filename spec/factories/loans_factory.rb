@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :loan do
-    person { "João" }
-    description { "Empréstimo pessoal" }
+    person { 'João' }
+    description { 'Empréstimo pessoal' }
     borrowed_amount { 100.0 }
     loan_date { Time.zone.today }
   end

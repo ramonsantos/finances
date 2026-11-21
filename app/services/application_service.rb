@@ -8,6 +8,6 @@ class ApplicationService
   private
 
   def call
-    raise NotImplementedError
+    raise(NotImplementedError)
   end
 end

@@ -20,7 +20,7 @@ class LoansIndexService < ApplicationService
   attr_reader :loan_status_param
 
   def loan_status
-    loan_status_param.to_s == "received" ? :received : :to_receive
+    loan_status_param.to_s == 'received' ? :received : :to_receive
   end
 
   def loans_scope

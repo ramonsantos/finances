@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_21_165708) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_21_170000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -51,7 +51,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_165708) do
   create_table "expense_creator_results", force: :cascade do |t|
     t.integer "expense_creator_id", null: false
     t.text "raw_content", null: false
-    t.boolean "success"
+    t.boolean "success", default: false, null: false
     t.string "details", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -87,6 +87,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_165708) do
     t.index ["date"], name: "index_expenses_on_date"
     t.index ["expense_category_id"], name: "index_expenses_on_expense_category_id"
     t.index ["expense_group_id"], name: "index_expenses_on_expense_group_id"
+    t.check_constraint "amount >= 0.01", name: "expenses_amount_check"
   end
 
   create_table "loans", force: :cascade do |t|
@@ -98,6 +99,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_165708) do
     t.date "received_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.check_constraint "borrowed_amount >= 0.01", name: "loans_borrowed_amount_check"
+    t.check_constraint "received_amount IS NULL OR received_amount >= 0.01", name: "loans_received_amount_check"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

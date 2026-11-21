@@ -1,10 +1,13 @@
----
+# ---
+# exclude_paths:
+#   - db/*
+
 detectors:
   Attribute:
     enabled: true
     exclude: []
   BooleanParameter:
-    enabled: false
+    enabled: true
     exclude: []
   ClassVariable:
     enabled: true
@@ -18,7 +21,7 @@ detectors:
     max_copies: 2
     min_clump_size: 2
   DuplicateMethodCall:
-    enabled: true
+    enabled: false
     exclude: []
     max_calls: 1
     allow_calls: []
@@ -26,7 +29,7 @@ detectors:
     enabled: false
     exclude: []
   InstanceVariableAssumption:
-    enabled: false
+    enabled: true
     exclude: []
   IrresponsibleModule:
     enabled: false
@@ -57,6 +60,7 @@ detectors:
     max_allowed_nesting: 1
     ignore_iterators:
     - tap
+    - Tempfile.create
   NilCheck:
     enabled: true
     exclude: []
@@ -80,7 +84,7 @@ detectors:
     exclude: []
     max_methods: 15
   TooManyStatements:
-    enabled: true
+    enabled: false
     exclude:
     - initialize
     max_statements: 5
@@ -117,7 +121,6 @@ detectors:
     - "/[A-Z]/"
     accept:
     - "/^_$/"
-    - e
   UnusedParameters:
     enabled: true
     exclude: []
@@ -128,3 +131,15 @@ detectors:
     enabled: false
     exclude: []
     public_methods_only: false
+
+directories:
+  "app/controllers":
+    InstanceVariableAssumption:
+      enabled: false
+  "db":
+    FeatureEnvy:
+      enabled: false
+    TooManyStatements:
+      enabled: false
+    UncommunicativeVariableName:
+      enabled: false

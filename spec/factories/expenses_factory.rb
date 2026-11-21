@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :expense do
-    description { "Compra" }
+    description { 'Compra' }
     amount { 25.50 }
     date { Time.zone.today }
     fixed { false }

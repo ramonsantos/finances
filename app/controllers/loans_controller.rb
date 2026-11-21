@@ -3,7 +3,7 @@
 class LoansController < ApplicationController
   include ResourceResponses
 
-  before_action :set_loan, only: %i[show update destroy]
+  before_action :set_loan, only: [:show, :update, :destroy]
 
   def index
     index_data = LoansIndexService.call(loan_status_param: params[:loan_status])
@@ -14,8 +14,7 @@ class LoansController < ApplicationController
     @pagy, @loans = pagy(:offset, index_data[:scope])
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @loan = Loan.new(loan_date: Time.zone.today)
@@ -37,17 +36,19 @@ class LoansController < ApplicationController
   private
 
   def set_loan
-    @loan = Loan.find(params[:id])
+    @loan = Loan.find(params.expect(:id))
   end
 
   def loan_params
-    params.require(:loan).permit(
-      :description,
-      :loan_date,
-      :received_at,
-      :borrowed_amount,
-      :person,
-      :received_amount
+    params.expect(
+      loan: [
+        :description,
+        :loan_date,
+        :received_at,
+        :borrowed_amount,
+        :person,
+        :received_amount
+      ]
     )
   end
 end

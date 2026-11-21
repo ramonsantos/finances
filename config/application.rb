@@ -34,7 +34,7 @@ module Finances
     # in config/environments, which are processed later.
     #
     config.time_zone = "America/Sao_Paulo"
-    config.i18n.default_locale = :"pt-BR"
+    config.i18n.default_locale = :'pt-BR'
 
     config.generators do |g|
       g.factory_bot(suffix: 'factory')

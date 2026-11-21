@@ -22,10 +22,10 @@ class ExpenseGroupsController < ApplicationController
   private
 
   def set_expense_group
-    @expense_group = ExpenseGroup.find(params[:id])
+    @expense_group = ExpenseGroup.find(params.expect(:id))
   end
 
   def expense_group_params
-    params.require(:expense_group).permit(:name)
+    params.expect(expense_group: [:name])
   end
 end

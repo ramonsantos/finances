@@ -3,12 +3,12 @@
 class ExpensesController < ApplicationController
   include ResourceResponses
 
-  before_action :set_expense, only: %i[show update destroy]
-  before_action :load_form_options, only: %i[new show create update]
+  before_action :set_expense, only: [:show, :update, :destroy]
+  before_action :load_form_options, only: [:new, :show, :create, :update]
 
   def index
     @current_expense_month = expense_month_from_params
-  @pagy, @expenses = pagy(:offset, Expense.for_month_ordered(@current_expense_month))
+    @pagy, @expenses = pagy(:offset, Expense.for_month_ordered(@current_expense_month))
     @total_expense_amount = Expense.total_for_month(@current_expense_month)
   end
 
@@ -49,18 +49,20 @@ class ExpensesController < ApplicationController
   private
 
   def set_expense
-    @expense = Expense.find(params[:id])
+    @expense = Expense.find(params.expect(:id))
   end
 
   def expense_params
-    params.require(:expense).permit(
-      :description,
-      :amount,
-      :date,
-      :fixed,
-      :remark,
-      :expense_category_id,
-      :expense_group_id
+    params.expect(
+      expense: [
+        :description,
+        :amount,
+        :date,
+        :fixed,
+        :remark,
+        :expense_category_id,
+        :expense_group_id
+      ]
     )
   end
 

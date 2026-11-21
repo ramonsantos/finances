@@ -3,5 +3,5 @@
 class ExpenseCreatorResult < ApplicationRecord
   belongs_to :expense_creator, counter_cache: :expense_creator_results_count
 
-  validates :expense_creator, :raw_content, :details, presence: true
+  validates :raw_content, :details, presence: true
 end

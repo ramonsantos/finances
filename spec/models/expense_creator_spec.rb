@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe ExpenseCreator, type: :model do
-  describe "associations" do
-    context "when have_many" do
+  describe 'associations' do
+    context 'when have_many' do
       it { is_expected.to have_many(:expense_creator_results).dependent(:destroy) }
     end
   end
 
-  describe "validations" do
-    context "when validate presence_of" do
+  describe 'validations' do
+    context 'when validate presence_of' do
       it { is_expected.to validate_presence_of(:date) }
     end
 
-    context "when define enum" do
+    context 'when define enum' do
       it do
         expect(subject).to define_enum_for(:status).with_values(
           queued: 0,
@@ -26,14 +26,14 @@ RSpec.describe ExpenseCreator, type: :model do
     end
   end
 
-  describe "#process_csv!" do
+  describe '#process_csv!' do
     let(:expense_creator) { create(:expense_creator) }
 
     before do
       allow(CreateExpensesFromCsvService).to receive(:call)
     end
 
-    it "delegates to CreateExpensesFromCsvService" do
+    it 'delegates to CreateExpensesFromCsvService' do
       expense_creator.process_csv!
 
       expect(CreateExpensesFromCsvService).to have_received(:call).with(expense_creator: expense_creator)

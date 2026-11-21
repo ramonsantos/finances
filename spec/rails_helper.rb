@@ -1,23 +1,34 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-ENV["RAILS_ENV"] ||= "test"
-require_relative "../config/environment"
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+ENV['RAILS_ENV'] = 'test'
 
-require "rspec/rails"
-require "capybara/rspec"
+require 'spec_helper'
 
-Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
+# Bootsnap precisa subir antes do Coverage; o SimpleCov precisa subir antes do
+# eager_load da app (CI). Por isso: boot → coverage → environment.
+require_relative '../config/boot'
+require_relative 'support/coverage'
+require_relative '../config/environment'
+
+abort('The Rails environment is running in production mode!') if Rails.env.production?
+
+require 'rspec/rails'
+require 'capybara/rspec'
+
+Rails.root.glob('spec/support/**/*.rb').each do |file|
+  next if file.basename.to_s == 'coverage.rb'
+
+  require file
+end
 
 begin
   ActiveRecord::Migration.maintain_test_schema!
-rescue ActiveRecord::PendingMigrationError => e
-  abort e.to_s.strip
+rescue ActiveRecord::PendingMigrationError => error
+  abort(error.to_s.strip)
 end
 
 RSpec.configure do |config|
-  config.fixture_paths = [Rails.root.join("spec/fixtures")]
+  config.fixture_paths = [Rails.root.join('spec/fixtures')]
   config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
@@ -25,7 +36,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include ActiveJob::TestHelper
 
-  %i[controller view request].each do |type|
+  [:controller, :view, :request].each do |type|
     config.include Rails::Controller::Testing::TestProcess, type: type
     config.include Rails::Controller::Testing::TemplateAssertions, type: type
     config.include Rails::Controller::Testing::Integration, type: type
@@ -38,7 +49,7 @@ end
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
-    with.test_framework :rspec
-    with.library :rails
+    with.test_framework(:rspec)
+    with.library(:rails)
   end
 end

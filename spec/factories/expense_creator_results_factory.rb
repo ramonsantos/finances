@@ -3,8 +3,8 @@
 FactoryBot.define do
   factory :expense_creator_result do
     expense_creator { nil }
-    raw_content { "MyText" }
+    raw_content { 'MyText' }
     success { false }
-    details { "MyString" }
+    details { 'MyString' }
   end
 end

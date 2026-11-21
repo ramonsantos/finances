@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :expense_category do
     sequence(:name) { |n| "Categoria #{n}" }
-    description { "Descrição" }
+    description { 'Descrição' }
   end
 end
