@@ -1,0 +1,33 @@
+<%# locals: (toast:) %>
+<div
+  data-controller="flash"
+  data-flash-timeout-value="<%= toast[:timeout] %>"
+  data-action="mouseenter->flash#pause mouseleave->flash#resume"
+  role="<%= toast[:role] %>"
+  aria-live="<%= toast[:aria_live] %>"
+  class="pointer-events-auto flex items-start gap-3 rounded-xl border p-4 shadow-lg <%= toast[:container_class] %>">
+  <span class="mt-0.5 shrink-0 <%= toast[:text_class] %>" aria-hidden="true">
+    <% case toast[:icon] %>
+    <% when :success %>
+      <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" />
+      </svg>
+    <% when :error %>
+      <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" />
+      </svg>
+    <% end %>
+  </span>
+
+  <p class="min-w-0 flex-1 text-sm <%= toast[:text_class] %>"><%= toast[:message] %></p>
+
+  <button
+    type="button"
+    data-action="flash#dismiss"
+    class="shrink-0 rounded-md p-0.5 opacity-70 transition hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-current/30 <%= toast[:text_class] %>"
+    aria-label="<%= t('flash.close') %>">
+    <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+    </svg>
+  </button>
+</div>

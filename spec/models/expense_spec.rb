@@ -21,8 +21,25 @@ RSpec.describe Expense, type: :model do
       end
     end
 
-    context 'when validate numericality_of' do
-      it { is_expected.to validate_numericality_of(:amount).is_greater_than_or_equal_to(0.01) }
+    context 'when validate comparison_of' do
+      it { is_expected.to validate_comparison_of(:amount).is_greater_than_or_equal_to(0.01) }
+    end
+
+    context 'when amount is submitted with comma decimal separator' do
+      let(:expense_category) { create(:expense_category) }
+      let(:payment_method) { create(:payment_method) }
+      let(:expense) do
+        build(
+          :expense,
+          amount: '2,00',
+          expense_category: expense_category,
+          payment_method: payment_method
+        )
+      end
+
+      it 'is valid' do
+        expect(expense).to be_valid
+      end
     end
   end
 

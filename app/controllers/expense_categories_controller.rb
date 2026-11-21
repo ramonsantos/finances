@@ -3,25 +3,38 @@
 class ExpenseCategoriesController < ApplicationController
   include ResourceResponses
 
-  before_action :set_expense_category, only: [:show, :update, :destroy]
+  before_action :set_expense_category, only: [:update, :destroy]
 
   def index
-    @expense_categories = ExpenseCategory.order(:name)
-  end
-
-  def show; end
-
-  def new
-    @expense_category = ExpenseCategory.new
+    prepare_index_context
+    @new_expense_category = ExpenseCategory.new
+    @open_expense_category_modal = false
+    @open_edit_expense_category_id = nil
   end
 
   def create
-    @expense_category = ExpenseCategory.new(expense_category_params)
-    create_resource(@expense_category, expense_categories_path)
+    @new_expense_category = ExpenseCategory.new(expense_category_params)
+
+    if @new_expense_category.save
+      redirect_to(expense_categories_path, notice: t('.created'))
+    else
+      prepare_index_context
+      @open_expense_category_modal = true
+      @open_edit_expense_category_id = nil
+      render(:index, status: :unprocessable_content)
+    end
   end
 
   def update
-    update_resource(@expense_category, expense_category_params, expense_categories_path)
+    if @expense_category.update(expense_category_params)
+      redirect_to(expense_categories_path, notice: t('.updated'))
+    else
+      prepare_index_context
+      @new_expense_category = ExpenseCategory.new
+      @open_expense_category_modal = false
+      @open_edit_expense_category_id = @expense_category.id
+      render(:index, status: :unprocessable_content)
+    end
   end
 
   def destroy
@@ -36,5 +49,9 @@ class ExpenseCategoriesController < ApplicationController
 
   def expense_category_params
     params.expect(expense_category: [:name, :description])
+  end
+
+  def prepare_index_context
+    @expense_categories = ExpenseCategory.order(:name)
   end
 end

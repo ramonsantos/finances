@@ -5,19 +5,28 @@
     </div>
   <% end %>
 
-  <div class="grid gap-5 sm:grid-cols-2">
-    <div class="sm:col-span-2">
+  <div class="space-y-5">
+    <div>
       <%= form.label :person, class: label_class %>
       <%= form.text_field :person, required: true, class: input_class %>
     </div>
-    <div class="sm:col-span-2">
+
+    <div>
       <%= form.label :description, class: label_class %>
       <%= form.text_field :description, required: true, class: input_class %>
     </div>
 
-    <div>
+    <div data-money-input-target="wrapper">
       <%= form.label :borrowed_amount, "Valor emprestado", class: label_class %>
-      <%= form.text_field :borrowed_amount, required: true, class: "#{input_class} tabular-nums", value: form_amount_value(loan.borrowed_amount), data: { money_input_target: "input", action: "input->money-input#input" } %>
+      <%= form.text_field :borrowed_amount,
+            required: true,
+            class: "#{input_class} tabular-nums",
+            value: form_amount_value(loan.borrowed_amount),
+            placeholder: "R$ 0,00",
+            data: {
+              money_input_target: "input",
+              action: "input->money-input#input keydown->money-input#keydown paste->money-input#paste"
+            } %>
     </div>
 
     <div>
@@ -25,9 +34,16 @@
       <%= form.date_field :loan_date, required: true, class: input_class %>
     </div>
 
-    <div>
+    <div data-money-input-target="wrapper">
       <%= form.label :received_amount, "Valor recebido", class: label_class %>
-      <%= form.text_field :received_amount, class: "#{input_class} tabular-nums", value: form_amount_value(loan.received_amount), data: { money_input_target: "input", action: "input->money-input#input" } %>
+      <%= form.text_field :received_amount,
+            class: "#{input_class} tabular-nums",
+            value: form_amount_value(loan.received_amount),
+            placeholder: "R$ 0,00",
+            data: {
+              money_input_target: "input",
+              action: "input->money-input#input keydown->money-input#keydown paste->money-input#paste"
+            } %>
     </div>
 
     <div>
@@ -36,7 +52,7 @@
     </div>
   </div>
 
-  <div class="pt-2">
-    <%= form.submit t("forms.save"), class: btn_primary %>
+  <div class="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
+    <%= form.submit t("forms.save"), class: "#{btn_primary} w-full sm:w-auto" %>
   </div>
 <% end %>

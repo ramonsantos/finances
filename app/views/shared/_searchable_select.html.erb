@@ -1,0 +1,45 @@
+<%# locals: (form:, attribute:, label:, options:, selected:) %>
+<div data-controller="searchable-select" class="relative">
+  <%= form.label attribute, label, class: label_class %>
+
+  <%= form.select(
+        attribute,
+        options,
+        { selected: selected },
+        class: "sr-only",
+        data: { searchable_select_target: "select" }
+      ) %>
+
+  <div class="relative mt-1 flex shadow-sm">
+    <input
+      type="text"
+      id="<%= "#{form.object_name}_#{attribute}_combobox" %>"
+      class="block w-full rounded-l-lg border border-slate-300 border-r-0 px-3 py-2 text-sm focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+      role="combobox"
+      aria-autocomplete="list"
+      aria-expanded="false"
+      aria-controls="<%= "#{form.object_name}_#{attribute}_listbox" %>"
+      autocomplete="off"
+      data-searchable-select-target="combobox"
+      data-action="click->searchable-select#click input->searchable-select#filter focus->searchable-select#focus blur->searchable-select#close keydown->searchable-select#keydown" />
+
+    <button
+      type="button"
+      class="inline-flex shrink-0 items-center rounded-r-lg border border-slate-300 bg-slate-50 px-3 text-slate-600 hover:bg-slate-100"
+      aria-label="<%= t("forms.open_options", field: label) %>"
+      aria-expanded="false"
+      data-searchable-select-target="toggle"
+      data-action="click->searchable-select#toggleDropdown">
+      <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+      </svg>
+    </button>
+  </div>
+
+  <ul
+    id="<%= "#{form.object_name}_#{attribute}_listbox" %>"
+    role="listbox"
+    class="hidden max-h-52 overflow-auto rounded-lg border border-slate-200 bg-white py-1 shadow-lg"
+    data-searchable-select-target="list"
+    data-action="mousedown->searchable-select#cancelClose"></ul>
+</div>

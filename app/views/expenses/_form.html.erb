@@ -5,52 +5,71 @@
     </div>
   <% end %>
 
-  <div class="grid gap-5 sm:grid-cols-2">
+  <div class="space-y-5">
     <div>
       <%= form.label :date, class: label_class %>
       <%= form.date_field :date, required: true, class: input_class, value: expense.date %>
     </div>
 
-    <div class="sm:col-span-2">
+    <div>
       <%= form.label :description, class: label_class %>
       <%= form.text_field :description, required: true, class: input_class %>
     </div>
 
     <div data-money-input-target="wrapper">
       <%= form.label :amount, class: label_class %>
-      <%= form.text_field :amount, required: true, class: "#{input_class} tabular-nums", value: form_amount_value(expense.amount), data: { money_input_target: "input", action: "input->money-input#input" } %>
+      <%= form.text_field :amount,
+            required: true,
+            class: "#{input_class} tabular-nums",
+            value: form_amount_value(expense.amount),
+            placeholder: "R$ 0,00",
+            data: {
+              money_input_target: "input",
+              action: "input->money-input#input keydown->money-input#keydown paste->money-input#paste"
+            } %>
     </div>
+
+    <%= render "shared/searchable_select",
+          form: form,
+          attribute: :expense_category_id,
+          label: "Categoria",
+          options: @expense_categories,
+          selected: expense.expense_category_id %>
+
+    <%= render "shared/searchable_select",
+          form: form,
+          attribute: :payment_method_id,
+          label: "Forma de pagamento",
+          options: @payment_methods,
+          selected: expense.payment_method_id %>
+
+    <%= render "shared/form_switch",
+          form: form,
+          attribute: :essential,
+          label: "Essencial",
+          hint: t("expenses.form.essential_hint") %>
+
+    <%= render "shared/form_switch",
+          form: form,
+          attribute: :fixed,
+          label: "Despesa fixa",
+          hint: t("expenses.form.fixed_hint") %>
 
     <div>
-      <%= form.label :expense_category_id, "Categoria", class: label_class %>
-      <%= form.select :expense_category_id, options_from_collection_for_select(ExpenseCategory.order(:name), :id, :name, expense.expense_category_id), {}, class: input_class %>
-    </div>
-
-    <div>
-      <%= form.label :payment_method_id, "Forma de pagamento", class: label_class %>
-      <%= form.select :payment_method_id, options_from_collection_for_select(PaymentMethod.order(:name), :id, :name, expense.payment_method_id), {}, class: input_class %>
-    </div>
-
-    <div class="flex items-end gap-6">
-      <label class="flex items-center gap-2 text-sm text-slate-700">
-        <%= form.check_box :essential, class: "rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" %>
-        Essencial
-      </label>
-      <label class="flex items-center gap-2 text-sm text-slate-700">
-        <%= form.check_box :fixed, class: "rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" %>
-        Despesa fixa
-      </label>
-    </div>
-
-    <div class="sm:col-span-2">
       <%= form.label :remark, "Observação", class: label_class %>
-      <%= form.text_area :remark, rows: 3, class: input_class %>
+      <%= form.text_field :remark, class: input_class %>
     </div>
   </div>
 
   <%= hidden_field_tag :expense_month, @current_expense_month %>
 
-  <div class="pt-2">
-    <%= form.submit t("forms.save"), class: btn_primary %>
+  <div class="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
+    <% if local_assigns[:modal] %>
+      <button type="button" data-action="expense-modal#close" class="<%= btn_outline %> w-full sm:w-auto">
+        <%= t("forms.cancel") %>
+      </button>
+    <% end %>
+
+    <%= form.submit t("forms.save"), class: "#{btn_primary} w-full sm:w-auto" %>
   </div>
 <% end %>

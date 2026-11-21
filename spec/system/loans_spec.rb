@@ -100,7 +100,7 @@ RSpec.describe 'Loans', type: :system do
 
       it 'removes the loan from the open list' do
         visit loans_path
-        click_button 'Excluir'
+        confirm_destroy_from_modal
 
         expect(page).to have_text('Empréstimo removido.')
         expect(page).to have_text('Nenhum empréstimo nesta lista.')

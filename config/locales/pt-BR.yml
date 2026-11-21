@@ -56,14 +56,21 @@ pt-BR:
       payment_methods: Formas de pagamento
       loans_index: Empréstimos
       loans_new: Novo empréstimo
+  confirm_destroy:
+    title: Confirmar exclusão
+    message: Tem certeza que deseja excluir este registro? Esta ação não pode ser desfeita.
+    message_with_name: 'Tem certeza que deseja excluir %{name}? Esta ação não pode ser desfeita.'
+    confirm: Confirmar exclusão
   flash:
-    confirm_destroy: Tem certeza?
+    close: Fechar notificação
   pagination:
     aria_label: Páginas
   expenses:
     index:
       title: "Despesas — %{month}"
       total: "Total do mês"
+      new: Nova despesa
+      month_navigation: Navegação por mês
       empty: Nenhuma despesa neste mês.
     report:
       title: "Relatório — %{month}"
@@ -82,6 +89,9 @@ pt-BR:
     essential:
       "yes": Sim
       "no": Não
+    form:
+      essential_hint: Gasto necessário no mês a mês
+      fixed_hint: Valor recorrente todo mês
     create:
       created: Despesa adicionada.
     update:
@@ -182,7 +192,9 @@ pt-BR:
         invalid_format: "Formato de %{column} inválido"
         nonexistent: "%{column} não existe"
   forms:
+    open_options: Abrir opções de %{field}
     save: Salvar
+    cancel: Cancelar
     remove: Excluir
     edit: Editar
     details: Detalhes

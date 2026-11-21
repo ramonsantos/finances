@@ -13,8 +13,8 @@ RSpec.describe Loan, type: :model do
       end
     end
 
-    context 'when validate numericality_of' do
-      it { is_expected.to validate_numericality_of(:borrowed_amount).is_greater_than_or_equal_to(0.01) }
+    context 'when validate comparison_of' do
+      it { is_expected.to validate_comparison_of(:borrowed_amount).is_greater_than_or_equal_to(0.01) }
     end
 
     context 'when custom validators' do

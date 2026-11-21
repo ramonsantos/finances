@@ -17,20 +17,6 @@ RSpec.describe ExpenseCategoriesController, type: :controller do
     end
   end
 
-  describe 'GET #show' do
-    it 'returns success' do
-      get(:show, params: { id: expense_category.id })
-      expect(response).to have_http_status(:ok)
-    end
-  end
-
-  describe 'GET #new' do
-    it 'returns success' do
-      get(:new)
-      expect(response).to have_http_status(:ok)
-    end
-  end
-
   describe 'POST #create' do
     context 'with valid params' do
       it 'creates a category' do
@@ -48,11 +34,12 @@ RSpec.describe ExpenseCategoriesController, type: :controller do
     end
 
     context 'with invalid params' do
-      it 'renders new' do
+      it 're-renders the index with the modal open' do
         post(:create, params: { expense_category: invalid_attributes })
 
         expect(response).to have_http_status(:unprocessable_content)
-        expect(response).to render_template(:new)
+        expect(response).to render_template(:index)
+        expect(assigns(:open_expense_category_modal)).to be(true)
       end
     end
   end
@@ -69,6 +56,16 @@ RSpec.describe ExpenseCategoriesController, type: :controller do
 
       expect(response).to redirect_to(expense_categories_path)
       expect(flash[:notice]).to eq(I18n.t('expense_categories.update.updated'))
+    end
+
+    context 'with invalid params' do
+      it 're-renders the index with the edit modal open' do
+        patch(:update, params: { id: expense_category.id, expense_category: { name: nil } })
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(response).to render_template(:index)
+        expect(assigns(:open_edit_expense_category_id)).to eq(expense_category.id)
+      end
     end
   end
 

@@ -1,0 +1,10 @@
+<%# locals: (expense_category:, open: false) %>
+<% modal_control_id = "expense-category-new-modal" %>
+
+<%= render layout: "shared/dismissible_modal",
+      locals: { modal_control_id: modal_control_id, title: t("expense_categories.new.title"), open: open } do %>
+  <%= render "form",
+        expense_category: expense_category,
+        modal: true,
+        modal_control_id: modal_control_id %>
+<% end %>

@@ -37,20 +37,6 @@ RSpec.describe ExpensesController, type: :controller do
     end
   end
 
-  describe 'GET #show' do
-    it 'returns success' do
-      get(:show, params: { id: expense.id, expense_month: Time.zone.today.to_s })
-      expect(response).to have_http_status(:ok)
-    end
-  end
-
-  describe 'GET #new' do
-    it 'returns success' do
-      get(:new)
-      expect(response).to have_http_status(:ok)
-    end
-  end
-
   describe 'POST #create' do
     context 'with valid params' do
       it 'creates an expense' do
@@ -74,11 +60,12 @@ RSpec.describe ExpensesController, type: :controller do
         end.not_to change(Expense, :count)
       end
 
-      it 'renders new' do
+      it 're-renders the index with the modal open' do
         post(:create, params: { expense: invalid_attributes })
 
         expect(response).to have_http_status(:unprocessable_content)
-        expect(response).to render_template(:new)
+        expect(response).to render_template(:index)
+        expect(assigns(:open_expense_modal)).to be(true)
       end
     end
   end
@@ -95,8 +82,18 @@ RSpec.describe ExpensesController, type: :controller do
     it 'redirects with a notice' do
       patch(:update, params: { id: expense.id, expense: new_attributes, expense_month: expense.date.to_s })
 
-      expect(response).to redirect_to(expense_path(expense, expense_month: expense.date.to_s))
+      expect(response).to redirect_to(expenses_path(expense_month: expense.date.to_s))
       expect(flash[:notice]).to eq(I18n.t('expenses.update.updated'))
+    end
+
+    context 'with invalid params' do
+      it 're-renders the index with the edit modal open' do
+        patch(:update, params: { id: expense.id, expense: { description: nil }, expense_month: expense.date.to_s })
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(response).to render_template(:index)
+        expect(assigns(:open_edit_expense_id)).to eq(expense.id)
+      end
     end
   end
 

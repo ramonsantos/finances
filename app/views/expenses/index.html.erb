@@ -1,19 +1,12 @@
 <% content_for :title, t("expenses.index.title", month: expense_month_label(@current_expense_month)) %>
 
-<div class="mb-6 flex flex-wrap items-center justify-between gap-4">
-  <h1 class="text-2xl font-bold text-slate-900">
-    <%= t("expenses.index.title", month: expense_month_label(@current_expense_month)) %>
-  </h1>
-  <div class="flex flex-wrap gap-2">
-    <%= link_to expense_month_label(@current_expense_month, :prev), expenses_path(expense_month: expense_month_param(@current_expense_month, :prev)), class: btn_outline %>
-    <%= link_to t("layout.nav.expenses_report"), report_expenses_path(expense_month: expense_month_param(@current_expense_month)), class: btn_primary_sm %>
-    <%= link_to expense_month_label(@current_expense_month, :next), expenses_path(expense_month: expense_month_param(@current_expense_month, :next)), class: btn_outline %>
-  </div>
-</div>
+<%= render "page_header",
+      title: t("expenses.index.title", month: expense_month_label(@current_expense_month)),
+      header_page: :index %>
 
 <div class="mb-6 rounded-xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
   <p class="text-sm text-slate-500"><%= t("expenses.index.total") %></p>
-  <p class="text-3xl font-bold tabular-nums text-emerald-700"><%= formatted_money(@total_expense_amount) %></p>
+  <p class="text-3xl font-bold tabular-nums text-sky-700"><%= formatted_money(@total_expense_amount) %></p>
 </div>
 
 <% if @expenses.any? %>
@@ -35,6 +28,7 @@
         </thead>
         <tbody class="divide-y divide-slate-100">
           <% @expenses.each do |expense| %>
+            <% editable_expense = @open_edit_expense_id == expense.id ? @expense : expense %>
             <tr class="hover:bg-slate-50">
               <td class="px-4 py-3"><%= l(expense.date) %></td>
               <td class="px-4 py-3 font-medium text-slate-900"><%= expense.description %></td>
@@ -49,8 +43,11 @@
               </td>
               <td class="px-4 py-3 text-slate-500"><%= remark_preview(expense.remark) %></td>
               <td class="px-4 py-3 text-right whitespace-nowrap">
-                <%= link_to t("forms.edit"), expense_path(expense, expense_month: expense_month_param(@current_expense_month)), class: btn_primary_xs %>
-                <%= button_to t("forms.remove"), expense_path(expense, expense_month: expense_month_param(@current_expense_month)), method: :delete, form: { data: { turbo_confirm: t("flash.confirm_destroy") } }, class: btn_danger_xs %>
+                <%= render "edit_modal",
+                      expense: editable_expense,
+                      current_expense_month: @current_expense_month,
+                      open: @open_edit_expense_id == expense.id %>
+                <%= render "shared/confirm_delete", action_url: expense_path(expense, expense_month: expense_month_param(@current_expense_month)), record_name: expense.description %>
               </td>
             </tr>
           <% end %>
@@ -60,5 +57,12 @@
   </div>
   <div class="mt-4 flex justify-end"><%== pagy_nav(@pagy) %></div>
 <% else %>
-  <p class="rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500"><%= t("expenses.index.empty") %></p>
+  <div class="rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500">
+    <p><%= t("expenses.index.empty") %></p>
+    <label for="expense-new-modal" class="<%= btn_primary_sm %> mt-4 inline-flex cursor-pointer">
+      <%= t("expenses.index.new") %>
+    </label>
+  </div>
 <% end %>
+
+<%= render "new_modal", expense: @new_expense, open: @open_expense_modal %>

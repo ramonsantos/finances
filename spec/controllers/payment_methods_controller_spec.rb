@@ -32,6 +32,14 @@ RSpec.describe PaymentMethodsController, type: :controller do
           post(:create, params: { payment_method: invalid_attributes })
         end.not_to change(PaymentMethod, :count)
       end
+
+      it 're-renders the index with the modal open' do
+        post(:create, params: { payment_method: invalid_attributes })
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(response).to render_template(:index)
+        expect(assigns(:open_payment_method_modal)).to be(true)
+      end
     end
   end
 

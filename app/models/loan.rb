@@ -6,8 +6,8 @@ class Loan < ApplicationRecord
   normalizes_currency :borrowed_amount, :received_amount
 
   validates :person, :description, :borrowed_amount, :loan_date, presence: true
-  validates :borrowed_amount, numericality: { greater_than_or_equal_to: 0.01 }
-  validates :received_amount, numericality: { greater_than_or_equal_to: 0.01 }, allow_nil: true
+  validates :borrowed_amount, comparison: { greater_than_or_equal_to: 0.01 }
+  validates :received_amount, comparison: { greater_than_or_equal_to: 0.01 }, allow_nil: true
   validate :received_at_requires_amount
 
   before_validation :clear_blank_amounts

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   root 'expenses#index'
 
-  resources :expenses, except: [:edit] do
+  resources :expenses, except: [:edit, :new, :show] do
     collection do
       get :report
     end
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 
   resources :loans, except: [:edit]
 
-  resources :expense_categories, except: [:edit]
+  resources :expense_categories, except: [:edit, :new, :show]
 
-  resources :payment_methods, except: [:edit]
+  resources :payment_methods, except: [:edit, :new, :show]
 end

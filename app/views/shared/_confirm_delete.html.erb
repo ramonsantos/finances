@@ -1,0 +1,49 @@
+<%# locals: (action_url:, record_name: nil, trigger_label: nil, trigger_class: nil) %>
+<%
+  label = trigger_label.presence || t("forms.remove")
+  trigger_classes = trigger_class.presence || btn_danger_xs
+  control_id = "confirm-delete-#{Digest::SHA256.hexdigest(action_url.to_s)[0, 12]}"
+  message = if record_name.present?
+              t("confirm_destroy.message_with_name", name: record_name)
+            else
+              t("confirm_destroy.message")
+            end
+%>
+<span class="contents" data-controller="expense-modal">
+  <input type="checkbox" id="<%= control_id %>" class="peer sr-only" aria-hidden="true" data-expense-modal-target="checkbox">
+
+  <label for="<%= control_id %>" class="<%= trigger_classes %> cursor-pointer">
+    <%= label %>
+  </label>
+
+  <div
+    class="pointer-events-none fixed left-0 top-0 z-[200] hidden h-dvh w-dvw items-center justify-center overflow-y-auto bg-slate-900/50 p-4 text-left whitespace-normal opacity-0 backdrop-blur-sm transition-opacity duration-200 peer-checked:pointer-events-auto peer-checked:flex peer-checked:opacity-100 sm:p-6"
+    role="presentation">
+    <div
+      class="mx-auto w-full min-w-0 max-w-lg shrink-0 rounded-2xl border border-slate-200 bg-white p-6 text-left whitespace-normal shadow-xl sm:p-8"
+      role="alertdialog"
+      aria-modal="true"
+      aria-labelledby="<%= control_id %>-title"
+      aria-describedby="<%= control_id %>-description">
+      <h3 id="<%= control_id %>-title" class="text-xl font-semibold text-slate-900">
+        <%= t("confirm_destroy.title") %>
+      </h3>
+
+      <p id="<%= control_id %>-description" class="mt-3 break-words text-base leading-relaxed text-slate-600">
+        <%= message %>
+      </p>
+
+      <div class="mt-8 flex flex-col-reverse flex-wrap gap-3 whitespace-normal sm:flex-row sm:justify-end">
+        <label for="<%= control_id %>" class="<%= btn_outline %> w-full cursor-pointer justify-center sm:w-auto">
+          <%= t("forms.cancel") %>
+        </label>
+
+        <%= button_to t("confirm_destroy.confirm"),
+              action_url,
+              method: :delete,
+              form: { class: "w-full sm:w-auto" },
+              class: "inline-flex w-full items-center justify-center whitespace-normal rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-red-700 sm:w-auto" %>
+      </div>
+    </div>
+  </div>
+</span>

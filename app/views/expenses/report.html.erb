@@ -1,19 +1,12 @@
 <% content_for :title, t("expenses.report.title", month: expense_month_label(@current_expense_month)) %>
 
-<div class="mb-6 flex flex-wrap items-center justify-between gap-4">
-  <h1 class="text-2xl font-bold text-slate-900">
-    <%= t("expenses.report.title", month: expense_month_label(@current_expense_month)) %>
-  </h1>
-  <div class="flex flex-wrap gap-2">
-    <%= link_to expense_month_label(@current_expense_month, :prev), report_expenses_path(expense_month: expense_month_param(@current_expense_month, :prev)), class: btn_outline %>
-    <%= link_to t("expenses.report.to_index"), expenses_path(expense_month: expense_month_param(@current_expense_month)), class: btn_primary_sm %>
-    <%= link_to expense_month_label(@current_expense_month, :next), report_expenses_path(expense_month: expense_month_param(@current_expense_month, :next)), class: btn_outline %>
-  </div>
-</div>
+<%= render "page_header",
+      title: t("expenses.report.title", month: expense_month_label(@current_expense_month)),
+      header_page: :report %>
 
 <div class="mb-6 rounded-xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
   <p class="text-sm text-slate-500"><%= t("expenses.report.month_total") %></p>
-  <p class="text-3xl font-bold tabular-nums text-emerald-700"><%= formatted_money(@total_expense_amount) %></p>
+  <p class="text-3xl font-bold tabular-nums text-sky-700"><%= formatted_money(@total_expense_amount) %></p>
 </div>
 
 <% if @category_report.any? %>
@@ -29,7 +22,7 @@
             <span class="tabular-nums text-slate-600"><%= number_with_precision(category[:percent_total], precision: 2) %>%</span>
           </div>
           <div class="h-2 overflow-hidden rounded-full bg-slate-100">
-            <div class="h-full rounded-full bg-emerald-500" style="width: <%= category[:percent_total] %>%"></div>
+            <div class="h-full rounded-full bg-sky-500" style="width: <%= category[:percent_total] %>%"></div>
           </div>
         </div>
       </div>
@@ -62,3 +55,5 @@
 <% else %>
   <p class="rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500"><%= t("expenses.index.empty") %></p>
 <% end %>
+
+<%= render "new_modal", expense: @new_expense, open: @open_expense_modal %>

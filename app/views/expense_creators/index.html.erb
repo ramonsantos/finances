@@ -3,13 +3,16 @@
 <h1 class="mb-6 text-2xl font-bold text-slate-900"><%= t("expense_creators.index.title") %></h1>
 
 <div class="mb-8 rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-  <%= form_with(url: expense_creators_path, multipart: true, class: "flex flex-wrap items-end gap-4") do |form| %>
-    <div class="flex-1 min-w-[200px]">
-      <label class="<%= label_class %>"><%= t("expense_creators.index.file_label") %></label>
+  <%= form_with(url: expense_creators_path, multipart: true, class: "space-y-5") do |form| %>
+    <div>
+      <label class="<%= label_class %>" for="csv_file"><%= t("expense_creators.index.file_label") %></label>
       <%= file_field_tag :file, id: "csv_file", required: true, accept: ".csv,text/csv", class: input_class %>
     </div>
-    <%= form.submit t("expense_creators.index.submit"), class: btn_primary %>
-    <%= link_to t("expense_creators.index.download_template"), download_csv_template_expense_creators_path, class: btn_outline %>
+
+    <div class="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
+      <%= link_to t("expense_creators.index.download_template"), download_csv_template_expense_creators_path, class: "#{btn_outline} w-full justify-center sm:w-auto" %>
+      <%= form.submit t("expense_creators.index.submit"), class: "#{btn_primary} w-full sm:w-auto" %>
+    </div>
   <% end %>
 </div>
 

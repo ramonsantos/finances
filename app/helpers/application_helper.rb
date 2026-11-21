@@ -1,20 +1,24 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  BTN_PRIMARY = 'inline-flex items-center rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-emerald-700'
-  BTN_PRIMARY_SM = 'inline-flex items-center rounded-lg bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-700'
-  BTN_PRIMARY_XS = 'inline-flex items-center rounded-lg bg-emerald-600 px-2.5 py-1 text-xs font-medium text-white hover:bg-emerald-700'
+  include FlashHelper
+
+  BTN_PRIMARY = 'inline-flex items-center rounded-lg bg-sky-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700'
+  BTN_PRIMARY_SM = 'inline-flex items-center rounded-lg bg-sky-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-sky-700'
+  BTN_PRIMARY_XS = 'inline-flex items-center rounded-lg bg-sky-600 px-2.5 py-1 text-xs font-medium text-white hover:bg-sky-700'
   BTN_OUTLINE = 'inline-flex items-center rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50'
+  BTN_TOGGLE_SM = 'inline-flex items-center rounded-lg bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-emerald-700'
   BTN_DANGER_XS = 'inline-flex items-center rounded-lg bg-red-600 px-2.5 py-1 text-xs font-medium text-white hover:bg-red-700'
 
   def btn_primary = BTN_PRIMARY
   def btn_primary_sm = BTN_PRIMARY_SM
   def btn_primary_xs = BTN_PRIMARY_XS
   def btn_outline = BTN_OUTLINE
+  def btn_toggle_sm = BTN_TOGGLE_SM
   def btn_danger_xs = BTN_DANGER_XS
 
   def input_class
-    'mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500'
+    'mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500'
   end
 
   def label_class

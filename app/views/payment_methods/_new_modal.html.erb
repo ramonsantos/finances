@@ -1,0 +1,10 @@
+<%# locals: (payment_method:, open: false) %>
+<% modal_control_id = "payment-method-new-modal" %>
+
+<%= render layout: "shared/dismissible_modal",
+      locals: { modal_control_id: modal_control_id, title: t("payment_methods.new.title"), open: open } do %>
+  <%= render "form",
+        payment_method: payment_method,
+        modal: true,
+        modal_control_id: modal_control_id %>
+<% end %>

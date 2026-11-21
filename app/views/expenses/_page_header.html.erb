@@ -1,0 +1,46 @@
+<%# locals: (title:, header_page:) %>
+<%
+  month_param = expense_month_param(@current_expense_month)
+
+  if header_page == :index
+    previous_month_path = expenses_path(expense_month: expense_month_param(@current_expense_month, :prev))
+    next_month_path = expenses_path(expense_month: expense_month_param(@current_expense_month, :next))
+    toggle_path = report_expenses_path(expense_month: month_param)
+    toggle_label = t("layout.nav.expenses_report")
+  else
+    previous_month_path = report_expenses_path(expense_month: expense_month_param(@current_expense_month, :prev))
+    next_month_path = report_expenses_path(expense_month: expense_month_param(@current_expense_month, :next))
+    toggle_path = expenses_path(expense_month: month_param)
+    toggle_label = t("expenses.report.to_index")
+  end
+
+  current_month_classes = "inline-flex min-w-[6.5rem] items-center justify-center rounded-lg border border-slate-300 bg-slate-100 px-3 py-1.5 text-sm font-semibold text-slate-900 tabular-nums"
+%>
+<div class="relative mb-6 min-h-[2.75rem]">
+  <div class="pointer-events-none relative z-10 flex items-center justify-between gap-3">
+    <h1 class="pointer-events-auto min-w-0 text-2xl font-bold text-slate-900 sm:max-w-[45%] lg:max-w-[min(18rem,35vw)]">
+      <%= title %>
+    </h1>
+
+    <div class="pointer-events-auto flex shrink-0 flex-wrap items-center justify-end gap-2">
+      <%= link_to toggle_label, toggle_path, class: btn_toggle_sm %>
+      <label for="expense-new-modal" class="<%= btn_primary_sm %> cursor-pointer">
+        <%= t("expenses.index.new") %>
+      </label>
+    </div>
+  </div>
+
+  <div
+    class="max-lg:mt-4 max-lg:flex max-lg:justify-center
+           lg:pointer-events-none lg:absolute lg:inset-0 lg:z-20 lg:flex lg:items-center lg:justify-center">
+    <nav
+      class="flex flex-wrap items-center justify-center gap-2 lg:pointer-events-auto lg:-translate-x-32"
+      aria-label="<%= t("expenses.index.month_navigation") %>">
+      <%= link_to expense_month_label(@current_expense_month, :prev), previous_month_path, class: btn_outline %>
+      <span class="<%= current_month_classes %>" aria-current="true">
+        <%= expense_month_label(@current_expense_month, :current) %>
+      </span>
+      <%= link_to expense_month_label(@current_expense_month, :next), next_month_path, class: btn_outline %>
+    </nav>
+  </div>
+</div>

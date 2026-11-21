@@ -9,7 +9,7 @@ class Expense < ApplicationRecord
   belongs_to :payment_method, counter_cache: true
 
   validates :description, presence: true
-  validates :amount, presence: true, numericality: { greater_than_or_equal_to: 0.01 }
+  validates :amount, presence: true, comparison: { greater_than_or_equal_to: 0.01 }
   validates :date, presence: true
 
   scope :for_month, ->(date) { where(date: date.all_month) }

@@ -14,13 +14,15 @@ RSpec.describe 'Expenses', type: :system do
     expect(page).to have_text('Padaria')
     expect(page).to have_text('R$')
 
-    visit new_expense_path
-    fill_in 'Descrição', with: 'Feira'
-    fill_in 'Valor', with: '30.00'
-    fill_in 'Data', with: Time.zone.today.to_s
-    select 'Alimentação', from: 'Categoria'
-    select 'Cartão Nubank', from: 'Forma de pagamento'
-    click_button 'Salvar'
+    find('label', text: 'Nova despesa', match: :first).click
+    within_dialog('expense-new-modal-title') do
+      fill_in 'Descrição', with: 'Feira'
+      fill_in 'Valor', with: '30.00'
+      fill_in 'Data', with: Time.zone.today.to_s
+      select 'Alimentação', from: 'Categoria'
+      select 'Cartão Nubank', from: 'Forma de pagamento'
+      click_button 'Salvar'
+    end
 
     expect(page).to have_text('Despesa adicionada')
     expect(page).to have_text('Feira')
@@ -77,14 +79,17 @@ RSpec.describe 'Expenses', type: :system do
   context 'when creating a fixed expense' do
     it 'shows the fixed badge on the list' do
       Timecop.freeze(Date.new(2026, 3, 15)) do
-        visit new_expense_path
-        fill_in 'Descrição', with: 'Aluguel'
-        fill_in 'Valor', with: '1200.00'
-        fill_in 'Data', with: '2026-03-15'
-        select 'Alimentação', from: 'Categoria'
-        select 'Cartão Nubank', from: 'Forma de pagamento'
-        check 'Despesa fixa'
-        click_button 'Salvar'
+        visit expenses_path
+        find('label', text: 'Nova despesa', match: :first).click
+        within_dialog('expense-new-modal-title') do
+          fill_in 'Descrição', with: 'Aluguel'
+          fill_in 'Valor', with: '1200.00'
+          fill_in 'Data', with: '2026-03-15'
+          select 'Alimentação', from: 'Categoria'
+          select 'Cartão Nubank', from: 'Forma de pagamento'
+          check 'Despesa fixa'
+          click_button 'Salvar'
+        end
 
         expect(page).to have_text('Despesa adicionada')
         expect(page).to have_text('Sim')
@@ -106,16 +111,19 @@ RSpec.describe 'Expenses', type: :system do
       )
     end
 
-    it 'saves changes from the edit screen' do
+    it 'saves changes from the edit modal' do
       Timecop.freeze(Date.new(2026, 3, 15)) do
-        visit expenses_path
-        click_link 'Editar'
+        expense = Expense.find_by!(description: 'Padaria')
 
-        fill_in 'Descrição', with: 'Padaria atualizada'
-        click_button 'Salvar'
+        visit expenses_path
+        find("label[for='expense-edit-#{expense.id}']").click
+        within_dialog("expense-edit-#{expense.id}-title") do
+          fill_in 'Descrição', with: 'Padaria atualizada'
+          click_button 'Salvar'
+        end
 
         expect(page).to have_text('Despesa atualizada.')
-        expect(page).to have_field('Descrição', with: 'Padaria atualizada')
+        expect(page).to have_text('Padaria atualizada')
       end
     end
   end
@@ -137,7 +145,7 @@ RSpec.describe 'Expenses', type: :system do
     it 'removes the row from the monthly list' do
       Timecop.freeze(Date.new(2026, 3, 15)) do
         visit expenses_path
-        click_button 'Excluir'
+        confirm_destroy_from_modal
 
         expect(page).to have_text('Despesa removida.')
         expect(page).to have_text('Nenhuma despesa neste mês.')
