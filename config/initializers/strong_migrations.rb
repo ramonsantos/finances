@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
-require 'strong_migrations'
+begin
+  require('strong_migrations')
+rescue LoadError
+  return
+end
 
 # Mark existing migrations as safe
 StrongMigrations.start_after = 20261121165708

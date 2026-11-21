@@ -49,7 +49,7 @@ RSpec.describe ExpensesController, type: :controller do
         post(:create, params: { expense: valid_attributes })
 
         expect(response).to redirect_to(expenses_path(expense_month: Time.zone.today.to_s))
-        expect(flash[:notice]).to eq(I18n.t('expenses.create.created'))
+        expect(flash[:notice]).to eq('Despesa adicionada.')
       end
     end
 
@@ -83,7 +83,7 @@ RSpec.describe ExpensesController, type: :controller do
       patch(:update, params: { id: expense.id, expense: new_attributes, expense_month: expense.date.to_s })
 
       expect(response).to redirect_to(expenses_path(expense_month: expense.date.to_s))
-      expect(flash[:notice]).to eq(I18n.t('expenses.update.updated'))
+      expect(flash[:notice]).to eq('Despesa atualizada.')
     end
 
     context 'with invalid params' do
@@ -108,7 +108,7 @@ RSpec.describe ExpensesController, type: :controller do
       delete(:destroy, params: { id: expense.id, expense_month: expense.date.to_s })
 
       expect(response).to redirect_to(expenses_path(expense_month: expense.date.to_s))
-      expect(flash[:notice]).to eq(I18n.t('expenses.destroy.destroyed'))
+      expect(flash[:notice]).to eq('Despesa removida.')
     end
   end
 end

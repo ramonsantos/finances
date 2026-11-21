@@ -8,7 +8,7 @@ class Loan < ApplicationRecord
   validates :person, :description, :borrowed_amount, :loan_date, presence: true
   validates :borrowed_amount, comparison: { greater_than_or_equal_to: 0.01 }
   validates :received_amount, comparison: { greater_than_or_equal_to: 0.01 }, allow_nil: true
-  validate :received_at_requires_amount
+  validates_with(LoanReceivedAtRequiresAmountValidator)
 
   before_validation :clear_blank_amounts
   before_validation :apply_received_at_default
@@ -30,11 +30,5 @@ class Loan < ApplicationRecord
     return if received_amount.blank?
 
     self.received_at = Time.zone.today if received_at.blank?
-  end
-
-  def received_at_requires_amount
-    return if received_at.blank? || received_amount.present?
-
-    errors.add(:received_at, :invalid)
   end
 end

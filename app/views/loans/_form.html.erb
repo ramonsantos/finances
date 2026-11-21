@@ -7,17 +7,17 @@
 
   <div class="space-y-5">
     <div>
-      <%= form.label :person, class: label_class %>
+      <%= required_form_label(form, :person) %>
       <%= form.text_field :person, required: true, class: input_class %>
     </div>
 
     <div>
-      <%= form.label :description, class: label_class %>
+      <%= required_form_label(form, :description) %>
       <%= form.text_field :description, required: true, class: input_class %>
     </div>
 
     <div data-money-input-target="wrapper">
-      <%= form.label :borrowed_amount, "Valor emprestado", class: label_class %>
+      <%= required_form_label(form, :borrowed_amount) %>
       <%= form.text_field :borrowed_amount,
             required: true,
             class: "#{input_class} tabular-nums",
@@ -30,12 +30,12 @@
     </div>
 
     <div>
-      <%= form.label :loan_date, "Data do empréstimo", class: label_class %>
+      <%= required_form_label(form, :loan_date) %>
       <%= form.date_field :loan_date, required: true, class: input_class %>
     </div>
 
     <div data-money-input-target="wrapper">
-      <%= form.label :received_amount, "Valor recebido", class: label_class %>
+      <%= form.label :received_amount, class: label_class %>
       <%= form.text_field :received_amount,
             class: "#{input_class} tabular-nums",
             value: form_amount_value(loan.received_amount),
@@ -47,7 +47,7 @@
     </div>
 
     <div>
-      <%= form.label :received_at, "Recebido em", class: label_class %>
+      <%= form.label :received_at, class: label_class %>
       <%= form.date_field :received_at, class: input_class %>
     </div>
   </div>

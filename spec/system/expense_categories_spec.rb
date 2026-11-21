@@ -33,8 +33,8 @@ RSpec.describe 'Expense categories', type: :system do
         find('label', text: 'Nova categoria', match: :first).click
         dialog = find(:xpath, "//*[@id='expense-category-new-modal-title']/ancestor::*[@role='dialog'][1]")
         within(dialog) do
-          fill_in 'Name', with: 'Moradia'
-          fill_in 'Description', with: 'Aluguel e condomínio'
+          fill_in 'Nome', with: 'Moradia'
+          fill_in 'Descrição', with: 'Aluguel e condomínio'
           click_button 'Salvar'
         end
 
@@ -62,7 +62,7 @@ RSpec.describe 'Expense categories', type: :system do
         find('label', text: 'Nova categoria', match: :first).click
         dialog = find(:xpath, "//*[@id='expense-category-new-modal-title']/ancestor::*[@role='dialog'][1]")
         within(dialog) do
-          fill_in 'Name', with: 'moradia'
+          fill_in 'Nome', with: 'moradia'
           click_button 'Salvar'
         end
 
@@ -82,7 +82,7 @@ RSpec.describe 'Expense categories', type: :system do
         find("label[for='expense-category-edit-#{category.id}']").click
         dialog = find(:xpath, "//*[@id='expense-category-edit-#{category.id}-title']/ancestor::*[@role='dialog'][1]")
         within(dialog) do
-          fill_in 'Description', with: 'Condomínio'
+          fill_in 'Descrição', with: 'Condomínio'
           click_button 'Salvar'
         end
 

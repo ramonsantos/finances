@@ -278,13 +278,12 @@ RSpec.describe ApplicationHelper, type: :helper do
 
     context 'when there are multiple pages' do
       let(:pagy) { instance_double(Pagy::Offset, pages: 3) }
-      let(:expected_result) { '<nav id="pagination" class="pagy-nav"></nav>' }
+      let(:expected_result) { '<nav id="pagination" class="pagy series-nav"></nav>' }
 
       before do
         allow(pagy).to receive(:series_nav).with(
           id: 'pagination',
-          aria_label: 'Páginas',
-          class: 'pagy-nav'
+          aria_label: 'Páginas'
         ).and_return(expected_result)
       end
 

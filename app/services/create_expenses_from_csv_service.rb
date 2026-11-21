@@ -66,7 +66,7 @@ class CreateExpensesFromCsvService < ApplicationService
   def record_result(row_hash, success, details)
     ExpenseCreatorResult.create!(
       expense_creator: @expense_creator,
-      raw_content: row_hash.compact_blank.to_s,
+      raw_content: row_hash.compact_blank.transform_keys(&:to_s).to_json,
       success: success,
       details: details
     )

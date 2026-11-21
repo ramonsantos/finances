@@ -43,7 +43,7 @@ RSpec.describe ExpenseCreatorsController, type: :controller do
         post(:create)
 
         expect(response).to redirect_to(expense_creators_path)
-        expect(flash[:alert]).to eq(I18n.t('expense_creators.create.file_required'))
+        expect(flash[:alert]).to eq('Selecione um arquivo CSV.')
       end
     end
 
@@ -60,7 +60,7 @@ RSpec.describe ExpenseCreatorsController, type: :controller do
 
         creator = ExpenseCreator.last
         expect(response).to redirect_to(expense_creator_path(creator))
-        expect(flash[:notice]).to eq(I18n.t('expense_creators.create.enqueued'))
+        expect(flash[:notice]).to eq('Importação iniciada. Acompanhe o progresso nesta página.')
       end
     end
   end

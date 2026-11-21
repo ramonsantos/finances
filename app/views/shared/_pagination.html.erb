@@ -1,0 +1,24 @@
+<% if pagy.pages > 1 %>
+  <%
+    attached = local_assigns.fetch(:variant, :attached) == :attached
+    wrapper_class = if attached
+                      'border-t border-slate-100 bg-slate-50/80 px-4 py-3'
+                    else
+                      'mt-4 rounded-xl bg-white px-4 py-3 shadow-sm ring-1 ring-slate-200'
+                    end
+  %>
+  <div class="<%= wrapper_class %>">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <% if local_assigns[:leading].present? %>
+        <div class="text-center text-sm text-slate-600 sm:text-left"><%= leading %></div>
+      <% elsif local_assigns.fetch(:show_info, true) %>
+        <p class="text-center text-sm text-slate-600 sm:text-left">
+          <span class="tabular-nums"><%== pagy_info(pagy, item_name: local_assigns[:item_name]) %></span>
+        </p>
+      <% end %>
+      <div class="flex justify-center sm:justify-end">
+        <%== pagy_nav(pagy) %>
+      </div>
+    </div>
+  </div>
+<% end %>

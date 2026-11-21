@@ -30,6 +30,7 @@ RSpec.describe Loan, type: :model do
               loan.valid?
 
               expect(loan.received_at).to eq(received_at)
+              expect(described_class.validators).to include(an_instance_of(LoanReceivedAtRequiresAmountValidator))
             end
           end
         end

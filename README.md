@@ -29,7 +29,7 @@ Edite `.env`:
 | Variável | Uso |
 |----------|-----|
 | `RAILS_MASTER_KEY` | Obrigatório em produção (conteúdo de `config/master.key`) |
-| `FINANCES_BACKUP_PATH` | Caminho **absoluto** no HD secundário (ex.: `/run/media/ramonsantos/Backup/finances`) |
+| `FINANCES_BACKUP_PATH` | Caminho **absoluto** no HD secundário (ex.: `/mnt/backup/finances`) |
 | `FINANCES_BACKUP_INTERVAL_SECONDS` | Intervalo entre backups (padrão `3600`) |
 | `FINANCES_BACKUP_RETENTION_DAYS` | Retenção das pastas datadas (padrão `14`) |
 

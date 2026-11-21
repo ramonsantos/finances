@@ -6,6 +6,15 @@ pt-BR:
         amount: Valor
         date: Data
         remark: Observações
+        expense_category: Categoria
+        payment_method: Forma de pagamento
+        essential: Essencial
+        fixed: Fixo
+      expense_category:
+        name: Nome
+        description: Descrição
+      payment_method:
+        name: Nome
       loan:
         person: Pessoa
         description: Descrição
@@ -36,6 +45,10 @@ pt-BR:
       - dez
     formats:
       default: "%d/%m/%Y"
+  time:
+    formats:
+      default: "%d/%m/%Y %H:%M"
+      short: "%d/%m/%y %H:%M"
   number:
     currency:
       format:
@@ -44,6 +57,8 @@ pt-BR:
         precision: 2
         separator: ","
         unit: R$
+  label:
+    required: "*"
   layout:
     app_name: Finanças
     footer: "© %{year} Ramon Santos."
@@ -65,6 +80,11 @@ pt-BR:
     close: Fechar notificação
   pagination:
     aria_label: Páginas
+    items:
+      expenses: despesas
+      loans: empréstimos
+      imports: importações
+      import_lines: linhas
   expenses:
     index:
       title: "Despesas — %{month}"
@@ -103,6 +123,7 @@ pt-BR:
       title: Formas de pagamento
       new: Nova forma
       empty: Nenhuma forma de pagamento cadastrada.
+      expenses_column: Despesas
     new:
       title: Nova forma de pagamento
     show:
@@ -119,6 +140,7 @@ pt-BR:
       title: Categorias de despesa
       new: Nova categoria
       empty: Nenhuma categoria cadastrada.
+      expenses_column: Despesas
     new:
       title: Nova categoria
     show:
@@ -163,7 +185,8 @@ pt-BR:
       title: Resultado da importação
       processing: Processando arquivo…
       failed: A importação falhou.
-      total: "%{count} linhas processadas"
+      summary: "%{total} linhas processadas · %{successes} sucessos · %{errors} erros"
+      result_column: Resultado
       status:
         queued: Na fila
         processing: Processando

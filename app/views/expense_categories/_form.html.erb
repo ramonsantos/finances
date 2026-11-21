@@ -7,7 +7,7 @@
 
   <div class="space-y-5">
     <div>
-      <%= form.label :name, class: label_class %>
+      <%= required_form_label(form, :name) %>
       <%= form.text_field :name, required: true, class: input_class %>
     </div>
 

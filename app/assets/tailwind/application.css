@@ -1,1 +1,33 @@
 @import "tailwindcss";
+
+@layer components {
+  .pagy.series-nav {
+    @apply flex flex-wrap items-center justify-center gap-1 text-sm font-semibold tabular-nums;
+  }
+
+  .pagy.series-nav a:not([role="separator"]) {
+    @apply inline-flex min-h-9 min-w-9 items-center justify-center rounded-lg border border-slate-200
+    bg-white px-2.5 py-1.5 text-slate-700 shadow-sm transition-colors;
+  }
+
+  .pagy.series-nav a[href]:hover {
+    @apply border-sky-200 bg-sky-50 text-sky-800;
+  }
+
+  .pagy.series-nav a[aria-current] {
+    @apply border-sky-600 bg-sky-600 text-white shadow-sm;
+  }
+
+  .pagy.series-nav a[role="link"]:not([aria-current]) {
+    @apply opacity-45;
+  }
+
+  .pagy.series-nav a[role="separator"] {
+    @apply inline-flex min-w-6 items-center justify-center border-0 bg-transparent px-0 py-1.5
+    text-slate-400 shadow-none;
+  }
+
+  span.pagy.info {
+    @apply inline text-sm font-normal text-slate-600;
+  }
+}

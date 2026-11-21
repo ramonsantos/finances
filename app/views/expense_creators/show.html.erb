@@ -15,29 +15,36 @@
   <% if @expense_creator.finished? || @expense_creator.failed? %>
     <% if @expense_creator_results.any? %>
       <div class="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-200">
-        <table class="min-w-full text-sm">
-          <thead class="bg-slate-50 text-left text-xs font-semibold uppercase text-slate-500">
-            <tr>
-              <th class="px-4 py-3">Linha</th>
-              <th class="px-4 py-3">Resultado</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-slate-100">
-            <% @expense_creator_results.each do |result| %>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-slate-200 text-sm">
+            <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
               <tr>
-                <td class="px-4 py-3 font-mono text-xs text-slate-700"><%= result.raw_content %></td>
-                <td class="px-4 py-3">
-                  <span class="<%= result.success? ? 'text-sky-700' : 'text-red-700' %>"><%= result.details %></span>
-                </td>
+                <% import_csv_column_headers.each do |header| %>
+                  <th class="whitespace-nowrap px-4 py-3"><%= header %></th>
+                <% end %>
+                <th class="whitespace-nowrap px-4 py-3"><%= t("expense_creators.show.result_column") %></th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <% @expense_creator_results.each do |result| %>
+                <tr class="hover:bg-slate-50">
+                  <% result.import_row_values.each do |value| %>
+                    <td class="whitespace-nowrap px-4 py-3 text-slate-700"><%= value.presence || "—" %></td>
+                  <% end %>
+                  <td class="whitespace-nowrap px-4 py-3">
+                    <%= render "import_result_badge", result: result %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="mt-4 flex items-center justify-between text-sm text-slate-600">
-        <span><%= t("expense_creators.show.total", count: @expense_creator.expense_creator_results_count) %></span>
-        <%== pagy_nav(@pagy) %>
-      </div>
+      <%= render "shared/pagination",
+            pagy: @pagy,
+            variant: :detached,
+            show_info: false,
+            leading: import_result_summary_text(@expense_creator) %>
     <% end %>
   <% end %>
 </div>

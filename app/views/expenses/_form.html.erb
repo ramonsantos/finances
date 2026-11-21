@@ -7,17 +7,17 @@
 
   <div class="space-y-5">
     <div>
-      <%= form.label :date, class: label_class %>
+      <%= required_form_label(form, :date) %>
       <%= form.date_field :date, required: true, class: input_class, value: expense.date %>
     </div>
 
     <div>
-      <%= form.label :description, class: label_class %>
+      <%= required_form_label(form, :description) %>
       <%= form.text_field :description, required: true, class: input_class %>
     </div>
 
     <div data-money-input-target="wrapper">
-      <%= form.label :amount, class: label_class %>
+      <%= required_form_label(form, :amount) %>
       <%= form.text_field :amount,
             required: true,
             class: "#{input_class} tabular-nums",
@@ -32,31 +32,35 @@
     <%= render "shared/searchable_select",
           form: form,
           attribute: :expense_category_id,
-          label: "Categoria",
+          label: t("activerecord.attributes.expense.expense_category"),
           options: @expense_categories,
-          selected: expense.expense_category_id %>
+          selected: expense.expense_category_id,
+          required: true %>
 
     <%= render "shared/searchable_select",
           form: form,
           attribute: :payment_method_id,
-          label: "Forma de pagamento",
+          label: t("activerecord.attributes.expense.payment_method"),
           options: @payment_methods,
-          selected: expense.payment_method_id %>
+          selected: expense.payment_method_id,
+          required: true %>
 
     <%= render "shared/form_switch",
           form: form,
           attribute: :essential,
-          label: "Essencial",
-          hint: t("expenses.form.essential_hint") %>
+          label: t("activerecord.attributes.expense.essential"),
+          hint: t("expenses.form.essential_hint"),
+          required: true %>
 
     <%= render "shared/form_switch",
           form: form,
           attribute: :fixed,
-          label: "Despesa fixa",
-          hint: t("expenses.form.fixed_hint") %>
+          label: t("activerecord.attributes.expense.fixed"),
+          hint: t("expenses.form.fixed_hint"),
+          required: true %>
 
     <div>
-      <%= form.label :remark, "Observação", class: label_class %>
+      <%= form.label :remark, class: label_class %>
       <%= form.text_field :remark, class: input_class %>
     </div>
   </div>

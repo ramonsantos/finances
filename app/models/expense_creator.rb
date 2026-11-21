@@ -12,4 +12,14 @@ class ExpenseCreator < ApplicationRecord
   def process_csv!
     CreateExpensesFromCsvService.call(expense_creator: self)
   end
+
+  def import_result_summary
+    grouped = expense_creator_results.group(:success).count
+
+    {
+      total: expense_creator_results_count,
+      successes: grouped[true] || 0,
+      errors: grouped[false] || 0
+    }
+  end
 end

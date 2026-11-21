@@ -87,7 +87,7 @@ RSpec.describe 'Expenses', type: :system do
           fill_in 'Data', with: '2026-03-15'
           select 'Alimentação', from: 'Categoria'
           select 'Cartão Nubank', from: 'Forma de pagamento'
-          check 'Despesa fixa'
+          check 'Fixo'
           click_button 'Salvar'
         end
 

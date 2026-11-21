@@ -2,6 +2,7 @@
 
 module ApplicationHelper
   include FlashHelper
+  include FormHelper
 
   BTN_PRIMARY = 'inline-flex items-center rounded-lg bg-sky-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700'
   BTN_PRIMARY_SM = 'inline-flex items-center rounded-lg bg-sky-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-sky-700'
@@ -71,6 +72,24 @@ module ApplicationHelper
     t("expenses.fixed.#{key}")
   end
 
+  def import_csv_column_headers
+    ImportRowContent::IMPORT_COLUMNS.map do |column|
+      t("services.create_expenses_from_spreadsheet_service.csv_headers.#{column}")
+    end
+  end
+
+  def import_result_summary_text(expense_creator)
+    t('expense_creators.show.summary', **expense_creator.import_result_summary)
+  end
+
+  def import_result_badge_classes(success)
+    if success
+      'bg-sky-100 text-sky-800 ring-sky-200'
+    else
+      'bg-red-100 text-red-800 ring-red-200'
+    end
+  end
+
   def essential_badge(essential)
     key = essential ? :yes : :no
     t("expenses.essential.#{key}")
@@ -85,8 +104,11 @@ module ApplicationHelper
 
     pagy.series_nav(
       id: 'pagination',
-      aria_label: t('pagination.aria_label'),
-      class: 'pagy-nav'
+      aria_label: t('pagination.aria_label')
     )
+  end
+
+  def pagy_info(pagy, item_name: nil)
+    pagy.info_tag(item_name: item_name)
   end
 end

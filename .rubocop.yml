@@ -53,6 +53,9 @@ Metrics/AbcSize:
 Metrics/BlockLength:
   Enabled: false
 
+Metrics/ClassLength:
+  Enabled: false
+
 Metrics/MethodLength:
   Enabled: false
 
@@ -105,6 +108,9 @@ Style/MethodCallWithArgsParentheses:
     - not_to
     - describe
 
+Style/MultilineBlockChain:
+  Enabled: false
+
 Style/NumericLiterals:
   Enabled: false
 
@@ -126,6 +132,11 @@ Style/WordArray:
   Exclude:
     - app/validators/brazilian_phone_validator.rb
     - config/application.rb
+
+# Rails
+Rails/I18nLocaleTexts:
+  Exclude:
+    - spec/*/*.rb
 
 # RSpec
 RSpec/ContextWording:

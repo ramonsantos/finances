@@ -29,7 +29,7 @@ RSpec.describe ExpenseCategoriesController, type: :controller do
         post(:create, params: { expense_category: valid_attributes })
 
         expect(response).to redirect_to(expense_categories_path)
-        expect(flash[:notice]).to eq(I18n.t('expense_categories.create.created'))
+        expect(flash[:notice]).to eq('Categoria adicionada.')
       end
     end
 
@@ -55,7 +55,7 @@ RSpec.describe ExpenseCategoriesController, type: :controller do
       patch(:update, params: { id: expense_category.id, expense_category: { name: 'Nova' } })
 
       expect(response).to redirect_to(expense_categories_path)
-      expect(flash[:notice]).to eq(I18n.t('expense_categories.update.updated'))
+      expect(flash[:notice]).to eq('Categoria atualizada.')
     end
 
     context 'with invalid params' do
@@ -85,7 +85,7 @@ RSpec.describe ExpenseCategoriesController, type: :controller do
       end.not_to change(ExpenseCategory, :count)
 
       expect(response).to redirect_to(expense_categories_path)
-      expect(flash[:alert]).to eq(I18n.t('expense_categories.destroy.destroy_failed'))
+      expect(flash[:alert]).to eq('Não é possível excluir uma categoria com despesas vinculadas.')
     end
   end
 end

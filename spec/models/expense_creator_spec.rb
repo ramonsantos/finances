@@ -26,6 +26,21 @@ RSpec.describe ExpenseCreator, type: :model do
     end
   end
 
+  describe '#import_result_summary' do
+    let(:expense_creator) { create(:expense_creator) }
+    let(:expected_result) { { total: 3, successes: 2, errors: 1 } }
+
+    before do
+      create(:expense_creator_result, expense_creator:, success: true)
+      create(:expense_creator_result, expense_creator:, success: true)
+      create(:expense_creator_result, expense_creator:, success: false)
+    end
+
+    it 'returns processed, success and error counts' do
+      expect(expense_creator.import_result_summary).to eq(expected_result)
+    end
+  end
+
   describe '#process_csv!' do
     let(:expense_creator) { create(:expense_creator) }
 

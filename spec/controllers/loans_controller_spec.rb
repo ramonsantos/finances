@@ -48,7 +48,7 @@ RSpec.describe LoansController, type: :controller do
         post(:create, params: { loan: valid_attributes })
 
         expect(response).to redirect_to(loans_path)
-        expect(flash[:notice]).to eq(I18n.t('loans.create.created'))
+        expect(flash[:notice]).to eq('Empréstimo adicionado.')
       end
     end
 
@@ -86,7 +86,7 @@ RSpec.describe LoansController, type: :controller do
       patch(:update, params: { id: loan.id, loan: { description: 'Outro' } })
 
       expect(response).to redirect_to(loan_path(loan))
-      expect(flash[:notice]).to eq(I18n.t('loans.update.updated'))
+      expect(flash[:notice]).to eq('Empréstimo atualizado.')
     end
   end
 
@@ -101,7 +101,7 @@ RSpec.describe LoansController, type: :controller do
       delete(:destroy, params: { id: loan.id })
 
       expect(response).to redirect_to(loans_path(loan_status: :to_receive))
-      expect(flash[:notice]).to eq(I18n.t('loans.destroy.destroyed'))
+      expect(flash[:notice]).to eq('Empréstimo removido.')
     end
   end
 end

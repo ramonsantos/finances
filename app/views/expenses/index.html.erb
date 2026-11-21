@@ -15,14 +15,14 @@
       <table class="min-w-full divide-y divide-slate-200 text-sm">
         <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
           <tr>
-            <th class="px-4 py-3">Data</th>
-            <th class="px-4 py-3">Descrição</th>
-            <th class="px-4 py-3 text-right">Valor</th>
-            <th class="px-4 py-3">Categoria</th>
-            <th class="px-4 py-3">Forma de pagamento</th>
-            <th class="px-4 py-3">Essencial</th>
-            <th class="px-4 py-3">Fixo</th>
-            <th class="px-4 py-3">Obs.</th>
+            <th class="px-4 py-3"><%= t("activerecord.attributes.expense.date") %></th>
+            <th class="px-4 py-3"><%= t("activerecord.attributes.expense.description") %></th>
+            <th class="px-4 py-3 text-right"><%= t("activerecord.attributes.expense.amount") %></th>
+            <th class="px-4 py-3"><%= t("activerecord.attributes.expense.expense_category") %></th>
+            <th class="px-4 py-3"><%= t("activerecord.attributes.expense.payment_method") %></th>
+            <th class="px-4 py-3"><%= t("activerecord.attributes.expense.essential") %></th>
+            <th class="px-4 py-3"><%= t("activerecord.attributes.expense.fixed") %></th>
+            <th class="px-4 py-3"><%= t("activerecord.attributes.expense.remark") %></th>
             <th class="px-4 py-3"></th>
           </tr>
         </thead>
@@ -54,8 +54,8 @@
         </tbody>
       </table>
     </div>
+    <%= render "shared/pagination", pagy: @pagy, item_name: t("pagination.items.expenses") %>
   </div>
-  <div class="mt-4 flex justify-end"><%== pagy_nav(@pagy) %></div>
 <% else %>
   <div class="rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500">
     <p><%= t("expenses.index.empty") %></p>

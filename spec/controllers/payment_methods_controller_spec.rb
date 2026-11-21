@@ -57,7 +57,7 @@ RSpec.describe PaymentMethodsController, type: :controller do
         end.not_to change(PaymentMethod, :count)
 
         expect(response).to redirect_to(payment_methods_path)
-        expect(flash[:alert]).to eq(I18n.t('payment_methods.destroy.destroy_failed'))
+        expect(flash[:alert]).to eq('Não é possível excluir uma forma de pagamento com despesas vinculadas.')
       end
     end
   end

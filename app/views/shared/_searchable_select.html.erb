@@ -1,6 +1,9 @@
-<%# locals: (form:, attribute:, label:, options:, selected:) %>
 <div data-controller="searchable-select" class="relative">
-  <%= form.label attribute, label, class: label_class %>
+  <% if local_assigns.fetch(:required, false) %>
+    <%= required_form_label(form, attribute, label: label) %>
+  <% else %>
+    <%= form.label attribute, label, class: label_class %>
+  <% end %>
 
   <%= form.select(
         attribute,
