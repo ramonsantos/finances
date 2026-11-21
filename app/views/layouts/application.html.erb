@@ -1,101 +1,31 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= t('views.app.name') %></title>
+    <title><%= content_for(:title) || "Finances" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Finances">
+    <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <%= yield :head %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
-    <%= favicon_link_tag asset_path('favicon.svg') %>
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <header>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <%= link_to(t('views.app.name'), root_path, class: 'navbar-brand') %>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <% if user_signed_in? %>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <%= t('views.app.menu.expense.name') %>
-                </a>
-
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <%= link_to(t('views.app.menu.expense.new'), new_expense_path, class: 'dropdown-item') %>
-
-                  <div class="dropdown-divider"></div>
-
-                  <%= link_to(t('views.app.menu.expense.new_from_csv'), expense_creators_path, class: 'dropdown-item') %>
-
-                  <div class="dropdown-divider"></div>
-
-                  <%= link_to(t('views.app.menu.expense.index'), expenses_path, class: 'dropdown-item') %>
-                  <%= link_to(t('views.app.menu.expense.report'), report_expenses_path, class: 'dropdown-item') %>
-
-                  <div class="dropdown-divider"></div>
-
-                  <%= link_to(t('views.app.menu.expense.places'), places_path, class: 'dropdown-item') %>
-
-                  <div class="dropdown-divider"></div>
-
-                  <%= link_to(t('views.app.menu.expense.expense_groups'), expense_groups_path, class: 'dropdown-item') %>
-
-                  <div class="dropdown-divider"></div>
-
-                  <%= link_to(t('views.app.menu.expense.new_category'), new_expense_category_path, class: 'dropdown-item') %>
-                  <%= link_to(t('views.app.menu.expense.index_categories'), expense_categories_path, class: 'dropdown-item') %>
-                </div>
-              </li>
-            </ul>
-
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <%= t('views.app.menu.loan.name') %>
-                </a>
-
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <%= link_to(t('views.app.menu.loan.new'), new_loan_path, class: 'dropdown-item') %>
-
-                  <div class="dropdown-divider"></div>
-
-                  <%= link_to(t('views.app.menu.loan.index'), loans_path, class: 'dropdown-item') %>
-                </div>
-              </li>
-            </ul>
-
-            <%= link_to(
-              t('views.app.button.exit'),
-              destroy_user_session_path,
-              method: :delete,
-              class: 'btn btn-outline-dark'
-            ) %>
-          </div>
-        <% end %>
-      </nav>
-    </header>
-
-    <main>
+    <main class="container mx-auto mt-28 px-5 flex">
       <%= yield %>
     </main>
-
-    <footer class="footer">
-      <div>
-        <%= t('views.app.footer', current_year: current_year) %>
-      </div>
-    </footer>
   </body>
 </html>
