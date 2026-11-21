@@ -1,0 +1,40 @@
+name: finances
+
+x-app-build: &app_build
+  context: .
+  dockerfile: Dockerfile.dev
+  args:
+    USER_ID: ${UID:-1000}
+    GROUP_ID: ${GID:-1000}
+
+x-app-common: &app_common
+  build: *app_build
+  volumes:
+    - .:/rails
+    - bundle:/usr/local/bundle
+    - ./storage:/rails/storage
+  working_dir: /rails
+  environment: &app_environment
+    RAILS_ENV: ${RAILS_ENV:-development}
+    BUNDLE_PATH: /usr/local/bundle
+    PORT: "3000"
+    PIDFILE: /rails/tmp/pids/server.pid
+    RUBY_DEBUG_OPEN: "true"
+    RUBY_DEBUG_HOST: "0.0.0.0"
+    RUBY_DEBUG_LAZY: "true"
+    SOLID_QUEUE_IN_PUMA: "1"
+  init: true
+
+services:
+  app:
+    <<: *app_common
+    ports:
+      - "3000:3000"
+      - "12345:12345"
+    command: ./bin/dev
+    tty: true
+    stdin_open: true
+    shm_size: "256mb"
+
+volumes:
+  bundle:

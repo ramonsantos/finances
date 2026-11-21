@@ -1,0 +1,35 @@
+name: finances-production
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: finances:production
+    ports:
+      - "3099:80"
+    env_file:
+      - .env
+    environment:
+      RAILS_ENV: production
+      SOLID_QUEUE_IN_PUMA: "true"
+    volumes:
+      - ./storage:/rails/storage
+    restart: unless-stopped
+
+  backup:
+    image: finances:production
+    depends_on:
+      - web
+    env_file:
+      - .env
+    environment:
+      FINANCES_BACKUP_INTERVAL_SECONDS: ${FINANCES_BACKUP_INTERVAL_SECONDS:-3600}
+      FINANCES_BACKUP_RETENTION_DAYS: ${FINANCES_BACKUP_RETENTION_DAYS:-14}
+      STORAGE_PATH: /rails/storage
+      BACKUP_PATH: /backup
+    volumes:
+      - ./storage:/rails/storage
+      - ${FINANCES_BACKUP_PATH:?Defina FINANCES_BACKUP_PATH no .env}:/backup
+    entrypoint: ["/rails/bin/backup-loop"]
+    restart: unless-stopped

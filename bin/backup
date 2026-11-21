@@ -1,0 +1,43 @@
+#!/bin/bash
+set -euo pipefail
+
+STORAGE="${STORAGE_PATH:-/rails/storage}"
+BACKUP_ROOT="${BACKUP_PATH:-/backup}"
+RETENTION_DAYS="${FINANCES_BACKUP_RETENTION_DAYS:-14}"
+
+if [ ! -d "$BACKUP_ROOT" ]; then
+  echo "Backup path $BACKUP_ROOT does not exist" >&2
+  exit 1
+fi
+
+if [ ! -w "$BACKUP_ROOT" ]; then
+  echo "Backup path $BACKUP_ROOT is not writable" >&2
+  exit 1
+fi
+
+if [ ! -d "$STORAGE" ]; then
+  echo "Storage path $STORAGE does not exist" >&2
+  exit 1
+fi
+
+TIMESTAMP="$(date +%Y%m%d-%H%M)"
+DEST="${BACKUP_ROOT}/${TIMESTAMP}"
+mkdir -p "${DEST}/storage"
+
+shopt -s nullglob
+sqlite_files=("${STORAGE}"/*.sqlite3)
+if [ ${#sqlite_files[@]} -eq 0 ]; then
+  echo "No SQLite files found in ${STORAGE}" >&2
+  exit 1
+fi
+
+for db in "${sqlite_files[@]}"; do
+  base="$(basename "$db")"
+  sqlite3 "$db" ".backup '${DEST}/${base}'"
+done
+
+rsync -a --exclude='*.sqlite3' "${STORAGE}/" "${DEST}/storage/"
+
+find "$BACKUP_ROOT" -maxdepth 1 -type d -name '20*' -mtime +"${RETENTION_DAYS}" -exec rm -rf {} +
+
+echo "Backup completed: ${DEST}"

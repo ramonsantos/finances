@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+
+INTERVAL="${FINANCES_BACKUP_INTERVAL_SECONDS:-3600}"
+
+while true; do
+  if /rails/bin/backup; then
+    echo "Next backup in ${INTERVAL}s"
+  else
+    echo "Backup failed; retrying in ${INTERVAL}s" >&2
+  fi
+  sleep "$INTERVAL"
+done

@@ -1,0 +1,35 @@
+#!/bin/bash -e
+
+# Seed bundle volume, fix bind-mount permissions, drop to rails user.
+if [ "$(id -u)" = "0" ]; then
+  if [ ! -f "${BUNDLE_PATH}/.image-seeded" ] && [ -d /usr/local/bundle-image ]; then
+    echo "Seeding gem bundle from image..."
+    mkdir -p "${BUNDLE_PATH}"
+    cp -a /usr/local/bundle-image/. "${BUNDLE_PATH}/"
+    touch "${BUNDLE_PATH}/.image-seeded"
+  fi
+
+  mkdir -p /rails/tmp /rails/tmp/pids /rails/log /rails/storage
+  chown -R rails:rails "${BUNDLE_PATH}" /rails/tmp /rails/log /rails/storage
+
+  export HOME=/home/rails
+  export USER=rails
+  export LOGNAME=rails
+  exec setpriv --reuid=rails --regid=rails --init-groups -- "$0" "$@"
+fi
+
+bundle check || bundle install
+
+prepare_database=false
+if [ "${1}" = "./bin/dev" ] || [ "${1}" = "bin/dev" ]; then
+  prepare_database=true
+elif [ "${2}" = "server" ] && { [ "${1}" = "./bin/rails" ] || [ "${1}" = "bin/rails" ]; }; then
+  prepare_database=true
+fi
+
+if [ "${prepare_database}" = true ]; then
+  rm -f tmp/pids/server.pid
+  ./bin/rails db:prepare
+fi
+
+exec "${@}"
