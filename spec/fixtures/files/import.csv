@@ -1,2 +1,2 @@
-Descrição,Valor,Data,Categoria,Grupo de Despesa,Fixo?,Observações
-Teste,"10,00",01/01/25,Alimentação,Pessoal,não,
+Data,Descrição,Valor,Categoria,Forma de pagamento,Essencial?,Fixo?,Observação
+01/01/25,Mercado,"10,00",Alimentação,Dinheiro,sim,não,

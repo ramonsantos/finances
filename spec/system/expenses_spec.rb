@@ -4,10 +4,10 @@ require 'rails_helper'
 
 RSpec.describe 'Expenses', type: :system do
   let!(:category) { create(:expense_category, name: 'Alimentação') }
-  let!(:group) { create(:expense_group, name: 'Pessoal') }
+  let!(:payment_method) { create(:payment_method, name: 'Cartão Nubank') }
 
   it 'lists monthly expenses and creates a new one' do
-    create(:expense, description: 'Padaria', amount: 15, date: Time.zone.today, expense_category: category, expense_group: group)
+    create(:expense, description: 'Padaria', amount: 15, date: Time.zone.today, expense_category: category, payment_method: payment_method)
 
     visit expenses_path
 
@@ -19,7 +19,7 @@ RSpec.describe 'Expenses', type: :system do
     fill_in 'Valor', with: '30.00'
     fill_in 'Data', with: Time.zone.today.to_s
     select 'Alimentação', from: 'Categoria'
-    select 'Pessoal', from: 'Grupo'
+    select 'Cartão Nubank', from: 'Forma de pagamento'
     click_button 'Salvar'
 
     expect(page).to have_text('Despesa adicionada')
@@ -47,7 +47,7 @@ RSpec.describe 'Expenses', type: :system do
         amount: 10,
         date: march_expense_date,
         expense_category: category,
-        expense_group: group
+        payment_method: payment_method
       )
       create(
         :expense,
@@ -55,7 +55,7 @@ RSpec.describe 'Expenses', type: :system do
         amount: 20,
         date: february_expense_date,
         expense_category: category,
-        expense_group: group
+        payment_method: payment_method
       )
     end
 
@@ -82,12 +82,12 @@ RSpec.describe 'Expenses', type: :system do
         fill_in 'Valor', with: '1200.00'
         fill_in 'Data', with: '2026-03-15'
         select 'Alimentação', from: 'Categoria'
-        select 'Pessoal', from: 'Grupo'
+        select 'Cartão Nubank', from: 'Forma de pagamento'
         check 'Despesa fixa'
         click_button 'Salvar'
 
         expect(page).to have_text('Despesa adicionada')
-        expect(page).to have_text('Fixa')
+        expect(page).to have_text('Sim')
       end
     end
   end
@@ -102,7 +102,7 @@ RSpec.describe 'Expenses', type: :system do
         amount: 15,
         date: expense_date,
         expense_category: category,
-        expense_group: group
+        payment_method: payment_method
       )
     end
 
@@ -130,7 +130,7 @@ RSpec.describe 'Expenses', type: :system do
         amount: 5,
         date: expense_date,
         expense_category: category,
-        expense_group: group
+        payment_method: payment_method
       )
     end
 

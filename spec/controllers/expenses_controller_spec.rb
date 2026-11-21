@@ -6,11 +6,11 @@ RSpec.describe ExpensesController, type: :controller do
   routes { Rails.application.routes }
 
   let!(:category) { create(:expense_category) }
-  let!(:group) { create(:expense_group) }
-  let!(:expense) { create(:expense, expense_category: category, expense_group: group, date: Time.zone.today) }
+  let!(:payment_method) { create(:payment_method) }
+  let!(:expense) { create(:expense, expense_category: category, payment_method: payment_method, date: Time.zone.today) }
 
   let(:valid_attributes) do
-    attributes_for(:expense, expense_category_id: category.id, expense_group_id: group.id)
+    attributes_for(:expense, expense_category_id: category.id, payment_method_id: payment_method.id)
   end
 
   let(:invalid_attributes) { attributes_for(:expense, description: nil) }
@@ -22,7 +22,7 @@ RSpec.describe ExpensesController, type: :controller do
     end
 
     it 'filters by the given month' do
-      create(:expense, date: 2.months.ago, expense_category: category, expense_group: group)
+      create(:expense, date: 2.months.ago, expense_category: category, payment_method: payment_method)
 
       get(:index, params: { expense_month: Time.zone.today.to_s })
 

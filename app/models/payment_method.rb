@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ExpenseGroup < ApplicationRecord
+class PaymentMethod < ApplicationRecord
   has_many :expenses, dependent: :restrict_with_error
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }

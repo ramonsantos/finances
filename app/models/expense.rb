@@ -6,7 +6,7 @@ class Expense < ApplicationRecord
   normalizes_currency :amount
 
   belongs_to :expense_category, counter_cache: true
-  belongs_to :expense_group, counter_cache: true
+  belongs_to :payment_method, counter_cache: true
 
   validates :description, presence: true
   validates :amount, presence: true, numericality: { greater_than_or_equal_to: 0.01 }
@@ -15,38 +15,42 @@ class Expense < ApplicationRecord
   scope :for_month, ->(date) { where(date: date.all_month) }
 
   scope :for_month_ordered, lambda { |date|
-    for_month(date).order(:date).includes(:expense_group, :expense_category)
+    for_month(date).order(:date).includes(:expense_category, :payment_method)
   }
 
   def self.total_for_month(date)
     for_month(date).sum(:amount)
   end
 
-  def self.grouped_for_report(date)
-    for_month(date).includes(:expense_group, :expense_category).group_by { |e| e.expense_group.name }
-  end
+  def self.category_report_data(date)
+    expenses = for_month(date).includes(:expense_category)
+    total = expenses.sum(&:amount)
 
-  def self.report_data(date)
-    grouped_for_report(date).map do |name, expenses|
-      total = expenses.sum(&:amount)
-
-      {
-        expense_group_name: name,
-        total: total,
-        categories: categories_report_data(expenses.group_by(&:expense_category), total)
-      }
-    end
-  end
-
-  def self.categories_report_data(by_category, total_amount)
-    by_category.map do |category, category_expenses|
+    expenses.group_by(&:expense_category).map do |category, category_expenses|
       portion = category_expenses.sum(&:amount)
 
       {
         name: category.name,
-        percent_total: percent_of(total_amount, portion)
+        total: portion,
+        percent_total: percent_of(total, portion)
       }
-    end
+    end.sort_by { |entry| -entry[:total] }
+  end
+
+  def self.payment_method_report_data(date)
+    expenses = for_month(date).includes(:payment_method)
+    total = expenses.sum(&:amount)
+
+    expenses.group_by(&:payment_method).map do |payment_method, method_expenses|
+      portion = method_expenses.sum(&:amount)
+
+      {
+        name: payment_method.name,
+        count: method_expenses.size,
+        total: portion,
+        percent_total: percent_of(total, portion)
+      }
+    end.sort_by { |entry| -entry[:total] }
   end
 
   def self.percent_of(total, portion)

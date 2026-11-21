@@ -6,7 +6,8 @@ FactoryBot.define do
     amount { 25.50 }
     date { Time.zone.today }
     fixed { false }
+    essential { false }
     expense_category
-    expense_group
+    payment_method
   end
 end

@@ -232,7 +232,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
   describe '#fixed_badge' do
     context 'when expense is fixed' do
-      let(:expected_result) { 'Fixa' }
+      let(:expected_result) { 'Sim' }
 
       it 'returns the fixed label' do
         expect(helper.fixed_badge(true)).to eq(expected_result)
@@ -240,7 +240,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
 
     context 'when expense is not fixed' do
-      let(:expected_result) { 'Avulsa' }
+      let(:expected_result) { 'Não' }
 
       it 'returns the non-fixed label' do
         expect(helper.fixed_badge(false)).to eq(expected_result)

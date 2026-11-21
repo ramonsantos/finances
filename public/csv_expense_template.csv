@@ -1,2 +1,2 @@
-Descrição,Valor,Data,Categoria,Grupo de Despesa,Fixo?,Observações
-Exemplo,"10,00",01/01/25,Alimentação,Pessoal,não,Observação opcional
+Data,Descrição,Valor,Categoria,Forma de pagamento,Essencial?,Fixo?,Observação
+02/11/2026,Exemplo,"R$ 10,00",Alimentação,Cartão Nubank,sim,não,

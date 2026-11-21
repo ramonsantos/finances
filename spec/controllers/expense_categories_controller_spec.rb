@@ -80,8 +80,8 @@ RSpec.describe ExpenseCategoriesController, type: :controller do
     end
 
     it 'blocks destroy when expenses exist' do
-      group = create(:expense_group)
-      create(:expense, expense_category: expense_category, expense_group: group)
+      payment_method = create(:payment_method)
+      create(:expense, expense_category: expense_category, payment_method: payment_method)
 
       expect do
         delete(:destroy, params: { id: expense_category.id })

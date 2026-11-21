@@ -6,6 +6,11 @@
   <% end %>
 
   <div class="grid gap-5 sm:grid-cols-2">
+    <div>
+      <%= form.label :date, class: label_class %>
+      <%= form.date_field :date, required: true, class: input_class, value: expense.date %>
+    </div>
+
     <div class="sm:col-span-2">
       <%= form.label :description, class: label_class %>
       <%= form.text_field :description, required: true, class: input_class %>
@@ -17,29 +22,28 @@
     </div>
 
     <div>
-      <%= form.label :date, class: label_class %>
-      <%= form.date_field :date, required: true, class: input_class, value: expense.date %>
+      <%= form.label :expense_category_id, "Categoria", class: label_class %>
+      <%= form.select :expense_category_id, options_from_collection_for_select(ExpenseCategory.order(:name), :id, :name, expense.expense_category_id), {}, class: input_class %>
     </div>
 
-    <div class="flex items-end">
+    <div>
+      <%= form.label :payment_method_id, "Forma de pagamento", class: label_class %>
+      <%= form.select :payment_method_id, options_from_collection_for_select(PaymentMethod.order(:name), :id, :name, expense.payment_method_id), {}, class: input_class %>
+    </div>
+
+    <div class="flex items-end gap-6">
+      <label class="flex items-center gap-2 text-sm text-slate-700">
+        <%= form.check_box :essential, class: "rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" %>
+        Essencial
+      </label>
       <label class="flex items-center gap-2 text-sm text-slate-700">
         <%= form.check_box :fixed, class: "rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" %>
         Despesa fixa
       </label>
     </div>
 
-    <div>
-      <%= form.label :expense_category_id, "Categoria", class: label_class %>
-      <%= form.select :expense_category_id, options_from_collection_for_select(ExpenseCategory.order(:name), :id, :name, expense.expense_category_id), {}, class: input_class %>
-    </div>
-
-    <div>
-      <%= form.label :expense_group_id, "Grupo", class: label_class %>
-      <%= form.select :expense_group_id, options_from_collection_for_select(ExpenseGroup.order(:name), :id, :name, expense.expense_group_id), {}, class: input_class %>
-    </div>
-
     <div class="sm:col-span-2">
-      <%= form.label :remark, "Observações", class: label_class %>
+      <%= form.label :remark, "Observação", class: label_class %>
       <%= form.text_area :remark, rows: 3, class: input_class %>
     </div>
   </div>

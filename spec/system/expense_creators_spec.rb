@@ -2,14 +2,18 @@
 
 require 'rails_helper'
 
-RSpec.describe 'CSV import', type: :system do
+RSpec.describe 'Spreadsheet import', type: :system do
+  let(:header) do
+    'Data,Descrição,Valor,Categoria,Forma de pagamento,Essencial?,Fixo?,Observação'
+  end
+
   before do
     create(:expense_category, name: 'Alimentação')
-    create(:expense_group, name: 'Pessoal')
+    create(:payment_method, name: 'Dinheiro')
   end
 
   it 'enqueues import and processes it in the job' do
-    csv = "Descrição,Valor,Data,Categoria,Grupo de Despesa,Fixo?,Observações\nMercado,\"10,00\",01/01/25,Alimentação,Pessoal,não,"
+    csv = "#{header}\n01/01/2025,Mercado,\"10,00\",Alimentação,Dinheiro,sim,não,"
     file = Tempfile.new(['import', '.csv'])
     file.write(csv)
     file.rewind
@@ -38,7 +42,7 @@ RSpec.describe 'CSV import', type: :system do
 
   context 'when a row fails validation' do
     it 'records the error on the import result page' do
-      csv = "Descrição,Valor,Data,Categoria,Grupo de Despesa,Fixo?,Observações\n,\"10,00\",01/01/25,Alimentação,Pessoal,não,"
+      csv = "#{header}\n01/01/2025,,\"10,00\",Alimentação,Dinheiro,sim,não,"
       file = Tempfile.new(['import', '.csv'])
       file.write(csv)
       file.rewind
@@ -61,18 +65,16 @@ RSpec.describe 'CSV import', type: :system do
     it 'returns a CSV file with headers' do
       visit download_csv_template_expense_creators_path
 
-      expect(page.body.b.force_encoding(Encoding::UTF_8)).to include(
-        'Descrição,Valor,Data,Categoria,Grupo de Despesa,Fixo?,Observações'
-      )
+      expect(page.body.b.force_encoding(Encoding::UTF_8)).to include(header)
     end
   end
 
   context 'when mixing valid and invalid rows' do
     it 'creates expenses for valid rows and errors for invalid rows' do
       csv = <<~CSV
-        Descrição,Valor,Data,Categoria,Grupo de Despesa,Fixo?,Observações
-        Mercado,"10,00",01/01/25,Alimentação,Pessoal,não,
-        ,"10,00",01/01/25,Alimentação,Pessoal,não,
+        #{header}
+        01/01/2025,Mercado,"10,00",Alimentação,Dinheiro,sim,não,
+        01/01/2025,,"10,00",Alimentação,Dinheiro,sim,não,
       CSV
       file = Tempfile.new(['import', '.csv'])
       file.write(csv)

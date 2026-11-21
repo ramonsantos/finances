@@ -22,12 +22,13 @@
       <table class="min-w-full divide-y divide-slate-200 text-sm">
         <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
           <tr>
+            <th class="px-4 py-3">Data</th>
             <th class="px-4 py-3">Descrição</th>
             <th class="px-4 py-3 text-right">Valor</th>
-            <th class="px-4 py-3">Data</th>
-            <th class="px-4 py-3">Tipo</th>
             <th class="px-4 py-3">Categoria</th>
-            <th class="px-4 py-3">Grupo</th>
+            <th class="px-4 py-3">Forma de pagamento</th>
+            <th class="px-4 py-3">Essencial</th>
+            <th class="px-4 py-3">Fixo</th>
             <th class="px-4 py-3">Obs.</th>
             <th class="px-4 py-3"></th>
           </tr>
@@ -35,14 +36,17 @@
         <tbody class="divide-y divide-slate-100">
           <% @expenses.each do |expense| %>
             <tr class="hover:bg-slate-50">
+              <td class="px-4 py-3"><%= l(expense.date) %></td>
               <td class="px-4 py-3 font-medium text-slate-900"><%= expense.description %></td>
               <td class="px-4 py-3 text-right tabular-nums"><%= formatted_money(expense.amount) %></td>
-              <td class="px-4 py-3"><%= l(expense.date) %></td>
+              <td class="px-4 py-3"><%= expense.expense_category.name %></td>
+              <td class="px-4 py-3"><%= expense.payment_method.name %></td>
+              <td class="px-4 py-3">
+                <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs"><%= essential_badge(expense.essential) %></span>
+              </td>
               <td class="px-4 py-3">
                 <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs"><%= fixed_badge(expense.fixed) %></span>
               </td>
-              <td class="px-4 py-3"><%= expense.expense_category.name %></td>
-              <td class="px-4 py-3"><%= expense.expense_group.name %></td>
               <td class="px-4 py-3 text-slate-500"><%= remark_preview(expense.remark) %></td>
               <td class="px-4 py-3 text-right whitespace-nowrap">
                 <%= link_to t("forms.edit"), expense_path(expense, expense_month: expense_month_param(@current_expense_month)), class: btn_primary_xs %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_21_170000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_21_180001) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -66,14 +66,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_170000) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "expense_groups", force: :cascade do |t|
-    t.string "name", null: false
-    t.integer "expenses_count", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index "lower(name)", name: "index_expense_groups_on_lower_name", unique: true
-  end
-
   create_table "expenses", force: :cascade do |t|
     t.string "description", null: false
     t.decimal "amount", precision: 12, scale: 2, null: false
@@ -81,12 +73,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_170000) do
     t.boolean "fixed", default: false, null: false
     t.text "remark"
     t.integer "expense_category_id", null: false
-    t.integer "expense_group_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "payment_method_id", null: false
+    t.boolean "essential", default: false, null: false
     t.index ["date"], name: "index_expenses_on_date"
     t.index ["expense_category_id"], name: "index_expenses_on_expense_category_id"
-    t.index ["expense_group_id"], name: "index_expenses_on_expense_group_id"
+    t.index ["payment_method_id"], name: "index_expenses_on_payment_method_id"
     t.check_constraint "amount >= 0.01", name: "expenses_amount_check"
   end
 
@@ -103,9 +96,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_170000) do
     t.check_constraint "received_amount IS NULL OR received_amount >= 0.01", name: "loans_received_amount_check"
   end
 
+  create_table "payment_methods", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "expenses_count", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index "lower(name)", name: "index_payment_methods_on_lower_name", unique: true
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "expense_creator_results", "expense_creators", on_delete: :cascade
   add_foreign_key "expenses", "expense_categories", on_delete: :restrict
-  add_foreign_key "expenses", "expense_groups", on_delete: :restrict
+  add_foreign_key "expenses", "payment_methods", on_delete: :restrict
 end

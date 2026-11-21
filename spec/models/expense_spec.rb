@@ -7,7 +7,7 @@ RSpec.describe Expense, type: :model do
     context 'when belong_to' do
       it do
         expect(subject).to belong_to(:expense_category).counter_cache(true)
-        expect(subject).to belong_to(:expense_group).counter_cache(true)
+        expect(subject).to belong_to(:payment_method).counter_cache(true)
       end
     end
   end
@@ -28,128 +28,52 @@ RSpec.describe Expense, type: :model do
 
   describe '.for_month' do
     let(:category) { create(:expense_category) }
-    let(:group) { create(:expense_group) }
-    let(:month) { Date.new(2025, 3, 15) }
-    let!(:in_month) { create(:expense, date: Date.new(2025, 3, 10), expense_category: category, expense_group: group) }
-    let(:expected_result) { [in_month] }
-
-    before { create(:expense, date: Date.new(2025, 2, 28), expense_category: category, expense_group: group) }
-
-    it 'returns expenses within the month' do
-      expect(described_class.for_month(month)).to match_array(expected_result)
-    end
-  end
-
-  describe '.for_month_ordered' do
-    let(:category) { create(:expense_category) }
-    let(:group) { create(:expense_group) }
-    let(:month) { Date.new(2025, 3, 15) }
-    let!(:later) { create(:expense, date: Date.new(2025, 3, 20), expense_category: category, expense_group: group) }
-    let!(:earlier) { create(:expense, date: Date.new(2025, 3, 5), expense_category: category, expense_group: group) }
-    let(:expected_result) { [earlier, later] }
-
-    it 'returns expenses ordered by date' do
-      expect(described_class.for_month_ordered(month).to_a).to eq(expected_result)
-    end
-  end
-
-  describe '.total_for_month' do
-    let(:category) { create(:expense_category) }
-    let(:group) { create(:expense_group) }
-    let(:month) { Date.new(2025, 1, 15) }
-    let(:expected_result) { 30 }
+    let(:payment_method) { create(:payment_method, name: 'Pix Nubank') }
+    let!(:in_month) { create(:expense, date: Date.new(2025, 3, 10), expense_category: category, payment_method: payment_method) }
 
     before do
-      create(:expense, amount: 10, date: Date.new(2025, 1, 5), expense_category: category, expense_group: group)
-      create(:expense, amount: 20, date: Date.new(2025, 1, 10), expense_category: category, expense_group: group)
+      create(:expense, date: Date.new(2025, 2, 28), expense_category: category, payment_method: payment_method)
     end
 
-    it 'sums amounts for the month' do
-      expect(described_class.total_for_month(month)).to eq(expected_result)
-    end
-  end
-
-  describe '.grouped_for_report' do
-    let(:category) { create(:expense_category) }
-    let(:group_a) { create(:expense_group, name: 'Grupo A') }
-    let(:group_b) { create(:expense_group, name: 'Grupo B') }
-    let(:month) { Date.new(2025, 4, 1) }
-
-    before do
-      create(:expense, date: month, expense_category: category, expense_group: group_a)
-      create(:expense, date: month, expense_category: category, expense_group: group_b)
-    end
-
-    it 'groups expenses by group name' do
-      result = described_class.grouped_for_report(month)
-
-      expect(result.keys).to contain_exactly('Grupo A', 'Grupo B')
-      expect(result['Grupo A'].size).to eq(1)
+    it 'returns expenses in the month' do
+      expect(described_class.for_month(Date.new(2025, 3, 15))).to contain_exactly(in_month)
     end
   end
 
-  describe '.categories_report_data' do
-    let(:category_a) { build_stubbed(:expense_category, name: 'Alimentação') }
-    let(:category_b) { build_stubbed(:expense_category, name: 'Transporte') }
-    let(:expense_a) { build_stubbed(:expense, amount: 30, expense_category: category_a) }
-    let(:expense_b) { build_stubbed(:expense, amount: 70, expense_category: category_b) }
-    let(:total_amount) { 100.0 }
-
-    let(:by_category) do
-      {
-        category_a => [expense_a],
-        category_b => [expense_b]
-      }
-    end
-
-    let(:expected_result) do
-      [
-        { name: 'Alimentação', percent_total: 30.0 },
-        { name: 'Transporte', percent_total: 70.0 }
-      ]
-    end
-
-    it 'returns category names with percent of the group total' do
-      expect(described_class.categories_report_data(by_category, total_amount)).to eq(expected_result)
-    end
-  end
-
-  describe '.report_data' do
+  describe '.category_report_data' do
     let(:category) { create(:expense_category, name: 'Alimentação') }
-    let(:group) { create(:expense_group, name: 'Pessoal') }
-    let(:month) { Date.new(2025, 5, 1) }
-    let(:expected_group_name) { 'Pessoal' }
-    let(:expected_total) { 100.0 }
+    let(:payment_method) { create(:payment_method, name: 'Swile') }
+    let(:month) { Date.new(2025, 1, 15) }
 
     before do
-      create(:expense, amount: 40, date: month, expense_category: category, expense_group: group)
-      create(:expense, amount: 60, date: month, expense_category: category, expense_group: group)
+      create(:expense, amount: 40, date: month, expense_category: category, payment_method: payment_method)
+      create(:expense, amount: 60, date: month, expense_category: category, payment_method: payment_method)
     end
 
-    it 'returns grouped totals and category percentages' do
-      data = described_class.report_data(month)
-      group_data = data.find { |row| row[:expense_group_name] == expected_group_name }
+    it 'returns category totals and percentages' do
+      data = described_class.category_report_data(month)
+      row = data.find { |entry| entry[:name] == 'Alimentação' }
 
-      expect(group_data[:total]).to eq(expected_total)
-      expect(group_data[:categories].first[:percent_total]).to eq(100.0)
+      expect(row[:total]).to eq(100)
+      expect(row[:percent_total]).to eq(100.0)
     end
   end
 
-  describe '.percent_of' do
-    context 'when total is zero' do
-      let(:expected_result) { 0.0 }
+  describe '.payment_method_report_data' do
+    let(:category) { create(:expense_category) }
+    let(:payment_method) { create(:payment_method, name: 'Cartão BB') }
+    let(:month) { Date.new(2025, 1, 15) }
 
-      it 'returns zero' do
-        expect(described_class.percent_of(0, 50)).to eq(expected_result)
-      end
+    before do
+      create(:expense, amount: 30, date: month, expense_category: category, payment_method: payment_method)
     end
 
-    context 'when total is positive' do
-      let(:expected_result) { 25.0 }
+    it 'returns payment method totals' do
+      data = described_class.payment_method_report_data(month)
+      row = data.find { |entry| entry[:name] == 'Cartão BB' }
 
-      it 'returns the rounded percentage' do
-        expect(described_class.percent_of(200, 50)).to eq(expected_result)
-      end
+      expect(row[:count]).to eq(1)
+      expect(row[:total]).to eq(30)
     end
   end
 end

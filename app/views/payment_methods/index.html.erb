@@ -1,0 +1,32 @@
+<% content_for :title, t("payment_methods.index.title") %>
+<div class="mb-6 flex items-center justify-between">
+  <h1 class="text-2xl font-bold text-slate-900"><%= t("payment_methods.index.title") %></h1>
+  <%= link_to t("payment_methods.index.new"), new_payment_method_path, class: btn_primary_sm %>
+</div>
+
+<% if @payment_methods.any? %>
+  <div class="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-200">
+    <table class="min-w-full text-sm">
+      <thead class="bg-slate-50 text-left text-xs font-semibold uppercase text-slate-500">
+        <tr>
+          <th class="px-4 py-3">Nome</th>
+          <th class="px-4 py-3 text-right">Despesas</th>
+          <th class="px-4 py-3"></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100">
+        <% @payment_methods.each do |payment_method| %>
+          <tr class="hover:bg-slate-50">
+            <td class="px-4 py-3 font-medium"><%= payment_method.name %></td>
+            <td class="px-4 py-3 text-right tabular-nums"><%= payment_method.expenses_count %></td>
+            <td class="px-4 py-3 text-right">
+              <%= link_to t("forms.edit"), payment_method_path(payment_method), class: btn_primary_xs %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <p class="rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500"><%= t("payment_methods.index.empty") %></p>
+<% end %>

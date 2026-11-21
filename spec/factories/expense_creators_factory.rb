@@ -8,7 +8,7 @@ FactoryBot.define do
     trait :with_csv do
       after(:build) do |creator|
         creator.csv_file.attach(
-          io: StringIO.new("Descrição,Valor,Data,Categoria,Grupo de Despesa,Fixo?,Observações\n"),
+          io: StringIO.new("Data,Descrição,Valor,Categoria,Forma de pagamento,Essencial?,Fixo?,Observação\n"),
           filename: 'test.csv',
           content_type: 'text/csv'
         )

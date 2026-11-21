@@ -14,7 +14,9 @@ class ExpensesController < ApplicationController
 
   def report
     @current_expense_month = expense_month_from_params
-    @expenses_grouped_data = Expense.report_data(@current_expense_month)
+    @category_report = Expense.category_report_data(@current_expense_month)
+    @payment_method_report = Expense.payment_method_report_data(@current_expense_month)
+    @total_expense_amount = Expense.total_for_month(@current_expense_month)
   end
 
   def show
@@ -59,16 +61,17 @@ class ExpensesController < ApplicationController
         :amount,
         :date,
         :fixed,
+        :essential,
         :remark,
         :expense_category_id,
-        :expense_group_id
+        :payment_method_id
       ]
     )
   end
 
   def load_form_options
     @expense_categories = ExpenseCategory.order(:name).pluck(:name, :id)
-    @expense_groups = ExpenseGroup.order(:name).pluck(:name, :id)
+    @payment_methods = PaymentMethod.order(:name).pluck(:name, :id)
   end
 
   def expense_month_from_params

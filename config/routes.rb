@@ -21,5 +21,5 @@ Rails.application.routes.draw do
 
   resources :expense_categories, except: [:edit]
 
-  resources :expense_groups, only: [:create, :destroy, :index]
+  resources :payment_methods, except: [:edit]
 end

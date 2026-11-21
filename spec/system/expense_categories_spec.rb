@@ -85,7 +85,7 @@ RSpec.describe 'Expense categories', type: :system do
 
     context 'when category has dependent expenses' do
       let!(:category) { create(:expense_category, name: 'Alimentação') }
-      let!(:group) { create(:expense_group, name: 'Pessoal') }
+      let!(:payment_method) { create(:payment_method, name: 'Dinheiro') }
 
       before do
         create(
@@ -93,7 +93,7 @@ RSpec.describe 'Expense categories', type: :system do
           description: 'Mercado',
           date: Date.new(2026, 3, 2),
           expense_category: category,
-          expense_group: group
+          payment_method: payment_method
         )
       end
 

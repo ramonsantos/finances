@@ -5,16 +5,20 @@ require 'rails_helper'
 RSpec.describe ImportExpensesCsvJob, type: :job do
   describe '#perform' do
     let(:category) { create(:expense_category, name: 'Alimentação') }
-    let(:group) { create(:expense_group, name: 'Pessoal') }
+    let(:payment_method) { create(:payment_method, name: 'Dinheiro') }
+
+    let(:header) do
+      'Data,Descrição,Valor,Categoria,Forma de pagamento,Essencial?,Fixo?,Observação'
+    end
 
     context 'when success' do
       it 'finishes the import' do
         category
-        group
+        payment_method
 
         creator = create(:expense_creator, status: :queued)
         creator.csv_file.attach(
-          io: StringIO.new("Descrição,Valor,Data,Categoria,Grupo de Despesa,Fixo?,Observações\nMercado,\"10,00\",01/01/25,Alimentação,Pessoal,não,"),
+          io: StringIO.new("#{header}\n01/01/2025,Mercado,\"10,00\",Alimentação,Dinheiro,sim,não,"),
           filename: 'import.csv',
           content_type: 'text/csv'
         )

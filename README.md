@@ -1,6 +1,6 @@
 # Finanças
 
-Aplicação Rails 8.1 para controle de despesas, empréstimos e importação via CSV. Stack: Ruby 4.0.10, SQLite (multi-database: primary, queue, cache, cable em produção), Active Storage em disco, Solid Queue.
+Aplicação Rails 8.1 para controle de despesas, empréstimos e importação via CSV (formato da planilha de gastos). Manual do usuário: [funcionalidades.md](funcionalidades.md). Stack: Ruby 4.0.10, SQLite (multi-database: primary, queue, cache, cable em produção), Active Storage em disco, Solid Queue.
 
 Desenvolvimento e produção local rodam em Docker. Dados ficam em `./storage` no disco principal; backups automáticos vão para um HD secundário configurável.
 

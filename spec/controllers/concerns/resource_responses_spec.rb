@@ -119,8 +119,8 @@ RSpec.describe ResourceResponses do
       end
 
       before do
-        group = create(:expense_group)
-        create(:expense, expense_category: record, expense_group: group)
+        payment_method = create(:payment_method)
+        create(:expense, expense_category: record, payment_method: payment_method)
       end
 
       it 'redirects with an alert' do

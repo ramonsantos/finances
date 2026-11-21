@@ -11,29 +11,53 @@
   </div>
 </div>
 
-<% if @expenses_grouped_data.any? %>
-  <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-    <% @expenses_grouped_data.each do |group| %>
+<div class="mb-6 rounded-xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
+  <p class="text-sm text-slate-500"><%= t("expenses.report.month_total") %></p>
+  <p class="text-3xl font-bold tabular-nums text-emerald-700"><%= formatted_money(@total_expense_amount) %></p>
+</div>
+
+<% if @category_report.any? %>
+  <h2 class="mb-4 text-lg font-semibold text-slate-900"><%= t("expenses.report.by_category") %></h2>
+  <div class="mb-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+    <% @category_report.each do |category| %>
       <div class="rounded-xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
-        <h2 class="text-lg font-semibold text-slate-900"><%= group[:expense_group_name] %></h2>
-        <div class="mt-4 space-y-4">
-          <% group[:categories].each do |category| %>
-            <div>
-              <div class="mb-1 flex justify-between text-sm">
-                <span><%= category[:name] %></span>
-                <span class="tabular-nums text-slate-600"><%= number_with_precision(category[:percent_total], precision: 2) %>%</span>
-              </div>
-              <div class="h-2 overflow-hidden rounded-full bg-slate-100">
-                <div class="h-full rounded-full bg-emerald-500" style="width: <%= category[:percent_total] %>%"></div>
-              </div>
-            </div>
-          <% end %>
+        <h3 class="text-lg font-semibold text-slate-900"><%= category[:name] %></h3>
+        <p class="mt-1 text-sm text-slate-600 tabular-nums"><%= formatted_money(category[:total]) %></p>
+        <div class="mt-4">
+          <div class="mb-1 flex justify-between text-sm">
+            <span><%= t("expenses.report.share") %></span>
+            <span class="tabular-nums text-slate-600"><%= number_with_precision(category[:percent_total], precision: 2) %>%</span>
+          </div>
+          <div class="h-2 overflow-hidden rounded-full bg-slate-100">
+            <div class="h-full rounded-full bg-emerald-500" style="width: <%= category[:percent_total] %>%"></div>
+          </div>
         </div>
-        <p class="mt-4 border-t border-slate-100 pt-3 text-right text-sm font-semibold tabular-nums text-slate-900">
-          <%= t("expenses.report.total") %>: <%= formatted_money(group[:total]) %>
-        </p>
       </div>
     <% end %>
+  </div>
+
+  <h2 class="mb-4 text-lg font-semibold text-slate-900"><%= t("expenses.report.by_payment_method") %></h2>
+  <div class="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-200">
+    <table class="min-w-full divide-y divide-slate-200 text-sm">
+      <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+        <tr>
+          <th class="px-4 py-3">Forma de pagamento</th>
+          <th class="px-4 py-3 text-right">Lançamentos</th>
+          <th class="px-4 py-3 text-right">Total</th>
+          <th class="px-4 py-3 text-right">% do mês</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100">
+        <% @payment_method_report.each do |row| %>
+          <tr>
+            <td class="px-4 py-3 font-medium text-slate-900"><%= row[:name] %></td>
+            <td class="px-4 py-3 text-right tabular-nums"><%= row[:count] %></td>
+            <td class="px-4 py-3 text-right tabular-nums"><%= formatted_money(row[:total]) %></td>
+            <td class="px-4 py-3 text-right tabular-nums"><%= number_with_precision(row[:percent_total], precision: 2) %>%</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 <% else %>
   <p class="rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500"><%= t("expenses.index.empty") %></p>

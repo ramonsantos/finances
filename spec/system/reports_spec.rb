@@ -3,16 +3,17 @@
 require 'rails_helper'
 
 RSpec.describe 'Expense report', type: :system do
-  it 'displays totals per group' do
+  it 'displays totals per category' do
     category = create(:expense_category, name: 'Alimentação')
-    group = create(:expense_group, name: 'Pessoal')
-    create(:expense, amount: 50, expense_category: category, expense_group: group, date: Time.zone.today)
-    create(:expense, amount: 50, expense_category: category, expense_group: group, date: Time.zone.today)
+    payment_method = create(:payment_method, name: 'Swile')
+    create(:expense, amount: 50, expense_category: category, payment_method: payment_method, date: Time.zone.today)
+    create(:expense, amount: 50, expense_category: category, payment_method: payment_method, date: Time.zone.today)
 
     visit report_expenses_path
 
-    expect(page).to have_text('Pessoal')
+    expect(page).to have_text('Alimentação')
     expect(page).to have_text('R$ 100,00')
+    expect(page).to have_text('Swile')
   end
 
   context 'when the month has no expenses' do
@@ -27,11 +28,11 @@ RSpec.describe 'Expense report', type: :system do
 
   context 'when navigating between months' do
     let(:category) { create(:expense_category, name: 'Alimentação') }
-    let(:group) { create(:expense_group, name: 'Pessoal') }
+    let(:payment_method) { create(:payment_method, name: 'Pix Nubank') }
 
     before do
-      create(:expense, amount: 40, expense_category: category, expense_group: group, date: Date.new(2026, 2, 5))
-      create(:expense, amount: 60, expense_category: category, expense_group: group, date: Date.new(2026, 3, 5))
+      create(:expense, amount: 40, expense_category: category, payment_method: payment_method, date: Date.new(2026, 2, 5))
+      create(:expense, amount: 60, expense_category: category, payment_method: payment_method, date: Date.new(2026, 3, 5))
     end
 
     it 'shows totals for the selected month only' do
@@ -49,7 +50,7 @@ RSpec.describe 'Expense report', type: :system do
 
   context 'when using the link to the expense list' do
     let(:category) { create(:expense_category, name: 'Alimentação') }
-    let(:group) { create(:expense_group, name: 'Pessoal') }
+    let(:payment_method) { create(:payment_method, name: 'Dinheiro') }
 
     before do
       create(
@@ -57,7 +58,7 @@ RSpec.describe 'Expense report', type: :system do
         description: 'Feira',
         amount: 25,
         expense_category: category,
-        expense_group: group,
+        payment_method: payment_method,
         date: Date.new(2026, 3, 2)
       )
     end

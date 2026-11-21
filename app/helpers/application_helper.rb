@@ -67,6 +67,11 @@ module ApplicationHelper
     t("expenses.fixed.#{key}")
   end
 
+  def essential_badge(essential)
+    key = essential ? :yes : :no
+    t("expenses.essential.#{key}")
+  end
+
   def loans_title(status)
     t("loans.status.#{status == :received ? :closed : :open}")
   end
