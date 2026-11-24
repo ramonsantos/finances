@@ -30,7 +30,7 @@ gem 'pagy', '43.8.5'
 # Stdlib extracted gems (Ruby 3.4+)
 gem 'csv', '3.3.7'
 # ActiveSupport 8.1 calls JSON.parse positionally, incompatible with json 3.x
-gem 'json', '2.21.2'
+gem 'json', '3.1.0'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', '1.2026.6', platforms: [:windows, :jruby]
